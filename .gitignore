@@ -1,15 +1,26 @@
 .idea
 
 node_modules
-.pnpm-debug.log*
+.pnpm-store
+
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
 
 .DS_Store
+Thumbs.db
 
 dist
 coverage
 
+.env
 *.local
 .eslintcache
 tmp
-.temp
-.pnpm-store
+*.tmp
+*.temp
+
+.husky/_
