@@ -1,1 +1,1 @@
-export { default } from '@cck-ui/eslint-cofig'
+export { default } from '@cck-ui/eslint-config'
