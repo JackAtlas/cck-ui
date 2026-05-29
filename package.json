@@ -5,6 +5,8 @@
   "private": true,
   "main": "index.js",
   "scripts": {
+    "lint": "eslint . --ext .vue,.js,.ts,.jsx,.tsx,.md,.json --max-warnings 0 --cache",
+    "lint:fix": "pnpm run lint --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -13,10 +15,15 @@
   "type": "module",
   "dependencies": {
     "@cck-ui/components": "workspace:^",
+    "@cck-ui/eslint-config": "workspace:^",
     "@cck-ui/hooks": "workspace:^",
     "@cck-ui/theme-slate": "workspace:^",
     "@cck-ui/utils": "workspace:^",
     "typescript": "^6.0.3",
     "vue": "^3.5.35"
+  },
+  "devDependencies": {
+    "eslint": "^10.4.0",
+    "prettier": "^3.8.3"
   }
 }
