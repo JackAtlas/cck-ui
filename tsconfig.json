@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "es2024",
+    "moduleResolution": "bundler",
+    "lib": ["ESNext", "DOM"],
+    "types": [],
+
+    "sourceMap": true,
+
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "noUncheckedSideEffectImports": true,
+    "moduleDetection": "force",
+    "allowSyntheticDefaultImports": true,
+
+    "jsx": "preserve",
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
+  },
+  "exclude": ["node_modules", "dist", "packages/*/dist"],
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.web.json" },
+    { "path": "./tsconfig.play.json" }
+  ]
+}

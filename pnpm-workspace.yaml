@@ -1,0 +1,7 @@
+packages:
+  - packages/*
+  - docs
+  - play
+  - internal/*
+allowBuilds:
+  esbuild: true

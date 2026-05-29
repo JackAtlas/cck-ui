@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.base.json",
+
+  "compilerOptions": {
+    "composite": true,
+
+    "outDir": "./play/dist",
+    "rootDir": "./play",
+
+    "allowJs": true
+  },
+  "include": ["play/**/*"],
+  "exclude": ["node_modules"]
+}
