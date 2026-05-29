@@ -92,11 +92,7 @@ export default defineConfig([
       'no-console': ['warn', { allow: ['error'] }],
       'no-debugger': 'warn',
       'no-constant-condition': ['error', { checkLoops: false }],
-      'no-restricted-syntax': [
-        'error',
-        'LabeledStatement',
-        'WithStatement'
-      ],
+      'no-restricted-syntax': ['error', 'LabeledStatement', 'WithStatement'],
       'no-return-await': 'error',
       'no-var': 'error',
       'no-empty': ['error', { allowEmptyCatch: true }],
@@ -135,12 +131,7 @@ export default defineConfig([
           ignoreCase: false,
           ignoreDeclarationSort: true,
           ignoreMemberSort: false,
-          memberSyntaxSortOrder: [
-            'none',
-            'all',
-            'multiple',
-            'single'
-          ],
+          memberSyntaxSortOrder: ['none', 'all', 'multiple', 'single'],
           allowSeparatedGroups: false
         }
       ],
@@ -153,10 +144,7 @@ export default defineConfig([
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-non-null-assertion': 'off',
       '@typescript-eslint/no-non-null-asserted-optional-chain': 'off',
-      '@typescript-eslint/ban-ts-comment': [
-        'off',
-        { 'ts-ignore': false }
-      ],
+      '@typescript-eslint/ban-ts-comment': ['off', { 'ts-ignore': false }],
       '@typescript-eslint/no-require-imports': 'off',
       '@typescript-eslint/no-unused-expressions': 'off',
 
@@ -192,14 +180,7 @@ export default defineConfig([
         {
           groups: [
             'builtin',
-            [
-              'external',
-              'internal',
-              'parent',
-              'sibling',
-              'index',
-              'object'
-            ],
+            ['external', 'internal', 'parent', 'sibling', 'index', 'object'],
             'type'
           ],
           pathGroups: [
@@ -326,8 +307,7 @@ export default defineConfig([
           ]
         },
         {
-          pathPattern:
-            '^(?:dev|peer|optional|bundled)?[Dd]ependencies$',
+          pathPattern: '^(?:dev|peer|optional|bundled)?[Dd]ependencies$',
           order: { type: 'asc' }
         }
       ]
@@ -464,8 +444,7 @@ export default defineConfig([
                 '@cck-ui/theme-slate',
                 '@cck-ui/utils'
               ],
-              message:
-                'Please do not use this dependency in the current file.'
+              message: 'Please do not use this dependency in the current file.'
             }
           ]
         }
@@ -516,8 +495,7 @@ export default defineConfig([
                 '@cck-ui/eslint-config',
                 '@cck-ui/metadata'
               ],
-              message:
-                'Please do not use this dependency in the current file.'
+              message: 'Please do not use this dependency in the current file.'
             }
           ]
         }
@@ -580,8 +558,7 @@ export default defineConfig([
                 '@cck-ui/eslint-config',
                 '@cck-ui/metadata'
               ],
-              message:
-                'Please do not use this dependency in the current file.'
+              message: 'Please do not use this dependency in the current file.'
             }
           ]
         }
