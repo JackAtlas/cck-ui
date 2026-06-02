@@ -4,10 +4,21 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "rimraf dist",
+    "build": "tsx buildfile.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "@cck-ui/build": "workspace:*",
+    "@cck-ui/build-utils": "workspace:*",
+    "consola": "^3.4.2",
+    "es-toolkit": "catalog:",
+    "lightningcss": "^1.32.0",
+    "sass-embedded": "^1.100.0",
+    "tinyglobby": "^0.2.16",
+    "tsx": "catalog:"
+  }
 }
