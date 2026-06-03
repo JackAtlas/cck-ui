@@ -3,13 +3,21 @@
 
   "compilerOptions": {
     "composite": true,
-
-    "outDir": "./dist",
-    "rootDir": "./packages",
-    "declaration": true,
-    "declarationMap": true
+    "jsx": "preserve",
+    "jsxImportSource": "vue",
+    "lib": ["ES2018", "ES2022.Intl", "DOM", "DOM.Iterable"],
+    "types": [],
+    "skipLibCheck": true
   },
 
-  "include": ["packages/**/*"],
-  "exclude": ["node_modules", "*/*.md", "**/__tests__/**"]
+  "include": ["packages", "typings/env.d.ts", "typings/style.d.ts"],
+  "exclude": [
+    "node_modules",
+    "**/dist",
+    "**/__tests__/**",
+    "**/buildfile.ts",
+    "**/test-helper",
+    "packages/test-utils",
+    "*/*.md"
+  ]
 }

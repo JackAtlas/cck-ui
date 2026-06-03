@@ -1,31 +1,27 @@
 {
   "compilerOptions": {
-    "module": "esnext",
+    "outDir": "dist",
     "target": "es2024",
-    "moduleResolution": "bundler",
-    "lib": ["ESNext", "DOM", "DOM.Iterable"],
-    "jsx": "preserve",
-
+    "module": "esnext",
     "sourceMap": false,
-    "removeComments": false,
-
-    "paths": {
-      "@cck-ui/*": ["./packages/*"]
-    },
-    "verbatimModuleSyntax": true,
-    "isolatedModules": true,
-    "noUncheckedSideEffectImports": true,
-    "moduleDetection": "force",
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-
+    "moduleResolution": "bundler",
+    "allowJs": false,
     "strict": true,
     "noUnusedLocals": true,
-    "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-
-    "types": []
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "removeComments": false,
+    "rootDir": ".",
+    "types": [],
+    "paths": {
+      "@cck-ui/components": ["./packages/components"],
+      "@cck-ui/components/*": ["./packages/components/*"],
+      "cck-ui/constants": ["./packages/constants"],
+      "cck-ui/hooks": ["./packages/hooks"],
+      "cck-ui/utils": ["./packages/utils"],
+      "cck-ui/utils/*": ["./packages/utils/*"],
+      "cck-ui": ["./packages/cck-ui"]
+    }
   }
 }
