@@ -11,12 +11,11 @@ import { addUnit, isUndefined } from '@cck-ui/utils'
 import { type IconProps } from './icon.types'
 
 defineOptions({
-  name: 'CIcon'
+  name: 'CIcon',
+  inheritAttrs: false
 })
-
-const ns = useNamespace('icon')
-
 const props = defineProps<IconProps>()
+const ns = useNamespace('icon')
 
 const style = computed<CSSProperties>(() => {
   const { size, color } = props
