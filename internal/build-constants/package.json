@@ -1,0 +1,28 @@
+{
+  "name": "@cck-ui/build-constants",
+  "version": "0.0.1",
+  "description": "Build constants for CCK UI",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "scripts": {
+    "build": "unbuild",
+    "dev": "pnpm run stub",
+    "stub": "unbuild --stub"
+  },
+  "keywords": [
+    "cck-ui"
+  ],
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "unbuild": "^3.6.1"
+  }
+}
