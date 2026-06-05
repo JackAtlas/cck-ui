@@ -1,0 +1,71 @@
+import { ComponentSize } from '@cck-ui/constants'
+import type { Component, CSSProperties } from 'vue'
+
+export type ButtonVariant =
+  | 'default'
+  | 'filled'
+  | 'light'
+  | 'outline'
+  | 'transparent'
+  | 'white'
+  | 'subtle'
+  | 'gradient'
+
+export interface ButtonProps {
+  /**
+   * @description If set, adjusts text color based on background color for `filled` variant
+   */
+  autoContrast?: boolean
+  /**
+   * @description Key of `theme.colors` or any valid CSS color
+   * @default theme.primaryColor
+   */
+  color?: string
+  /**
+   * @description Sets `disabled` attribute, applies disabled styles
+   */
+  disabled?: boolean
+  /**
+   * @description Sets `width: 100%`
+   * @default false
+   */
+  fullWidth?: boolean
+  /**
+   * @description Gradient configuration used for `variant="gradient"`
+   * @default theme.defaultGradient
+   */
+  gradient?: string
+  /**
+   * @description Sets `justify-content` of `inner` element, can be used to change distribution of sections and label
+   * @default 'center'
+   */
+  justify?: CSSProperties['justify-content']
+  /**
+   * @description Props add to the `Loader` component (only visible when `loading` props is set)
+   */
+  loaderProps?: Record<string, string>
+  /**
+   * @description If set, the `Loader` component is displayed over the button
+   */
+  loading?: boolean
+  /**
+   * @description Key of `theme.radius` or any valid CSS value to set `border-radius`
+   * @default theme.defaultRadius
+   */
+  radius?: string
+  /**
+   * @description Controls button `height`, `font-size` and horizontal `padding`
+   * @default 'sm'
+   */
+  size?: ComponentSize
+  /**
+   * @description custom element tag
+   * @default 'button'
+   */
+  tag?: string | Component
+  /**
+   * @description variants of button
+   * @default 'default'
+   */
+  variant?: ButtonVariant
+}
