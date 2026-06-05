@@ -1,7 +1,6 @@
 @use 'sass:map';
 
 @use 'common/var' as *;
-@use 'mixins/button' as *;
 
 :root[data-cck-color-scheme='dark'],
 :host([data-cck-color-scheme='dark']) {
