@@ -3,5 +3,18 @@ packages:
   - docs
   - play
   - internal/*
+
 allowBuilds:
+  '@parcel/watcher': true
   esbuild: true
+
+catalog:
+  '@ctrl/tinycolor': ^4.2.0
+  '@vue/shared': ^3.5.35
+  '@vueuse/core': ^14.3.0
+  es-toolkit: ^1.47.0
+  vue-component-type-helpers: ^3.3.2
+  tsx: ^4.22.4
+
+minimumReleaseAgeExclude:
+  - tsx@4.22.4
