@@ -82,3 +82,34 @@ export function generateColorShades(originalColor: string): string[] {
 export function clearShadeCache(): void {
   shadeCache.clear()
 }
+
+export function setColorAlpha(originalColor: string, alpha: number): string {
+  if (Number.isNaN(Number(alpha))) {
+    throw new TypeError(`Invalid alpha: ${alpha}`)
+  }
+
+  const tc = new TinyColor(originalColor)
+  if (!tc.isValid) {
+    throw new Error(`Invalid color: ${originalColor}`)
+  }
+
+  const targetFormat = getFormat(originalColor)
+  tc.setAlpha(alpha)
+
+  let output: string
+  switch (targetFormat) {
+    case 'rgb':
+      output = tc.toRgbString()
+      break
+    case 'hsl':
+      output = tc.toHslString()
+      break
+    case 'hsv':
+      output = tc.toHsvString()
+      break
+    default:
+      output = tc.toRgbString()
+  }
+
+  return output
+}
