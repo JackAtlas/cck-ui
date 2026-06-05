@@ -66,6 +66,9 @@ export function generateColorShades(originalColor: string): string[] {
       case 'hsl':
         output = color.toHslString()
         break
+      case 'hsv':
+        output = color.toHsvString()
+        break
       default:
         output = color.toHexString()
     }
