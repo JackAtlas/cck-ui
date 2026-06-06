@@ -19,19 +19,19 @@ export const useButton = (
   const hasRightSection = hasRightSlot || !!props.rightSection
 
   const _props = computed(() => {
-    if (props.tag === 'button') {
-      return {
-        ariaDisabled: _disabled.value || props.loading || undefined,
-        'data-disabled': _disabled.value || props.loading || undefined,
-        disabled: _disabled.value || props.loading,
-        'data-block': props.fullWidth || undefined,
-        'data-size': props.size || undefined,
-        'data-with-left-section': hasLeftSection || undefined,
-        'data-with-right-section': hasRightSection || undefined,
-        'data-variant': props.variant || 'default'
-      }
+    const _attrs: Record<string, any> = {
+      'data-disabled': _disabled.value || props.loading || undefined,
+      'data-block': props.fullWidth || undefined,
+      'data-size': props.size && props.size !== 'sm' ? props.size : undefined,
+      'data-with-left-section': hasLeftSection || undefined,
+      'data-with-right-section': hasRightSection || undefined,
+      'data-variant': props.variant || 'default'
     }
-    return {}
+    if (props.tag === 'button') {
+      _attrs['aria-disabled'] = _disabled.value || props.loading || undefined
+      _attrs['disabled'] = _disabled.value || props.loading
+    }
+    return _attrs
   })
 
   const handleClick = (evt: MouseEvent) => {

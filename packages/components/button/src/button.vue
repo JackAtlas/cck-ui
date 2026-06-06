@@ -64,7 +64,7 @@ const buttonStyle = useButtonCustomStyle(props)
 const ns = useNamespace('button')
 const buttonClass = computed(() => [
   useNamespace('focus').b('auto'),
-  useNamespace('active').b(),
+  !_disabled.value && useNamespace('active').b(),
   ns.e('root'),
   ns.is('loading', props.loading)
 ])
@@ -73,7 +73,7 @@ const labelClass = computed(() => [ns.e('label')])
 
 defineExpose({
   /** @description if button is disabled */
-  disabled: _disabled,
+  disabled: _disabled.value,
   /** @description button html element */
   ref: _ref,
   /** @description button size */
