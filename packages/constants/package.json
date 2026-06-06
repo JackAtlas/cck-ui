@@ -1,5 +1,6 @@
 {
   "name": "@cck-ui/constants",
+  "private": true,
   "version": "0.0.0",
   "description": "",
   "main": "index.js",
