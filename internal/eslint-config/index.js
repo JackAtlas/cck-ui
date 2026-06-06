@@ -545,10 +545,10 @@ export default defineConfig([
             {
               group: [
                 '@cck-ui/theme-slate/**/*.css',
-                '!@cck-ui/theme-slate/cck-*.css',
+                '!@cck-ui/theme-slate/cu-*.css',
                 '!@cck-ui/theme-slate/base.css'
               ],
-              message: 'Use @cck-ui/theme-slate/cck-*.css instead.'
+              message: 'Use @cck-ui/theme-slate/cu-*.css instead.'
             },
             {
               group: [
