@@ -9,5 +9,13 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "@ctrl/tinycolor": "catalog:"
+  },
+  "devDependencies": {
+    "@vue/shared": "catalog:",
+    "es-toolkit": "catalog:",
+    "vue-component-type-helpers": "catalog:"
+  }
 }
