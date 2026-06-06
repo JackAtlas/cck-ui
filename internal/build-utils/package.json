@@ -1,0 +1,34 @@
+{
+  "name": "@cck-ui/build-utils",
+  "version": "0.0.0",
+  "description": "",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "scripts": {
+    "build": "unbuild",
+    "dev": "pnpm run stub",
+    "stub": "unbuild --stub"
+  },
+  "keywords": [
+    "cck-ui"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "unbuild": "^3.6.1"
+  },
+  "dependencies": {
+    "@pnpm/find-workspace-packages": "^6.0.9",
+    "@pnpm/types": "^1101.2.0",
+    "consola": "^3.4.2"
+  }
+}
