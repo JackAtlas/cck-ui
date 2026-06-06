@@ -55,7 +55,7 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   variant: 'default'
 })
 
-const { _props, _ref, handleClick } = useButton(props, {
+const { _disabled, _props, _ref, handleClick } = useButton(props, {
   hasLeftSlot: hasLeftSlot.value,
   hasRightSlot: hasRightSlot.value
 })
@@ -70,7 +70,13 @@ const innerClass = computed(() => [ns.e('inner')])
 const labelClass = computed(() => [ns.e('label')])
 
 defineExpose({
+  /** @description if button is disabled */
+  disabled: _disabled,
   /** @description button html element */
-  ref: _ref
+  ref: _ref,
+  /** @description button size */
+  size: props.size,
+  /** @description button variant */
+  variant: props.variant
 })
 </script>

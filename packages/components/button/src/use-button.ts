@@ -42,6 +42,7 @@ export const useButton = (
   }
 
   return {
+    _disabled,
     _ref,
     _props,
     handleClick
