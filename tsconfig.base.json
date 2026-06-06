@@ -17,10 +17,10 @@
     "paths": {
       "@cck-ui/components": ["./packages/components"],
       "@cck-ui/components/*": ["./packages/components/*"],
-      "cck-ui/constants": ["./packages/constants"],
-      "cck-ui/hooks": ["./packages/hooks"],
-      "cck-ui/utils": ["./packages/utils"],
-      "cck-ui/utils/*": ["./packages/utils/*"],
+      "@cck-ui/constants": ["./packages/constants"],
+      "@cck-ui/hooks": ["./packages/hooks"],
+      "@cck-ui/utils": ["./packages/utils"],
+      "@cck-ui/utils/*": ["./packages/utils/*"],
       "cck-ui": ["./packages/cck-ui"]
     }
   }
