@@ -50,9 +50,13 @@ export function useButtonCustomStyle(props: ButtonProps) {
   return computed(() => {
     const styles: Record<string, string> = {}
 
-    const { color, variant } = props
+    const { color, justify, variant } = props
     const scheme = colorScheme.value
     const idx = getShadeIndexes(scheme)
+
+    if (justify) {
+      styles['--button-justify'] = justify
+    }
 
     switch (variant) {
       case 'default':

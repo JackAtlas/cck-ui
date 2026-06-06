@@ -7,15 +7,27 @@
     @click="handleClick"
   >
     <span :class="innerClass">
+      <span data-position="left" v-if="$slots['left-section']">
+        <slot name="left-section"></slot>
+      </span>
+      <span data-position="left" v-else-if="leftSection">
+        <component :is="leftSection" />
+      </span>
       <span :class="labelClass">
         <slot />
+      </span>
+      <span data-position="right" v-if="$slots['right-section']">
+        <slot name="right-section"></slot>
+      </span>
+      <span data-position="right" v-else-if="rightSection">
+        <component :is="rightSection" />
       </span>
     </span>
   </component>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, useSlots } from 'vue'
 import type { ButtonProps } from './button.types'
 import { useNamespace } from '@cck-ui/hooks'
 import { useButton } from './use-button'
@@ -25,15 +37,28 @@ defineOptions({
   name: 'CButton'
 })
 
+defineSlots<{
+  'left-section': any
+  'right-section': any
+  default: any
+}>()
+
+const slots = useSlots()
+
+const hasLeftSlot = computed(() => !!slots['left-section'])
+const hasRightSlot = computed(() => !!slots['right-section'])
+
 const props = withDefaults(defineProps<ButtonProps>(), {
-  justify: 'center',
   radius: '4px',
   size: 'sm',
   tag: 'button',
   variant: 'default'
 })
 
-const { _props, _ref, handleClick } = useButton(props)
+const { _props, _ref, handleClick } = useButton(props, {
+  hasLeftSlot: hasLeftSlot.value,
+  hasRightSlot: hasRightSlot.value
+})
 
 const buttonStyle = useButtonCustomStyle(props)
 const ns = useNamespace('button')

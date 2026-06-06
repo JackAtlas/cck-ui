@@ -58,7 +58,8 @@
   border: var(--button-bd, 1px solid transparent);
   color: var(--button-color);
   height: var(--button-height);
-  padding-inline: var(--button-padding-x);
+  padding-inline-start: var(--button-padding-x);
+  padding-inline-end: var(--button-padding-x);
   vertical-align: middle;
   transition:
     background 0.15s ease,
@@ -225,6 +226,13 @@
   transition:
     transform 150ms ease,
     opacity 100ms ease;
+
+  [data-position='left'] {
+    margin-inline-end: var(--c-spacing-xs);
+  }
+  [data-position='right'] {
+    margin-inline-start: var(--c-spacing-xs);
+  }
 }
 
 .c-button__label {

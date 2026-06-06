@@ -3,9 +3,20 @@ import { computed, ref } from 'vue'
 import { ButtonProps } from './button.types'
 import { useFormDisabled } from '@cck-ui/components/form'
 
-export const useButton = (props: ButtonProps) => {
+export const useButton = (
+  props: ButtonProps,
+  slots: {
+    hasLeftSlot: boolean
+    hasRightSlot: boolean
+  }
+) => {
   const _disabled = useFormDisabled()
   const _ref = ref<HTMLButtonElement>()
+
+  const { hasLeftSlot, hasRightSlot } = slots
+
+  const hasLeftSection = hasLeftSlot || !!props.leftSection
+  const hasRightSection = hasRightSlot || !!props.rightSection
 
   const _props = computed(() => {
     if (props.tag === 'button') {
@@ -15,6 +26,8 @@ export const useButton = (props: ButtonProps) => {
         disabled: _disabled.value || props.loading,
         'data-block': props.fullWidth || undefined,
         'data-size': props.size || undefined,
+        'data-with-left-section': hasLeftSection || undefined,
+        'data-with-right-section': hasRightSection || undefined,
         'data-variant': props.variant || 'default'
       }
     }

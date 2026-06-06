@@ -41,6 +41,10 @@ export interface ButtonProps {
    */
   justify?: CSSProperties['justify-content']
   /**
+   * @description Content on the left side of the button label
+   */
+  leftSection?: Component
+  /**
    * @description Props add to the `Loader` component (only visible when `loading` props is set)
    */
   loaderProps?: Record<string, string>
@@ -53,6 +57,10 @@ export interface ButtonProps {
    * @default theme.defaultRadius
    */
   radius?: string
+  /**
+   * @description Content on the right side of the button label
+   */
+  rightSection?: Component
   /**
    * @description Controls button `height`, `font-size` and horizontal `padding`
    * @default 'sm'
