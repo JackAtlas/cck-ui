@@ -54,6 +54,14 @@
     },
     "./*": "./*"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JackAtlas/cck-ui.git"
+  },
+  "publishConfig": {
+    "access": "public",
+    "directory": "../../dist/cck-ui"
+  },
   "style": "dist/index.css",
   "author": "",
   "license": "ISC",

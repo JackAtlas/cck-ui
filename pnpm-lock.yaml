@@ -227,7 +227,8 @@ importers:
         specifier: ^10.4.0
         version: 10.4.1(jiti@2.7.0)
 
-  packages/cck-ui: {}
+  packages/cck-ui:
+    publishDirectory: ../../dist/cck-ui
 
   packages/components: {}
 
@@ -10664,7 +10665,7 @@ snapshots:
     dependencies:
       emoji-regex: 8.0.0
       is-fullwidth-code-point: 3.0.0
-      strip-ansi: 6.0.1
+      strip-ansi: 6.0.0
 
   string-width@4.2.2:
     dependencies:
