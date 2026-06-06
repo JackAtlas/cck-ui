@@ -11,6 +11,7 @@
   "scripts": {
     "build": "pnpm run -C internal/build start",
     "build:theme": "pnpm run -C packages/theme-slate build",
+    "changeset": "changeset",
     "clean": "pnpm run clean:dist && pnpm run -r -parallel clean",
     "clean:dist": "rimraf dist",
     "commit": "cz",
@@ -22,8 +23,10 @@
     "postinstall": "pnpm stub && pnpm gen:version & pnpm run -C internal/metadata dev &",
     "prepare": "husky",
     "prettier": "prettier --write .",
+    "release": "pnpm build && changeset publish",
     "stub": "pnpm run -r --parallel stub",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "version": "changeset version"
   },
   "dependencies": {
     "@cck-ui/components": "workspace:^",
@@ -35,6 +38,7 @@
   },
   "devDependencies": {
     "@cck-ui/build": "workspace:^",
+    "@changesets/cli": "^2.31.0",
     "@commitlint/cli": "^21.0.1",
     "@commitlint/config-conventional": "^21.0.1",
     "@types/node": "^24.12.4",
