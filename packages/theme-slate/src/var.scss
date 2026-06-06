@@ -120,7 +120,7 @@
 
 :root[data-c-color-scheme='light'],
 :host([data-c-color-scheme='light']) {
-  --c-color-color-scheme: light;
+  --c-color-scheme: light;
   --c-primary-color-contrast: var(--c-color-white);
   --c-color-bright: var(--c-color-black);
   --c-color-text: #000;

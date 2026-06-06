@@ -101,7 +101,7 @@
 
   &:where(:disabled:not([data-loading]), [data-disabled]:not([data-loading])) {
     cursor: not-allowed;
-    border: calc(0.625rem * var(--c-scale)) solid transparent;
+    border: calc(0.0625rem * var(--c-scale)) solid transparent;
     color: var(--c-color-disabled-color);
     background: var(--c-color-disabled);
     transform: none;
