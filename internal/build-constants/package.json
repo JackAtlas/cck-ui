@@ -1,5 +1,6 @@
 {
   "name": "@cck-ui/build-constants",
+  "private": true,
   "version": "0.0.2",
   "description": "Build constants for CCK UI",
   "main": "./dist/index.cjs",
