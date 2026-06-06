@@ -63,6 +63,8 @@ const { _disabled, _props, _ref, handleClick } = useButton(props, {
 const buttonStyle = useButtonCustomStyle(props)
 const ns = useNamespace('button')
 const buttonClass = computed(() => [
+  useNamespace('focus').b('auto'),
+  useNamespace('active').b(),
   ns.e('root'),
   ns.is('loading', props.loading)
 ])
