@@ -257,27 +257,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-catalogs:
-  default:
-    '@ctrl/tinycolor':
-      specifier: ^4.2.0
-      version: 4.2.0
-    '@vue/shared':
-      specifier: ^3.5.35
-      version: 3.5.35
-    '@vueuse/core':
-      specifier: ^14.3.0
-      version: 14.3.0
-    es-toolkit:
-      specifier: ^1.47.0
-      version: 1.47.0
-    tsx:
-      specifier: ^4.22.4
-      version: 4.22.4
-    vue-component-type-helpers:
-      specifier: ^3.3.2
-      version: 3.3.2
-
 importers:
 
   .:
@@ -479,11 +458,7 @@ importers:
 
   packages/cck-ui: {}
 
-  packages/components:
-    dependencies:
-      '@ctrl/tinycolor':
-        specifier: 'catalog:'
-        version: 4.2.0
+  packages/components: {}
 
   packages/constants: {}
 
