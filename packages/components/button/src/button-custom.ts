@@ -50,7 +50,7 @@ export function useButtonCustomStyle(props: ButtonProps) {
   return computed(() => {
     const styles: Record<string, string> = {}
 
-    const { color, justify, variant } = props
+    const { color, gradient, justify, variant } = props
     const scheme = colorScheme.value
     const idx = getShadeIndexes(scheme)
 
@@ -140,6 +140,23 @@ export function useButtonCustomStyle(props: ButtonProps) {
             styles['--button-color'] = shades[idx.bg]
           }
         }
+        break
+      case 'gradient':
+        const from = gradient?.from || 'blue'
+        const to = gradient?.to || 'cyan'
+        const deg = gradient?.deg || '45'
+
+        let finalFrom: string = from
+        let finalTo: string = to
+        if (PRESET_COLORS.includes(from)) {
+          finalFrom = `var(--c-color-${from}-filled)`
+        }
+        if (PRESET_COLORS.includes(to)) {
+          finalTo = `var(--c-color-${to}-filled)`
+        }
+
+        styles['--button-bg'] =
+          `linear-gradient(${deg}deg, ${finalFrom} 0%, ${finalTo} 100%)`
         break
       default:
         break

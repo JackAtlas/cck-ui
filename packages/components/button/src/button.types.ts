@@ -32,9 +32,13 @@ export interface ButtonProps {
   fullWidth?: boolean
   /**
    * @description Gradient configuration used for `variant="gradient"`
-   * @default theme.defaultGradient
+   * @default { from: 'blue', to: 'cyan', deg: 45 }
    */
-  gradient?: string
+  gradient?: {
+    from: string
+    to: string
+    deg: number
+  }
   /**
    * @description Sets `justify-content` of `inner` element, can be used to change distribution of sections and label
    * @default 'center'
