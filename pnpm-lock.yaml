@@ -102,6 +102,9 @@ importers:
       '@vueuse/core':
         specifier: 'catalog:'
         version: 14.3.0(vue@3.5.35(typescript@6.0.3))
+      cck-ui:
+        specifier: npm:cck-ui@latest
+        version: 0.0.1
     devDependencies:
       sass:
         specifier: ^1.100.0
@@ -228,6 +231,10 @@ importers:
         version: 10.4.1(jiti@2.7.0)
 
   packages/cck-ui:
+    dependencies:
+      vue:
+        specifier: ^3.5.0
+        version: 3.5.35(typescript@6.0.3)
     publishDirectory: ../../dist/cck-ui
 
   packages/components: {}
@@ -284,6 +291,9 @@ importers:
       '@cck-ui/components':
         specifier: workspace:^
         version: link:../packages/components
+      '@cck-ui/theme-slate':
+        specifier: ''
+        version: 0.0.2
       '@lucide/vue':
         specifier: ^1.17.0
         version: 1.17.0(vue@3.5.35(typescript@6.0.3))
@@ -456,6 +466,9 @@ packages:
 
   '@bufbuild/protobuf@2.12.0':
     resolution: {integrity: sha512-B/XlCaFIP8LOwzo+bz5uFzATYokcwCKQcghqnlfwSmM5eX/qTkvDBnDPs+gXtX/RyjxJ4DRikECcPJbyALA8FA==}
+
+  '@cck-ui/theme-slate@0.0.2':
+    resolution: {integrity: sha512-nm87UY0evGkKcwKnKd+KJiv3E4Vh49KcDeHRbBpN9m9kSAk7qsSYacEz4hHc9ZWjOC8JM/Zg8JhD3MG39H7CoA==}
 
   '@changesets/apply-release-plan@7.1.1':
     resolution: {integrity: sha512-9qPCm/rLx/xoOFXIHGB229+4GOL76S4MC+7tyOuTsR6+1jYlfFDQORdvwR5hDA6y4FL2BPt3qpbcQIS+dW85LA==}
@@ -2547,6 +2560,9 @@ packages:
 
   caniuse-lite@1.0.30001793:
     resolution: {integrity: sha512-iwSsYWaCOoh26cV8NwNRViHlrfUvYsHDfRVcbtmw0Kg6PJIZZXwMkj1442FYLBGkeUf1juAsU3DTfxW579mrPA==}
+
+  cck-ui@0.0.1:
+    resolution: {integrity: sha512-jPM5/TvXH9U1sqZSHbRWk4axnTTJKIE4eiH/LRdps/WY5S0C0EeGYpbfDKc/hbWNzkWareLm3/YQbhFbOIPHlw==}
 
   ccount@2.0.1:
     resolution: {integrity: sha512-eyrF0jiFpY+3drT6383f1qhkbGsLSifNAjA61IUjZjmLCWjItY6LB9ft9YhoDgwfmclB2zhu51Lc7+95b8NRAg==}
@@ -5089,10 +5105,6 @@ packages:
     resolution: {integrity: sha512-NrX+1dVVh+6Y9dnQ19pR0pP4FiEIlUvdTGn8pw6CKTNq5sgib2nIhmUNT5TAmhWmvKr3WcxBcP3E8nWezuipuQ==}
     engines: {node: '>=8'}
 
-  string-width@4.2.0:
-    resolution: {integrity: sha512-zUz5JD+tgqtuDjMhwIg5uFVV3dtqZ9yQJlZVfq4I01/K5Paj5UHj7VyrQOJvzawSVlKpObApbfD0Ed6yJc+1eg==}
-    engines: {node: '>=8'}
-
   string-width@4.2.2:
     resolution: {integrity: sha512-XBJbT3N4JhVumXE0eoLU9DCjcaF92KLNqTmFCnG1pf8duUxFGwtP6AD6nkjw9a3IdiRtL3E2w3JDiE/xi3vOeA==}
     engines: {node: '>=8'}
@@ -5798,6 +5810,8 @@ snapshots:
 
   '@bufbuild/protobuf@2.12.0': {}
 
+  '@cck-ui/theme-slate@0.0.2': {}
+
   '@changesets/apply-release-plan@7.1.1':
     dependencies:
       '@changesets/config': 3.1.4
@@ -6401,7 +6415,7 @@ snapshots:
   '@isaacs/cliui@8.0.2':
     dependencies:
       string-width: 5.1.2
-      string-width-cjs: string-width@4.2.0
+      string-width-cjs: string-width@4.2.2
       strip-ansi: 7.2.0
       strip-ansi-cjs: strip-ansi@6.0.1
       wrap-ansi: 8.1.0
@@ -7710,6 +7724,8 @@ snapshots:
       lodash.uniq: 4.5.0
 
   caniuse-lite@1.0.30001793: {}
+
+  cck-ui@0.0.1: {}
 
   ccount@2.0.1: {}
 
@@ -10660,12 +10676,6 @@ snapshots:
       emoji-regex: 8.0.0
       is-fullwidth-code-point: 3.0.0
       strip-ansi: 5.2.0
-
-  string-width@4.2.0:
-    dependencies:
-      emoji-regex: 8.0.0
-      is-fullwidth-code-point: 3.0.0
-      strip-ansi: 6.0.0
 
   string-width@4.2.2:
     dependencies:
