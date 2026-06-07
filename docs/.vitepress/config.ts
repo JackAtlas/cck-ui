@@ -25,16 +25,5 @@ export default defineConfig({
     socialLinks: [
       { icon: 'github', link: 'https://github.com/JackAtlas/cck-ui' }
     ]
-  },
-  vite: {
-    resolve: {
-      alias: {
-        'cck-ui': resolve(__dirname, '../../packages/cck-ui/index.ts'),
-        '@cck-ui/theme-slate': resolve(
-          __dirname,
-          '../../packages/theme-slate/src/index.scss'
-        )
-      }
-    }
   }
 })
