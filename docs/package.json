@@ -15,7 +15,8 @@
   "type": "module",
   "dependencies": {
     "@lucide/vue": "^1.17.0",
-    "@vueuse/core": "catalog:"
+    "@vueuse/core": "catalog:",
+    "cck-ui": "npm:cck-ui@latest"
   },
   "devDependencies": {
     "sass": "^1.100.0",
