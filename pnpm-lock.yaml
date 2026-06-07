@@ -291,9 +291,6 @@ importers:
       '@cck-ui/components':
         specifier: workspace:^
         version: link:../packages/components
-      '@cck-ui/theme-slate':
-        specifier: ''
-        version: 0.0.2
       '@lucide/vue':
         specifier: ^1.17.0
         version: 1.17.0(vue@3.5.35(typescript@6.0.3))
@@ -466,9 +463,6 @@ packages:
 
   '@bufbuild/protobuf@2.12.0':
     resolution: {integrity: sha512-B/XlCaFIP8LOwzo+bz5uFzATYokcwCKQcghqnlfwSmM5eX/qTkvDBnDPs+gXtX/RyjxJ4DRikECcPJbyALA8FA==}
-
-  '@cck-ui/theme-slate@0.0.2':
-    resolution: {integrity: sha512-nm87UY0evGkKcwKnKd+KJiv3E4Vh49KcDeHRbBpN9m9kSAk7qsSYacEz4hHc9ZWjOC8JM/Zg8JhD3MG39H7CoA==}
 
   '@changesets/apply-release-plan@7.1.1':
     resolution: {integrity: sha512-9qPCm/rLx/xoOFXIHGB229+4GOL76S4MC+7tyOuTsR6+1jYlfFDQORdvwR5hDA6y4FL2BPt3qpbcQIS+dW85LA==}
@@ -5810,8 +5804,6 @@ snapshots:
       '@babel/helper-validator-identifier': 8.0.0-rc.6
 
   '@bufbuild/protobuf@2.12.0': {}
-
-  '@cck-ui/theme-slate@0.0.2': {}
 
   '@changesets/apply-release-plan@7.1.1':
     dependencies:
