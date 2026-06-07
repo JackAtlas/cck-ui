@@ -17,6 +17,4 @@ catalog:
   tsx: ^4.22.4
 
 minimumReleaseAgeExclude:
-  - tsx@4.22.4
-  - cck-ui@0.0.1
-  - '@cck-ui/theme-slate@0.0.2'
+  - cck-ui
