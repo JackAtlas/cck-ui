@@ -1,7 +1,7 @@
 {
   "name": "cck-ui",
   "version": "0.0.1",
-  "description": "",
+  "description": "Another Vue 3 Component Library",
   "keywords": [
     "cck-ui",
     "cck",
@@ -63,7 +63,15 @@
     "directory": "../../dist/cck-ui"
   },
   "style": "dist/index.css",
-  "author": "",
-  "license": "ISC",
-  "type": "module"
+  "sideEffects": [
+    "dist/*",
+    "theme-slate/**/*.css",
+    "theme-slate/src/**/*.scss",
+    "es/components/*/style/*",
+    "lib/components/*/style/*"
+  ],
+  "peerDependencies": {
+    "vue": "^3.5.0"
+  },
+  "license": "ISC"
 }
