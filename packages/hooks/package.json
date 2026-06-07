@@ -9,5 +9,12 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module"
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JackAtlas/cck-ui.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
 }

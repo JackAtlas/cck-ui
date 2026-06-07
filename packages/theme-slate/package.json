@@ -14,6 +14,13 @@
     "dist"
   ],
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JackAtlas/cck-ui.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "@cck-ui/build": "workspace:*",
     "@cck-ui/build-utils": "workspace:*",
