@@ -88,6 +88,7 @@ export function useButtonCustomStyle(props: ButtonProps) {
         }
         break
       case 'outline':
+      case 'dashed':
         if (color) {
           if (PRESET_COLORS.includes(color)) {
             styles['--button-hover'] = `var(--c-color-${color}-outline-hover)`

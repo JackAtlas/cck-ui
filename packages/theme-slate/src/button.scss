@@ -146,12 +146,15 @@
     --button-hover: var(--c-primary-color-light-hover);
     --button-color: var(--c-primary-color-light-color);
   }
-  &[data-variant='outline']:not([data-disabled]) {
+  &[data-variant='outline']:not([data-disabled]),
+  &[data-variant='dashed']:not([data-disabled]) {
     --button-bg: transparent;
     --button-hover: var(--c-primary-color-outline-hover);
     --button-color: var(--c-primary-color-outline);
-    --button-bd: calc(0.0625rem * var(--c-scale)) solid
-      var(--c-primary-color-outline);
+    --button-bd: var(--button-color);
+  }
+  &[data-variant='dashed']:not([data-disabled]) {
+    border-style: dashed;
   }
   &[data-variant='subtle']:not([data-disabled]) {
     --button-bg: transparent;
