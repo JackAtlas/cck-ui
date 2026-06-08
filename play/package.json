@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@cck-ui/components": "workspace:^",
+    "@cck-ui/theme-slate": "workspace:^",
     "@lucide/vue": "^1.17.0",
     "vue": "^3.5.34"
   },
