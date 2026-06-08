@@ -9,3 +9,16 @@
   }
   @return $name;
 }
+
+@function strip-unit($value) {
+  @if type-of($value) == 'number' and not unitless($value) {
+    @return $value / ($value * 0 + 1);
+  }
+  @return $value;
+}
+
+@function em($px, $base: 16px) {
+  $px-unitless: strip-unit($px);
+  $base-unitless: strip-unit($base);
+  @return ($px-unitless / $base-unitless) * 1em;
+}

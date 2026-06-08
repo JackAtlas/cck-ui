@@ -1,0 +1,41 @@
+@use './mixins/function.scss' as *;
+
+:root,
+:host {
+  color-scheme: var(--c-color-scheme);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+button,
+select {
+  text-transform: none;
+}
+
+body,
+:host {
+  margin: 0;
+  font-family: var(--c-font-family);
+  font-size: var(--c-font-size-md);
+  line-height: var(--c-line-height);
+  background-color: var(--c-color-body);
+  color: var(--c-color-text);
+
+  -webkit-font-smoothing: var(--c-webkit-font-smoothing);
+  -moz-osx-font-smoothing: var(--c-moz-font-smoothing);
+
+  @media screen and (max-device-width: em(500px)) {
+    -webkit-text-size-adjust: 100%;
+  }
+}
