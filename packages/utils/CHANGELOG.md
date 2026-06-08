@@ -1,15 +1,9 @@
-# @cck-ui/components
+# @cck-ui/utils
 
-## 0.0.2
+## 0.0.1
 
 ### Patch Changes
 
 - 4cd1223: - new component: button group and button group section
   - refactor button styles
   - new button variant `dashed`
-
-## 0.0.1
-
-### Patch Changes
-
-- a98c13a: button component
