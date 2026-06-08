@@ -1,5 +1,7 @@
-import { ComponentSize } from '@cck-ui/constants'
+import { CGradient, CRadius, CSize } from '@cck-ui/constants'
 import type { Component, CSSProperties } from 'vue'
+
+export type ButtonSize = CSize | `compact-${CSize}`
 
 export type ButtonVariant =
   | 'default'
@@ -35,11 +37,7 @@ export interface ButtonProps {
    * @description Gradient configuration used for `variant="gradient"`
    * @default { from: 'blue', to: 'cyan', deg: 45 }
    */
-  gradient?: {
-    from: string
-    to: string
-    deg: number
-  }
+  gradient?: CGradient
   /**
    * @description Sets `justify-content` of `inner` element, can be used to change distribution of sections and label
    * @default 'center'
@@ -61,7 +59,7 @@ export interface ButtonProps {
    * @description Key of `theme.radius` or any valid CSS value to set `border-radius`
    * @default theme.defaultRadius
    */
-  radius?: string
+  radius?: CRadius
   /**
    * @description Content on the right side of the button label
    */
@@ -70,7 +68,7 @@ export interface ButtonProps {
    * @description Controls button `height`, `font-size` and horizontal `padding`
    * @default 'sm'
    */
-  size?: ComponentSize
+  size?: ButtonSize
   /**
    * @description custom element tag
    * @default 'button'

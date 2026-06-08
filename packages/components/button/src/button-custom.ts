@@ -59,8 +59,6 @@ export function useButtonCustomStyle(props: ButtonProps) {
     }
 
     switch (variant) {
-      case 'default':
-        break
       case 'filled':
         if (color) {
           if (PRESET_COLORS.includes(color)) {
@@ -93,8 +91,6 @@ export function useButtonCustomStyle(props: ButtonProps) {
           if (PRESET_COLORS.includes(color)) {
             styles['--button-hover'] = `var(--c-color-${color}-outline-hover)`
             styles['--button-color'] = `var(--c-color-${color}-outline)`
-            styles['--button-bd'] =
-              `calc(0.0625rem * var(--c-scale)) solid var(--c-color-${color}-outline)`
           } else {
             const shades = generateColorShades(color)
             styles['--button-hover'] = setColorAlpha(
@@ -102,8 +98,6 @@ export function useButtonCustomStyle(props: ButtonProps) {
               idx.outlineHoverBgAlpha
             )
             styles['--button-color'] = shades[idx.outlineColor]
-            styles['--button-bd'] =
-              `calc(0.0625rem * var(--c-scale)) solid ${shades[idx.outlineColor]}`
           }
         }
         break
@@ -158,6 +152,7 @@ export function useButtonCustomStyle(props: ButtonProps) {
 
         styles['--button-bg'] =
           `linear-gradient(${deg}deg, ${finalFrom} 0%, ${finalTo} 100%)`
+        styles['--button-color'] = 'var(--c-color-white)'
         break
       default:
         break

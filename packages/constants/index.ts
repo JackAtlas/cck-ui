@@ -1,2 +1,2 @@
 export * from './key'
-export * from './sizes'
+export * from './theme.types'
