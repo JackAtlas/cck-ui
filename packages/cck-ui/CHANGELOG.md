@@ -1,5 +1,12 @@
 # cck-ui
 
+## 0.0.3
+
+### Patch Changes
+
+- dff6f4e: - new components: button-group, button-group-section
+  - button supports new variant: `dashed`
+
 ## 0.0.2
 
 ### Patch Changes
