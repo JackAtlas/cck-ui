@@ -7,7 +7,12 @@ export const CButtonGroup: SFCWithInstall<typeof ButtonGroup> =
   withInstall(ButtonGroup)
 export const CButtonGroupSection: SFCWithInstall<typeof ButtonGroupSection> =
   withInstall(ButtonGroupSection)
-export const CButton: SFCWithInstall<typeof Button> = withInstall(Button)
+export const CButton: SFCWithInstall<typeof Button> & {
+  ButtonGroup: typeof ButtonGroup
+} & { ButtonGroupSection: typeof ButtonGroupSection } = withInstall(Button, {
+  ButtonGroup,
+  ButtonGroupSection
+})
 export default CButton
 
 export * from './src/button-group-section/button-group-section.types'
