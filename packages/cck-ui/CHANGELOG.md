@@ -1,5 +1,11 @@
 # cck-ui
 
+## 0.0.4
+
+### Patch Changes
+
+- 9bec272: fix missing button-group and button-group-section when globally registered
+
 ## 0.0.3
 
 ### Patch Changes
