@@ -1,4 +1,13 @@
-import { Fragment, Slots, VNode, computed, ref } from 'vue'
+import {
+  Comment,
+  Fragment,
+  Slots,
+  Text,
+  VNode,
+  computed,
+  isVNode,
+  ref
+} from 'vue'
 import CButton from '../button.vue'
 import CButtonGroupSection from '../button-group-section/button-group-section.vue'
 import { getComponentName } from '@cck-ui/utils'
@@ -8,18 +17,23 @@ export const getValidButtons = (children: VNode[]): VNode[] => {
   const result: VNode[] = []
 
   for (const child of children) {
+    if (!isVNode(child)) continue
+
     if (child.type === Comment || child.type === Text) continue
 
-    if (child.type === Fragment && Array.isArray(child.children)) {
-      result.push(...getValidButtons(child.children as VNode[]))
+    if (child.type === Fragment) {
+      const fragmentChildren = Array.isArray(child.children)
+        ? child.children
+        : [child.children]
+      result.push(...getValidButtons(fragmentChildren as VNode[]))
       continue
     }
 
     if (child.type !== CButton && child.type !== CButtonGroupSection) {
       console.error(
-        '[CButtonGroup] invalid child component: only CButton or CButtonGroup components are allowed as direct children.',
+        '[CButtonGroup] invalid child component: only CButton or CButtonGroupSection components are allowed as direct children.',
         `Received: <${getComponentName(child.type)}>.`,
-        'Please ensure all direct children are <c-button> or <c-button-group> components.'
+        'Please ensure all direct children are <c-button> or <c-button-group-section> components.'
       )
       continue
     }
