@@ -27,10 +27,12 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        working-directory: docs
+        run: pnpm install
 
       - name: Build docs
-        run: pnpm run docs:build
+        working-directory: docs
+        run: pnpm run build
 
       - name: Deploy to server via rsync
         uses: burnett01/rsync-deployments@7.0.1
