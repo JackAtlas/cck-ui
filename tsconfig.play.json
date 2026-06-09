@@ -11,7 +11,7 @@
     "typings/env.d.ts",
     "typings/style.d.ts",
 
-    "play/main.ts",
+    "play/src/main.ts",
     "play/env.d.ts",
     "play/src/**/*"
   ]
