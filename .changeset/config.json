@@ -7,5 +7,5 @@
   "access": "restricted",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["@cck-ui/constants"]
+  "ignore": ["@cck-ui/constants", "@cck-ui/components"]
 }
