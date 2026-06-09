@@ -1,5 +1,11 @@
 # cck-ui
 
+## 0.0.5
+
+### Patch Changes
+
+- 6c15b0c: enhance child validation and fix import issues
+
 ## 0.0.4
 
 ### Patch Changes
