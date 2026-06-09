@@ -8,7 +8,7 @@ lang: en-US
 ## Variant
 
 <script setup>
-import { ChevronRightIcon, DownloadIcon, ImageIcon } from '@lucide/vue'
+import { ChevronDownIcon, ChevronRightIcon, ChevronUpIcon, DownloadIcon, ImageIcon } from '@lucide/vue'
 import { h } from 'vue'
 
 const downloadIcon = h(DownloadIcon, { size: 14 })
@@ -494,8 +494,113 @@ To add new `Button` variants, use the data-variant attribute. Usually the new va
 
 Note that the `auto-contrast` feature works only if you use the `color` prop to change the background color. `auto-contrast` works only with the `filled` variant.
 
-## Button group (WIP)
+## Button group
 
-## Button group section (WIP)
+<div style="display:flex; flex-direction:column; align-items: center; gap: 12px;">
+  <c-button-group>
+    <c-button>Left</c-button>
+    <c-button>Center</c-button>
+    <c-button>Right</c-button>
+  </c-button-group>
+
+  <c-button-group orientation="vertical">
+    <c-button>Top</c-button>
+    <c-button>Middle</c-button>
+    <c-button>Bottom</c-button>
+  </c-button-group>
+</div>
+
+```vue
+<c-button-group>
+  <c-button>Left</c-button>
+  <c-button>Center</c-button>
+  <c-button>Right</c-button>
+</c-button-group>
+
+<c-button-group orientation="vertical">
+  <c-button>Top</c-button>
+  <c-button>Middle</c-button>
+  <c-button>Bottom</c-button>
+</c-button-group>
+```
+
+Note that you must not wrap child `c-button` components with any additional elements.
+
+```vue
+<c-button-group>
+  <div>
+    <c-button>This will not work</c-button>
+  </div>
+  <c-button>Buttons will have incorrect borders</c-button>
+</c-button-group>
+```
+
+## Button group section
+
+<div style="display: flex; justify-content: center; gap: 12px">
+  <c-button-group>
+    <c-button-group-section variant="filled">123</c-button-group-section>
+    <c-button>
+      <chevron-up-icon color="var(--c-color-teal-text)" />
+    </c-button>
+  </c-button-group>
+  <c-button-group>
+    <c-button>
+      <chevron-down-icon color="var(--c-color-red-text)" />
+    </c-button>
+    <c-button-group-section>123</c-button-group-section>
+    <c-button>
+      <chevron-up-icon color="var(--c-color-teal-text)" />
+    </c-button>
+  </c-button-group>
+  <c-button-group>
+    <c-button>
+      <chevron-down-icon color="var(--c-color-red-text)" />
+    </c-button>
+    <c-button-group-section>123</c-button-group-section>
+  </c-button-group>
+</div>
+
+```vue
+<div style="display: flex; justify-content: center; gap: 12px">
+  <c-button-group>
+    <c-button-group-section variant="filled">123</c-button-group-section>
+    <c-button>
+      <chevron-up-icon color="var(--c-color-teal-text)" />
+    </c-button>
+  </c-button-group>
+  <c-button-group>
+    <c-button>
+      <chevron-down-icon color="var(--c-color-red-text)" />
+    </c-button>
+    <c-button-group-section>123</c-button-group-section>
+    <c-button>
+      <chevron-up-icon color="var(--c-color-teal-text)" />
+    </c-button>
+  </c-button-group>
+  <c-button-group>
+    <c-button>
+      <chevron-down-icon color="var(--c-color-red-text)" />
+    </c-button>
+    <c-button-group-section>123</c-button-group-section>
+  </c-button-group>
+</div>
+```
 
 ## Get element ref
+
+```vue
+<template>
+  <c-button ref="buttonRef" variant="filled" size="lg">点击我</c-button>
+</template>
+
+<script setup>
+import { ref, onMounted } from 'vue'
+
+const buttonRef = ref(null)
+
+onMounted(() => {
+  console.log(buttonRef.value.ref)
+})
+</script>
+```
