@@ -1,5 +1,11 @@
 # cck-ui
 
+## 0.0.6
+
+### Patch Changes
+
+- 3c59da1: add loader component
+
 ## 0.0.5
 
 ### Patch Changes
