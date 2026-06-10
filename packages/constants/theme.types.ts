@@ -19,3 +19,45 @@ export interface CGradient {
   to: string
   deg?: number
 }
+
+export type CColorsTuple = readonly [
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  ...string[]
+]
+
+export type DefaultCColor =
+  | 'dark'
+  | 'gray'
+  | 'red'
+  | 'pink'
+  | 'grape'
+  | 'violet'
+  | 'indigo'
+  | 'blue'
+  | 'cyan'
+  | 'green'
+  | 'lime'
+  | 'yellow'
+  | 'orange'
+  | 'teal'
+  | (string & {})
+
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface CThemeColorsOverride {}
+
+export type CThemeColors = CThemeColorsOverride extends {
+  colors: Record<infer CustomColors, CColorsTuple>
+}
+  ? Record<CustomColors, CColorsTuple>
+  : Record<DefaultCColor, CColorsTuple>
+
+export type CColor = keyof CThemeColors
