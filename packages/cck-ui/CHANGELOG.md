@@ -1,5 +1,11 @@
 # cck-ui
 
+## 0.0.8
+
+### Patch Changes
+
+- 47eeec4: fix missing export of loader component
+
 ## 0.0.7
 
 ### Patch Changes
