@@ -1,17 +1,6 @@
 import { CColor, CSize } from '@cck-ui/constants'
 import { Component } from 'vue'
-import { JSX } from 'vue/jsx-runtime'
-
-/**
- * @description Extracts props from a Vue component or HTML element, omitting specified keys.
- *
- * @example
- * type SvgProps = ElementProps<'svg', 'style' | 'display'>
- */
-export type ElementProps<
-  Tag extends keyof JSX.IntrinsicElements,
-  PropsToOmit extends string = never
-> = Omit<JSX.IntrinsicElements[Tag], 'style' | PropsToOmit>
+import { ElementProps } from '../../../core/box/box.types'
 
 export type CLoaderComponent = Component<
   // Props: HTML attributes + ref support

@@ -1,5 +1,5 @@
 {
-  "name": "@cck-ui/components",
+  "name": "@cck-ui/core",
   "private": true,
   "version": "0.0.0",
   "description": "",
@@ -10,5 +10,10 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "csstype": "^3.2.3",
+    "type-fest": "^5.7.0",
+    "vue": "catalog:"
+  }
 }

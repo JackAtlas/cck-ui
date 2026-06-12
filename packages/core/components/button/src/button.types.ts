@@ -1,7 +1,7 @@
 import { CGradient, CRadius, CSize } from '@cck-ui/constants'
 import type { Component, CSSProperties } from 'vue'
 
-export type ButtonSize = CSize | `compact-${CSize}`
+export type ButtonSize = CSize | `compact-${CSize}` | (string & {}) // TODO: support custom size
 
 export type ButtonVariant =
   | 'default'

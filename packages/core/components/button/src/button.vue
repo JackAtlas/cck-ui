@@ -55,7 +55,7 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   variant: 'default'
 })
 
-const { _disabled, _props, _ref, handleClick } = useButton(props, {
+const { _disabled, _loading, _props, _ref, handleClick } = useButton(props, {
   hasLeftSlot: hasLeftSlot.value,
   hasRightSlot: hasRightSlot.value
 })
@@ -64,7 +64,7 @@ const buttonStyle = useButtonCustomStyle(props)
 const ns = useNamespace('button')
 const buttonClass = computed(() => [
   useNamespace('focus').b('auto'),
-  !_disabled.value && useNamespace('active').b(),
+  !_disabled.value && !_loading.value && useNamespace('active').b(),
   ns.e('root'),
   ns.is('loading', props.loading)
 ])
@@ -74,6 +74,8 @@ const labelClass = computed(() => [ns.e('label')])
 defineExpose({
   /** @description if button is disabled */
   disabled: _disabled.value,
+  /** @description if button is loading */
+  loading: _loading.value,
   /** @description button html element */
   ref: _ref,
   /** @description button size */
