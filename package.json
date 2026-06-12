@@ -27,7 +27,7 @@
     "version": "changeset version"
   },
   "dependencies": {
-    "@cck-ui/components": "workspace:^",
+    "@cck-ui/core": "workspace:^",
     "@cck-ui/eslint-config": "workspace:^",
     "@cck-ui/hooks": "workspace:^",
     "@cck-ui/theme-slate": "workspace:^",
