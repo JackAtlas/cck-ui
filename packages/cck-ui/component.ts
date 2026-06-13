@@ -1,4 +1,4 @@
-import { CButton, CIcon, CLoader } from '@cck-ui/components'
+import { CButton, CIcon, CLoader } from '@cck-ui/core'
 
 import type { Plugin } from 'vue'
 
