@@ -50,7 +50,7 @@ export interface GridProps
    * Number of columns in each row
    * @default 12
    */
-  columns?: number
+  columns?: number | string
 
   /**
    * @description Sets `overflow` CSS property on the root element

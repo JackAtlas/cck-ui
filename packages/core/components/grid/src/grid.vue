@@ -32,7 +32,16 @@ const ns = useNamespace('grid')
 const gridClass = computed(() => [ns.e('root')])
 const innerClass = computed(() => [ns.e('inner')])
 
-const _columns = computed(() => props.columns)
+const _columns = computed(() => {
+  if (!isNumberLike(props.columns)) {
+    console.warn(
+      `[C-Grid] columns should be number or number-like string, got ${props.columns}. Fallback to default columns ${DEFAULT_COLUMNS}.`
+    )
+    return DEFAULT_COLUMNS
+  }
+
+  return Number(props.columns)
+})
 const _grow = computed(() => props.grow)
 const _type = computed(() => props.type)
 
