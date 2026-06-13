@@ -44,7 +44,7 @@ const getColumnOffset = (offset: number | undefined, columns: number) => {
 
   const percentage = (100 * offset) / columns
   const gapFactor = offset / columns
-  return `clac(${percentage}% + ${gapFactor} * var(--grid-column-gap))`
+  return `calc(${percentage}% + ${gapFactor} * var(--grid-column-gap))`
 }
 
 export function useColCustomStyle(
