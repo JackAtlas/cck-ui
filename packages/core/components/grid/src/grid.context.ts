@@ -1,4 +1,3 @@
-import { InjectionKey } from 'vue'
 // import { GridBreakpoints } from './grid.types'
 
 export interface GridContextValue {
@@ -7,6 +6,3 @@ export interface GridContextValue {
   // breakpoints: GridBreakpoints // TODO
   type: 'container' | 'media' | undefined
 }
-
-export const GRID_CONTEXT_KEY: InjectionKey<GridContextValue> =
-  Symbol('GridContext')

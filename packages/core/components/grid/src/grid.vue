@@ -11,15 +11,17 @@ import { computed } from 'vue'
 import type { GridProps } from './grid.types'
 import { useNamespace } from '@cck-ui/hooks'
 import { useGridCustomStyle } from './grid-custom'
-import { GRID_CONTEXT_KEY, GridContextValue } from './grid.context'
+import { GridContextValue } from './grid.context'
 import { provide } from 'vue'
+import { isNumberLike } from '../../../core'
+import { DEFAULT_COLUMNS, GRID_CONTEXT_KEY } from './grid.constants'
 
 defineOptions({
   name: 'CGrid'
 })
 
 const props = withDefaults(defineProps<GridProps>(), {
-  columns: 12,
+  columns: DEFAULT_COLUMNS,
   gap: 'md',
   grow: false,
   justify: 'flex-start'

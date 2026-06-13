@@ -9,7 +9,8 @@ import { useNamespace } from '@cck-ui/hooks'
 import type { ColProps } from './col.types'
 import { computed, inject } from 'vue'
 import { useColCustomStyle } from './col-custom'
-import { GRID_CONTEXT_KEY, GridContextValue } from '../grid.context'
+import { GridContextValue } from '../grid.context'
+import { GRID_CONTEXT_KEY } from '../grid.constants'
 
 defineOptions({
   name: 'CCol'
