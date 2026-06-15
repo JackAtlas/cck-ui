@@ -3,5 +3,7 @@ export type {
   BoxProps,
   ElementProps,
   BoxMod,
-  BoxComponentProps
+  BoxComponentProps,
+  NumberLikeString
 } from './box.types'
+export { useRandomClassName } from './use-random-classname/use-random-classname'

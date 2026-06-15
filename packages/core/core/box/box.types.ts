@@ -3,6 +3,8 @@ import { CStyleProps } from './style-props/style-props.types'
 import { CBreakpoint, CTheme } from '../config-provider/theme.types'
 import { JSX } from 'vue/jsx-runtime'
 
+export type NumberLikeString = number | `${number}`
+
 export interface CSSProperties extends Properties {
   [key: string]: any
 }
