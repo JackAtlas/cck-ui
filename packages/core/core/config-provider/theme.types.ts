@@ -25,6 +25,12 @@ export interface CTheme {
 
   /** Object of colors, key is color name, value is an array of at least 10 strings (colors) */
   colors: CThemeColors
+
+  /**
+   * Object of values that are used to control breakpoints in all components,
+   * values are expected to be defined in em
+   */
+  breakpoints: CBreakpointsValues
 }
 
 export type CColorScheme = 'light' | 'dark' | 'auto'
