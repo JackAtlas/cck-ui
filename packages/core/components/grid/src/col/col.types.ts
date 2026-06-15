@@ -14,12 +14,12 @@ export interface ColProps
   /**
    * @description Column order, use to reorder columns at different viewport sizes
    */
-  order?: StyleProp<number>
+  order?: StyleProp<number | `${number}`>
 
   /**
    * @description Column start offset - number of empty columns before this column
    */
-  offset?: StyleProp<number>
+  offset?: StyleProp<number | `${number}`>
 
   /**
    * @description Vertical alignment of the column, controls `align-self` CSS property

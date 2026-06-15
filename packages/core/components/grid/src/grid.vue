@@ -32,6 +32,7 @@ const ns = useNamespace('grid')
 const gridClass = computed(() => [ns.e('root')])
 const innerClass = computed(() => [ns.e('inner')])
 
+const _breakpoints = computed(() => props.breakpoints)
 const _columns = computed(() => {
   if (!isNumberLike(props.columns)) {
     console.warn(
@@ -46,11 +47,14 @@ const _grow = computed(() => props.grow)
 const _type = computed(() => props.type)
 
 const context: GridContextValue = {
-  get grow() {
-    return _grow.value
+  get breakpoints() {
+    return _breakpoints.value
   },
   get columns() {
     return _columns.value
+  },
+  get grow() {
+    return _grow.value
   },
   get type() {
     return _type.value

@@ -1,7 +1,24 @@
 import { computed } from 'vue'
 import { ColProps, ColSpan } from './col.types'
-import { filterProps, getBaseValue } from '../../../../core'
+import {
+  CTheme,
+  filterProps,
+  getBaseValue,
+  getSortedBreakpoints,
+  keys,
+  StyleProp,
+  stylesToString
+} from '../../../../core'
 import { GridContextValue } from '../grid.context'
+import type { GridBreakpoints } from '../grid.types'
+
+interface ColVariablesProps {
+  selector: string
+  align?: ColProps['align'] | undefined
+  offset?: StyleProp<number> | undefined
+  order?: ColProps['order'] | undefined
+  span: ColProps['span'] | undefined
+}
 
 const getColumnFlexBasis = (colSpan: ColSpan | undefined, columns: number) => {
   if (colSpan === 'content') return 'auto'
@@ -48,10 +65,12 @@ const getColumnOffset = (offset: number | undefined, columns: number) => {
 }
 
 export function useColCustomStyle(
-  { align, offset, order, span }: ColProps,
-  gridContext: GridContextValue
+  { align, offset, order, selector, span }: ColVariablesProps,
+  gridContext: GridContextValue,
+  theme: CTheme
 ) {
   return computed(() => {
+    const _breakpoints = gridContext.breakpoints || theme.breakpoints
     const baseValue = getBaseValue(span)
     const baseSpan = baseValue === undefined ? 12 : baseValue
 
@@ -72,6 +91,69 @@ export function useColCustomStyle(
       '--col-align-self': getBaseValue(align)
     })
 
-    return styles
+    const queries = keys(_breakpoints).reduce<
+      Record<string, Record<string, any>>
+    >((acc, breakpoint) => {
+      if (!acc[breakpoint]) acc[breakpoint] = {}
+
+      if (typeof order === 'object' && order[breakpoint] !== undefined) {
+        acc[breakpoint]['--col-order'] = order[breakpoint]?.toString()
+      }
+
+      if (typeof span === 'object' && span[breakpoint] !== undefined) {
+        acc[breakpoint]['--col-flex-grow'] = getColumnFlexGrow(
+          span[breakpoint],
+          gridContext.grow
+        )
+        acc[breakpoint]['--col-flex-basis'] = getColumnFlexBasis(
+          span[breakpoint],
+          gridContext.columns
+        )
+        acc[breakpoint]['--col-width'] =
+          span[breakpoint] === 'content' ? 'auto' : undefined
+        acc[breakpoint]['--col-max-width'] = getColumnMaxWidth(
+          span[breakpoint],
+          gridContext.columns,
+          gridContext.grow
+        )
+      }
+
+      if (typeof offset === 'object' && offset[breakpoint] !== undefined) {
+        acc[breakpoint]['--col-offset'] = getColumnOffset(
+          offset[breakpoint],
+          gridContext.columns
+        )
+      }
+
+      if (typeof align === 'object' && align[breakpoint] !== undefined) {
+        acc[breakpoint]['--col-align-self'] = align[breakpoint]
+      }
+
+      return acc
+    }, {})
+
+    const sortedBreakpoints = getSortedBreakpoints(
+      keys(queries),
+      _breakpoints
+    ).filter((breakpoint) => keys(queries[breakpoint.value]).length > 0)
+
+    const values = sortedBreakpoints.map((breakpoint) => ({
+      query:
+        gridContext.type === 'container'
+          ? `c-grid (min-width: ${_breakpoints[breakpoint.value as keyof GridBreakpoints]})`
+          : `(min-width: ${_breakpoints[breakpoint.value as keyof GridBreakpoints]})`,
+      styles: queries[breakpoint.value]
+    }))
+
+    const queryStyles = {
+      styles,
+      media: gridContext.type === 'container' ? undefined : values,
+      container: gridContext.type === 'container' ? values : undefined,
+      selector
+    }
+
+    const queryStylesString = stylesToString(queryStyles)
+
+    return { queryStylesString }
   })
 }
