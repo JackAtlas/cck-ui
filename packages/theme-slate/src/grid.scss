@@ -1,5 +1,9 @@
 @use 'common/var' as *;
 
+.c-grid__container {
+  container: c-grid / inline-size;
+}
+
 .c-grid__root {
   --grid-overflow: visible;
   --grid-column-gap: var(--grid-gap);

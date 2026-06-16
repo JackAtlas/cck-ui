@@ -1,20 +1,38 @@
 <template>
-  <div :class="gridClass" :style="gridStyle">
-    <div :class="innerClass">
-      <slot />
+  <div v-if="type === 'container' && breakpoints" :class="containerClass">
+    <div :class="gridClass">
+      <div :class="innerClass">
+        <slot />
+      </div>
     </div>
   </div>
+  <template v-else>
+    <div :class="gridClass">
+      <div :class="innerClass">
+        <slot />
+      </div>
+    </div>
+  </template>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import type { GridProps } from './grid.types'
 import { useNamespace } from '@cck-ui/hooks'
 import { useGridCustomStyle } from './grid-custom'
 import { GridContextValue } from './grid.context'
 import { provide } from 'vue'
-import { isNumberLike } from '../../../core'
+import {
+  DEFAULT_THEME,
+  isNumberLike,
+  responsiveStyleManager,
+  THEME_KEY,
+  useRandomClassName
+} from '../../../core'
 import { DEFAULT_COLUMNS, GRID_CONTEXT_KEY } from './grid.constants'
+import { inject } from 'vue'
+import { watchEffect } from 'vue'
+import { onUnmounted } from 'vue'
 
 defineOptions({
   name: 'CGrid'
@@ -27,10 +45,39 @@ const props = withDefaults(defineProps<GridProps>(), {
   justify: 'flex-start'
 })
 
-const gridStyle = useGridCustomStyle(props)
+const theme = inject(THEME_KEY, DEFAULT_THEME)
+
+const responsiveClassname = useRandomClassName()
+const gridStyle = useGridCustomStyle(
+  { selector: responsiveClassname, ...props },
+  theme
+)
 const ns = useNamespace('grid')
-const gridClass = computed(() => [ns.e('root')])
+const containerClass = computed(() => [ns.e('container')])
+const gridClass = computed(() => [ns.e('root'), responsiveClassname])
 const innerClass = computed(() => [ns.e('inner')])
+
+const currentStyleKey = ref<string | null>(null)
+watchEffect(() => {
+  const cssText = gridStyle.value.queryStylesString
+  if (cssText) {
+    const newKey = responsiveStyleManager.register(cssText)
+    if (currentStyleKey.value && currentStyleKey.value !== newKey) {
+      responsiveStyleManager.unregister(currentStyleKey.value)
+    }
+    currentStyleKey.value = newKey
+  } else {
+    if (currentStyleKey.value) {
+      responsiveStyleManager.unregister(currentStyleKey.value)
+      currentStyleKey.value = null
+    }
+  }
+})
+onUnmounted(() => {
+  if (currentStyleKey.value) {
+    responsiveStyleManager.unregister(currentStyleKey.value)
+  }
+})
 
 const _breakpoints = computed(() => props.breakpoints)
 const _columns = computed(() => {
