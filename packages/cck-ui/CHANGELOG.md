@@ -1,5 +1,11 @@
 # cck-ui
 
+## 0.1.0
+
+### Minor Changes
+
+- 56edb77: 1. support media query and container query 2. using style manager to manage inline styles
+
 ## 0.0.9
 
 ### Patch Changes
