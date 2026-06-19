@@ -27,6 +27,25 @@ export interface CTheme {
   colors: CThemeColors
 
   /**
+   * Index of theme.colors[color].
+   * Primary shade is used in all components to determine which color from theme.colors[color] should be used.
+   * Can be either a number (0-9) or an object to specify different color shades for light and dark color schemes.
+   * Default value `{ light: 6, dark: 8 }`
+   *
+   * For example,
+   * { primaryShade: 6 } // shade 6 is used both for dark and light color schemes
+   * { primaryShade: { light: 6, dark: 7 } } // different shades for dark and light color schemes
+   */
+  primaryShade: CColorShade | CPrimaryShade
+
+  /**
+   * Key of `theme.colors`, hex/rgb/hsl values are not supported.
+   * Determines which color will be used in all components by default.
+   * @default `blue`
+   */
+  primaryColor: string
+
+  /**
    * Object of values that are used to control breakpoints in all components,
    * values are expected to be defined in em
    */

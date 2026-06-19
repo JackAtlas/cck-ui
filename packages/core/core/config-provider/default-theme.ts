@@ -7,6 +7,8 @@ export const DEFAULT_THEME: CTheme = {
   white: '#fff',
   black: '#000',
   colors: DEFAULT_COLORS,
+  primaryShade: { light: 6, dark: 8 },
+  primaryColor: 'blue',
   breakpoints: {
     xs: '36em',
     sm: '48em',
