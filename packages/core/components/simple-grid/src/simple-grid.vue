@@ -24,7 +24,6 @@ import { useNamespace } from '@cck-ui/hooks'
 import { computed } from 'vue'
 import { useSimpleGridStyle } from './simple-grid-custom'
 import { watchEffect, onUnmounted } from 'vue'
-import classes from './simple-grid.module.css'
 
 defineOptions({
   name: 'CSimpleGrid'
@@ -45,12 +44,8 @@ const gridStyle = useSimpleGridStyle(
 )
 
 const ns = useNamespace('simple-grid')
-const containerClass = computed(() => [ns.e('container'), classes.container])
-const gridClass = computed(() => [
-  ns.e('root'),
-  responsiveClassname,
-  classes.root
-])
+const containerClass = computed(() => [ns.e('container')])
+const gridClass = computed(() => [ns.e('root'), responsiveClassname])
 
 const currentStyleKey = ref<string | null>(null)
 watchEffect(() => {
