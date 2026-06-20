@@ -15,3 +15,12 @@ export { isNumberLike } from './is-number-like/is-number-like'
 export { numberLikeStringToNumber } from './number-like-string-to-number/number-like-string-to-number'
 export { keys } from './keys/keys'
 export { px, rem, em } from './units-converters'
+export { getComponentName, withInstall, withPropsDefaultSetter } from './vue'
+export type {
+  SFCInstallWithContext,
+  SFCWithInstall,
+  SFCWithPropsDefaultSetter
+} from './vue'
+export * from './color'
+export * from './dom'
+export { isNumber, isString, isStringNumber, isUndefined } from './types'

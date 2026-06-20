@@ -1,4 +1,4 @@
-import { SFCWithInstall, withInstall } from '@cck-ui/utils'
+import { SFCWithInstall, withInstall } from '@cck-ui/core/core/utils'
 import SimpleGrid from './src/simple-grid.vue'
 
 export const CSimpleGrid: SFCWithInstall<typeof SimpleGrid> =

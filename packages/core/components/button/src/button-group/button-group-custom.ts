@@ -1,4 +1,4 @@
-import { rem } from '@cck-ui/utils'
+import { rem } from '@cck-ui/core/core/utils'
 import { computed } from 'vue'
 import { ButtonGroupProps } from './button-group.types'
 

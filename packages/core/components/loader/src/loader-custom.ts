@@ -1,8 +1,7 @@
 import { ColorScheme, useColorScheme } from '@cck-ui/hooks'
 import { LoaderProps } from './loader.types'
 import { computed } from 'vue'
-import { generateColorShades } from '@cck-ui/utils'
-import { getSize } from '@cck-ui/utils/get-size'
+import { generateColorShades, getSize } from '../../../core/utils'
 
 const PRESET_COLORS = [
   'red',

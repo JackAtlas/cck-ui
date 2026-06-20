@@ -1,7 +1,7 @@
 import { ColorScheme, useColorScheme } from '@cck-ui/hooks'
 import { ButtonGroupSectionProps } from './button-group-section.types'
 import { computed } from 'vue'
-import { generateColorShades } from '@cck-ui/utils'
+import { generateColorShades } from '@cck-ui/core/core/utils'
 
 const PRESET_COLORS = [
   'red',

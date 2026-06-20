@@ -10,7 +10,7 @@ import {
 } from 'vue'
 import CButton from '../button.vue'
 import CButtonGroupSection from '../button-group-section/button-group-section.vue'
-import { getComponentName } from '@cck-ui/utils'
+import { getComponentName } from '@cck-ui/core/core/utils'
 import { ButtonGroupProps } from './button-group.types.js'
 
 export const getValidButtons = (children: VNode[]): VNode[] => {

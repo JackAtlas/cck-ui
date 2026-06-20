@@ -6,12 +6,24 @@ settings:
 
 catalogs:
   default:
+    '@ctrl/tinycolor':
+      specifier: ^4.2.0
+      version: 4.2.0
     '@vue/shared':
       specifier: ^3.5.35
       version: 3.5.35
+    es-toolkit:
+      specifier: ^1.47.0
+      version: 1.47.0
     tsx:
       specifier: ^4.22.4
       version: 4.22.4
+    vue:
+      specifier: ^3.5.37
+      version: 3.5.37
+    vue-component-type-helpers:
+      specifier: ^3.3.2
+      version: 3.3.5
 
 importers:
 
@@ -29,9 +41,6 @@ importers:
       '@cck-ui/theme-slate':
         specifier: workspace:^
         version: link:packages/theme-slate
-      '@cck-ui/utils':
-        specifier: workspace:^
-        version: link:packages/utils
       vue:
         specifier: ^3.5.35
         version: 3.5.35(typescript@6.0.3)
@@ -206,16 +215,32 @@ importers:
   packages/constants: {}
 
   packages/core:
+    dependencies:
+      '@ctrl/tinycolor':
+        specifier: 'catalog:'
+        version: 4.2.0
     devDependencies:
+      '@vue/shared':
+        specifier: 'catalog:'
+        version: 3.5.35
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
       csstype:
         specifier: ^3.2.3
         version: 3.2.3
+      es-toolkit:
+        specifier: 'catalog:'
+        version: 1.47.0
       type-fest:
         specifier: ^5.7.0
         version: 5.7.0
       vue:
         specifier: 'catalog:'
         version: 3.5.37(typescript@6.0.3)
+      vue-component-type-helpers:
+        specifier: 'catalog:'
+        version: 3.3.5
 
   packages/hooks: {}
 
@@ -245,22 +270,6 @@ importers:
       tsx:
         specifier: 'catalog:'
         version: 4.22.4
-
-  packages/utils:
-    dependencies:
-      '@ctrl/tinycolor':
-        specifier: 'catalog:'
-        version: 4.2.0
-    devDependencies:
-      '@vue/shared':
-        specifier: 'catalog:'
-        version: 3.5.35
-      es-toolkit:
-        specifier: 'catalog:'
-        version: 1.47.0
-      vue-component-type-helpers:
-        specifier: 'catalog:'
-        version: 3.3.3
 
   play:
     dependencies:
@@ -2399,6 +2408,10 @@ packages:
   clone@1.0.4:
     resolution: {integrity: sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==}
     engines: {node: '>=0.8'}
+
+  clsx@2.1.1:
+    resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
+    engines: {node: '>=6'}
 
   color-convert@1.9.3:
     resolution: {integrity: sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg==}
@@ -5187,8 +5200,8 @@ packages:
   vscode-uri@3.1.0:
     resolution: {integrity: sha512-/BpdSx+yCQGnCvecbyXdxHDkuk55/G3xwnC0GqY4gmQ3j+A+g8kzzgB4Nk/SINjqn6+waqw3EgbVF2QKExkRxQ==}
 
-  vue-component-type-helpers@3.3.3:
-    resolution: {integrity: sha512-x4nsFpy5Pe8fqPzp/5vkTPeTTDBpAx4WVtV47Ejt0+2FQrq4pRRsJs7JmYRqMFzTu/LW+pCWEjQ3YVCkPV7f9g==}
+  vue-component-type-helpers@3.3.5:
+    resolution: {integrity: sha512-Fe1jyPJoUGpJOYKOri44jduR7My4yYINOMJISuMAbmrs+L5LbIDUc8NTWZYY3EJLK0yPLuCmcd5zoCsE4k2/KA==}
 
   vue-eslint-parser@10.4.1:
     resolution: {integrity: sha512-Gk6gRDj0n/fkRa3C3l0bBheoBckUq/Rs0F/TvMWIS6nzzx67amAViMe9CkNgsP2tXyQONvGiHQESHwFtZ3aYDA==}
@@ -7436,6 +7449,8 @@ snapshots:
       wrap-ansi: 9.0.0
 
   clone@1.0.4: {}
+
+  clsx@2.1.1: {}
 
   color-convert@1.9.3:
     dependencies:
@@ -10655,7 +10670,7 @@ snapshots:
 
   vscode-uri@3.1.0: {}
 
-  vue-component-type-helpers@3.3.3: {}
+  vue-component-type-helpers@3.3.5: {}
 
   vue-eslint-parser@10.4.1(eslint@10.4.1(jiti@2.7.0)):
     dependencies:

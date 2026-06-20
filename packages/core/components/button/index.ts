@@ -1,4 +1,4 @@
-import { type SFCWithInstall, withInstall } from '@cck-ui/utils'
+import { type SFCWithInstall, withInstall } from '@cck-ui/core/core/utils'
 import ButtonGroup from './src/button-group/button-group.vue'
 import ButtonGroupSection from './src/button-group-section/button-group-section.vue'
 import Button from './src/button.vue'

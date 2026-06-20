@@ -1,4 +1,4 @@
-import { SFCWithInstall, withInstall } from '@cck-ui/utils'
+import { SFCWithInstall, withInstall } from '@cck-ui/core/core/utils'
 import Form from './src/form.vue'
 
 export const CForm: SFCWithInstall<typeof Form> = withInstall(Form)

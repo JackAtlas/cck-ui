@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { type CSSProperties, computed } from 'vue'
 import { useNamespace } from '@cck-ui/hooks'
-import { addUnit, isUndefined } from '@cck-ui/utils'
+import { addUnit, isUndefined } from '@cck-ui/core/core/utils'
 import { type IconProps } from './icon.types'
 
 defineOptions({

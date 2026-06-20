@@ -1,4 +1,4 @@
-import { type SFCWithInstall, withInstall } from '@cck-ui/utils'
+import { type SFCWithInstall, withInstall } from '@cck-ui/core/core/utils'
 import Grid from './src/grid.vue'
 import Col from './src/col/col.vue'
 

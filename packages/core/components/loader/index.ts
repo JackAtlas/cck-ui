@@ -1,4 +1,4 @@
-import { SFCWithInstall, withInstall } from '@cck-ui/utils'
+import { SFCWithInstall, withInstall } from '@cck-ui/core/core/utils'
 import Loader from './src/loader.vue'
 import { CLoadersRecord } from './src/loader.types'
 
