@@ -16,12 +16,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import type { GridProps } from './grid.types'
+import { computed, inject, onUnmounted, provide, ref, watchEffect } from 'vue'
 import { useNamespace } from '@cck-ui/hooks'
 import { useGridCustomStyle } from './grid-custom'
+import { DEFAULT_COLUMNS, GRID_CONTEXT_KEY } from './grid.constants'
 import { GridContextValue } from './grid.context'
-import { provide } from 'vue'
+import type { GridProps } from './grid.types'
 import {
   DEFAULT_THEME,
   isNumberLike,
@@ -29,10 +29,6 @@ import {
   THEME_KEY,
   useRandomClassName
 } from '../../../core'
-import { DEFAULT_COLUMNS, GRID_CONTEXT_KEY } from './grid.constants'
-import { inject } from 'vue'
-import { watchEffect } from 'vue'
-import { onUnmounted } from 'vue'
 
 defineOptions({
   name: 'CGrid'
