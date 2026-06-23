@@ -1,5 +1,7 @@
-import { provide } from 'vue'
+import { CStylesTransform } from './config-provider.context'
 import { CColorScheme, CThemeOverride } from './theme.types'
+
+export const CONFIG_KEY = Symbol('CCK_CONFIG_KEY')
 
 export const THEME_KEY = Symbol('THEME_SLATE')
 
@@ -45,14 +47,19 @@ export interface ConfigProviderProps {
    */
   withStaticClasses?: boolean
 
+  /**
+   * @description Determines whether global classes should be added with `<style />` tag. Global classes are required for `hiddenFrom`/`visibleFrom` and `lightHidden`/`darkHidden` props to work.
+   * @default true
+   */
   withGlobalClasses?: boolean
+
+  /**
+   * An object to transform `styles` and `sx` props into css classes, can be used with CSS-in-JS libraries
+   */
+  stylesTransform?: CStylesTransform
 
   /**
    * @description Enviroment at which the useTheme is used, `'test'` environment disables all transitions and portals
    */
   env?: 'default' | 'test'
-}
-
-export function ConfigProvider({ theme }: ConfigProviderProps) {
-  theme && provide(THEME_KEY, theme)
 }

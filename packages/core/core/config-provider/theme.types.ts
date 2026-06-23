@@ -1,5 +1,6 @@
 import { Properties } from 'csstype'
 import { PartialDeep } from 'type-fest'
+import { VariantColorsResolver } from './color-functions'
 
 export interface CTheme {
   /**
@@ -12,44 +13,165 @@ export interface CTheme {
   focusRing: 'auto' | 'always' | 'never'
 
   /**
-   * Rem units scale, change if you customize font-size of `html` element
+   * @description Rem units scale, change if you customize font-size of `html` element
    * default value is `1` (for `100%`/`16px` font-size on `html`)
    */
   scale: number
 
-  /** White color */
+  /** @description White color */
   white: string
 
-  /** Black color */
+  /** @description Black color */
   black: string
 
-  /** Object of colors, key is color name, value is an array of at least 10 strings (colors) */
+  /** @description Object of colors, key is color name, value is an array of at least 10 strings (colors) */
   colors: CThemeColors
 
   /**
-   * Index of theme.colors[color].
+   * @description Index of theme.colors[color].
    * Primary shade is used in all components to determine which color from theme.colors[color] should be used.
    * Can be either a number (0-9) or an object to specify different color shades for light and dark color schemes.
    * Default value `{ light: 6, dark: 8 }`
    *
-   * For example,
+   * @example
    * { primaryShade: 6 } // shade 6 is used both for dark and light color schemes
    * { primaryShade: { light: 6, dark: 7 } } // different shades for dark and light color schemes
    */
   primaryShade: CColorShade | CPrimaryShade
 
   /**
-   * Key of `theme.colors`, hex/rgb/hsl values are not supported.
+   * @description Key of `theme.colors`, hex/rgb/hsl values are not supported.
    * Determines which color will be used in all components by default.
    * @default `blue`
    */
   primaryColor: string
 
   /**
-   * Object of values that are used to control breakpoints in all components,
+   * @description Function to resolve colors based on variant.
+   * Can be used to deeply customize how colors are applied to `Button`, `ActionIcon`, `ThemeIcon` and other components that use colors from theme.
+   */
+  variantColorResolver: VariantColorsResolver
+
+  /**
+   * @description Determines whether text color must be changed based on the given `color` prop in filled variant
+   * For example, if you pass `color="blue.1"` to Button component, text color will be changed to `var(--c-color-black)`
+   * @default false
+   */
+  autoContrast: boolean
+
+  /**
+   * @description Determines which luminance value is used to determine if text color should be light or dark.
+   * Used only if `theme.autoContrast` is set to `true`.
+   * @default 0.3
+   */
+  luminanceThreshold: number
+
+  /**
+   * @description Font-family used in all components, system fonts by default
+   */
+  fontFamily: string
+
+  /**
+   * @description Monospace font-family, used in code and other similar components, system fonts by default
+   */
+  fontFamilyMonospace: string
+
+  /**
+   * @description Controls various styles of h1-h6 elements, used in Typography and Title components
+   */
+  headings: {
+    fontFamily: string
+    fontWeight: string
+    textWrap: 'wrap' | 'nowrap' | 'balance' | 'pretty' | 'stable'
+    sizes: {
+      h1: HeadingStyle
+      h2: HeadingStyle
+      h3: HeadingStyle
+      h4: HeadingStyle
+      h5: HeadingStyle
+      h6: HeadingStyle
+    }
+  }
+
+  /**
+   * @description Object of values that are used to set `border-radius` in all components that support it
+   */
+  radius: CRadiusValues
+
+  /**
+   * @description Key of `theme.radius` or any valid CSS value.
+   * @default `border-radius` used by most components
+   */
+  defaultRadius: CRadius
+
+  /**
+   * @description Object of values that are used to set various CSS properties that control spacing between elements
+   */
+  spacing: CSpacingValues
+
+  /**
+   * @description Object of values that are used to control `font-size` property in all components
+   */
+  fontSizes: CFontSizesValues
+
+  /**
+   * @description Object of values that are used to control `line-height` property in all components
+   */
+  lineHeights: CLineHeightValues
+
+  /**
+   * @description Object of values that are used to control `font-weight` property in all components
+   */
+  fontWeights: CFontWeightsValues
+
+  /**
+   * @description Object of values that are used to control breakpoints in all components,
    * values are expected to be defined in em
    */
   breakpoints: CBreakpointsValues
+
+  /**
+   * @description Object of values that are used to add `box-shadow` styles to components that support `shadow` prop
+   */
+  shadows: CShadowsValues
+
+  /**
+   * @description Determines whether user OS settings to reduce motion should be respected.
+   * @default false
+   */
+  respectReducedMotion: boolean
+
+  /**
+   * @description Determines which cursor type will be used for interactive elements
+   * - `default` - cursor that is used by native HTML elements, for example, `input[type="checkbox"]` has `cursor: default` styles
+   * - `pointer` - sets `cursor: pointer` on interactive elements that do not have these styles by default
+   */
+  cursorType: 'default' | 'pointer'
+
+  /**
+   * @description Default gradient configuration for components that support `variant="gradient"`
+   */
+  defaultGradient: CGradient
+
+  /**
+   * @description Class added to the elements that have active styles, for example, `Button` and `ActionIcon`
+   */
+  activeClassName: string
+
+  /**
+   * @description Class added to the elements that have focus styles, for example, `Button` or `ActionIcon`. Overrides `theme.focusRing` property.
+   */
+  focusClassName: string
+
+  /**
+   * @description allows adding `classNames`, `styles` and `defaultProps` to any component
+   */
+  components: CThemeComponents
+
+  /**
+   * @description Any other properties that you want to access with the theme objects
+   */
+  other: CThemeOther
 }
 
 export type CColorScheme = 'light' | 'dark' | 'auto'
