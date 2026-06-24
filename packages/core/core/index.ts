@@ -1,4 +1,6 @@
 export * from './box'
 export * from './config-provider'
+export * from './factory'
 export * from './responsive-style-manager'
+export * from './styles-api'
 export * from './utils'
