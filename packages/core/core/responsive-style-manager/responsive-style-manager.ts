@@ -16,13 +16,13 @@ function hashString(str: string): string {
 class ResponsiveStyleManager {
   private styleMap: Map<string, StyleManagerEntry> = new Map()
 
-  public register(cssText: string): string {
-    const key = hashString(cssText)
-    const existing = this.styleMap.get(key)
+  public register(cssText: string, key?: string): string {
+    const finalKey = key || hashString(cssText)
+    const existing = this.styleMap.get(finalKey)
 
     if (existing) {
       existing.refCount++
-      return key
+      return finalKey
     }
 
     if (typeof document !== 'undefined') {
@@ -30,20 +30,20 @@ class ResponsiveStyleManager {
       styleEl.textContent = cssText
       document.head.appendChild(styleEl)
 
-      this.styleMap.set(key, {
+      this.styleMap.set(finalKey, {
         refCount: 1,
         styleEl,
         cssText
       })
     } else {
-      this.styleMap.set(key, {
+      this.styleMap.set(finalKey, {
         refCount: 1,
         styleEl: null as any,
         cssText
       })
     }
 
-    return key
+    return finalKey
   }
 
   public unregister(styleKey: string): void {
