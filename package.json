@@ -31,7 +31,7 @@
     "@cck-ui/eslint-config": "workspace:^",
     "@cck-ui/hooks": "workspace:^",
     "@cck-ui/theme-slate": "workspace:^",
-    "vue": "^3.5.35"
+    "vue": "^3.5.38"
   },
   "devDependencies": {
     "@cck-ui/build": "workspace:^",
@@ -39,7 +39,7 @@
     "@commitlint/cli": "^21.0.1",
     "@commitlint/config-conventional": "^21.0.1",
     "@types/node": "^24.12.4",
-    "@vue/shared": "catalog:",
+    "@vue/shared": "^3.5.38",
     "commitizen": "^4.3.1",
     "cz-git": "^1.13.1",
     "eslint": "^10.4.0",
