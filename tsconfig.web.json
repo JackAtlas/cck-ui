@@ -5,7 +5,7 @@
     "composite": true,
     "jsx": "preserve",
     "jsxImportSource": "vue",
-    "lib": ["ES2018", "ES2022.Intl", "DOM", "DOM.Iterable"],
+    "lib": ["DOM", "ESNext"],
     "types": [],
     "skipLibCheck": true
   },
