@@ -18,6 +18,12 @@ export interface CTheme {
    */
   scale: number
 
+  /**
+   * @description Determines whether `font-smoothing` property should be set on the body
+   * @default true
+   */
+  fontSmoothing: boolean
+
   /** @description White color */
   white: string
 
