@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, useAttrs, useSlots } from 'vue'
+import { computed, useSlots } from 'vue'
 import type { GroupFactory, GroupProps, GroupStylesCtx } from './group.types'
 import { filterFalsyChildren } from './filter-falsy-children/filter-falsy-children'
 import { createVarsResolver, getSpacing, useStyles, CBox } from '@cck-ui/core'
@@ -25,7 +25,6 @@ defineOptions({
 })
 
 const slots = useSlots()
-const attrs = useAttrs()
 
 const props = withDefaults(defineProps<GroupProps>(), {
   preventGrowOverflow: true,
@@ -42,12 +41,17 @@ const {
   styles,
   unstyled,
   gap,
+  align,
+  justify,
+  wrap,
   grow,
+  preventGrowOverflow,
   vars,
   variant,
   __size,
   mod,
-  attributes
+  attributes,
+  ...others
 } = props
 
 const filteredChildren = filterFalsyChildren(slots.default?.())
@@ -91,5 +95,5 @@ const getStyles = useStyles<GroupFactory>({
 
 const rootAttrs = computed(() => getStyles('root'))
 
-const mergedAttrs = computed(() => ({ ...attrs, ...rootAttrs.value }))
+const mergedAttrs = computed(() => ({ ...others, ...rootAttrs.value }))
 </script>
