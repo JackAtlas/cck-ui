@@ -1,4 +1,5 @@
 import {
+  CStyleProp,
   DEFAULT_THEME,
   FactoryPayload,
   THEME_KEY,
@@ -28,12 +29,14 @@ import { Properties } from 'csstype'
 import { getStyle } from './get-style/get-style'
 
 export interface UseStylesInput<Payload extends FactoryPayload> {
-  name: string | string[]
-  classes: Record<string, string>
+  name: string | (string | undefined)[]
+  classes: Payload['stylesNames'] extends string
+    ? Record<string, string>
+    : never
   props: Payload['props']
-  stylesCtx: Payload['ctx']
-  className?: string
-  style?: Record<string, any>
+  stylesCtx?: Payload['ctx']
+  className?: string | undefined
+  style?: CStyleProp
   rootSelector?: Payload['stylesNames']
   unstyled?: boolean
   classNames?: ClassNames<Payload> | ClassNamesArray<Payload>
