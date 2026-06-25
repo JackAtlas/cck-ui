@@ -1,5 +1,5 @@
 import { ColorScheme, useColorScheme } from '@cck-ui/hooks'
-import { generateColorShades, setColorAlpha } from '../../../core/utils'
+import { generateColorShades, setColorAlpha } from '../../core/utils'
 import { computed } from 'vue'
 import { ButtonProps } from './button.types'
 
