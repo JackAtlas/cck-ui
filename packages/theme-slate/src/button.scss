@@ -217,6 +217,18 @@
     --button-height: var(--button-height-compact-xl);
     --button-padding-x: var(--button-padding-x-compact-xl);
   }
+
+  :where([data-c-color-scheme='dark']) &::before {
+    background-color: #00000026;
+  }
+  :where([data-c-color-scheme='light']) &::before {
+    background-color: #ffffff26;
+  }
+
+  &:where([data-loading])::before {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .c-button__inner {
