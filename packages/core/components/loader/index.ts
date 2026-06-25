@@ -1,10 +1,10 @@
-import { SFCWithInstall, withInstall } from '@cck-ui/core/core/utils'
-import Loader from './src/loader.vue'
-import { CLoadersRecord } from './src/loader.types'
+import { SFCWithInstall, withInstall } from '@cck-ui/core'
+import Loader from './loader.vue'
+import { CLoadersRecord } from './loader.types.js'
 
-import Bars from './src/loaders/bars.vue'
-import Dots from './src/loaders/dots.vue'
-import Oval from './src/loaders/oval.vue'
+import Bars from './loaders/bars.vue'
+import Dots from './loaders/dots.vue'
+import Oval from './loaders/oval.vue'
 
 export const CDefaultLoaders: CLoadersRecord = {
   bars: Bars,
@@ -15,4 +15,4 @@ export const CDefaultLoaders: CLoadersRecord = {
 export const CLoader: SFCWithInstall<typeof Loader> = withInstall(Loader)
 export default CLoader
 
-export * from './src/loader.types'
+export * from './loader.types.js'

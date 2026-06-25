@@ -1,6 +1,6 @@
 import { CColor, CSize } from '@cck-ui/constants'
 import { Component } from 'vue'
-import { ElementProps } from '../../../core/box/box.types'
+import { ElementProps } from '../../core/box/box.types'
 
 export type CLoaderComponent = Component<
   // Props: HTML attributes + ref support

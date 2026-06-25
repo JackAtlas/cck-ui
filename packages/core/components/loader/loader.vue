@@ -7,7 +7,7 @@ import { computed } from 'vue'
 import type { LoaderProps } from './loader.types'
 import { useLoader } from './use-loader'
 import { useLoaderCustomStyle } from './loader-custom'
-import { CDefaultLoaders } from '..'
+import { CDefaultLoaders } from '.'
 
 defineOptions({
   name: 'CLoader'
