@@ -1,6 +1,7 @@
 export * from './button'
 export * from './form'
 export * from './grid'
+export * from './group'
 export * from './icon'
 export * from './loader'
 export * from './simple-grid'
