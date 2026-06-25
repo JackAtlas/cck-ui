@@ -1,4 +1,3 @@
-import { SimpleGridProps } from 'cck-ui'
 import { computed } from 'vue'
 import {
   CBreakpoint,
@@ -12,7 +11,8 @@ import {
   px,
   rem,
   stylesToString
-} from '../../../core'
+} from '@cck-ui/core'
+import { SimpleGridProps } from './simple-grid.types'
 
 interface SimpleGridVariablesProps extends SimpleGridProps {
   selector: string

@@ -19,7 +19,7 @@ import {
   responsiveStyleManager,
   THEME_KEY,
   useRandomClassName
-} from '../../../core'
+} from '../../core'
 import { useNamespace } from '@cck-ui/hooks'
 import { computed } from 'vue'
 import { useSimpleGridStyle } from './simple-grid-custom'
