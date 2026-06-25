@@ -1,11 +1,5 @@
 import type { Property } from 'csstype'
-import {
-  BoxProps,
-  CSize,
-  CSpacing,
-  ElementProps,
-  StyleProp
-} from '../../../core'
+import { BoxProps, CSize, CSpacing, ElementProps, StyleProp } from '../../core'
 
 export type GridBreakpoints = Record<CSize, string>
 

@@ -6,7 +6,7 @@ import {
   getSpacing,
   keys,
   stylesToString
-} from '../../../core'
+} from '../../core'
 import { GridBreakpoints, GridProps } from './grid.types'
 import { computed } from 'vue'
 

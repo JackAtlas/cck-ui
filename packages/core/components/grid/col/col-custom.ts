@@ -8,7 +8,7 @@ import {
   keys,
   StyleProp,
   stylesToString
-} from '../../../../core'
+} from '../../../core'
 import { GridContextValue } from '../grid.context'
 import type { GridBreakpoints } from '../grid.types'
 

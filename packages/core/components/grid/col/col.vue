@@ -17,7 +17,7 @@ import {
   responsiveStyleManager,
   THEME_KEY,
   useRandomClassName
-} from '../../../../core'
+} from '../../../core'
 import { ref } from 'vue'
 import { watchEffect } from 'vue'
 import { onUnmounted } from 'vue'

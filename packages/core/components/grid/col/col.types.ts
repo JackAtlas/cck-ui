@@ -1,4 +1,4 @@
-import { BoxProps, ElementProps, StyleProp } from '../../../../core'
+import { BoxProps, ElementProps, StyleProp } from '../../../core'
 import { Property } from 'csstype'
 
 export type ColSpan = number | 'auto' | 'content'

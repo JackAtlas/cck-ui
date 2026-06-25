@@ -28,7 +28,7 @@ import {
   responsiveStyleManager,
   THEME_KEY,
   useRandomClassName
-} from '../../../core'
+} from '../../core'
 
 defineOptions({
   name: 'CGrid'
