@@ -4,6 +4,27 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+catalogs:
+  default:
+    '@ctrl/tinycolor':
+      specifier: ^4.2.0
+      version: 4.2.0
+    '@vue/shared':
+      specifier: ^3.5.38
+      version: 3.5.38
+    es-toolkit:
+      specifier: ^1.47.0
+      version: 1.47.0
+    tsx:
+      specifier: ^4.22.4
+      version: 4.22.4
+    vue:
+      specifier: ^3.5.38
+      version: 3.5.38
+    vue-component-type-helpers:
+      specifier: ^3.3.2
+      version: 3.3.5
+
 importers:
 
   .:
@@ -261,6 +282,9 @@ importers:
       '@lucide/vue':
         specifier: ^1.17.0
         version: 1.17.0(vue@3.5.35(typescript@6.0.3))
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
       vue:
         specifier: ^3.5.34
         version: 3.5.35(typescript@6.0.3)
