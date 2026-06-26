@@ -1,29 +1,27 @@
 <template>
-  <div v-if="type === 'container'" :class="containerClass">
-    <div :class="gridClass">
+  <c-box v-if="type === 'container'" v-bind="containerAttrs">
+    <c-box v-bind="mergedRootAttrs" :data-auto-cols="autoColsAttr">
       <slot />
-    </div>
-  </div>
+    </c-box>
+  </c-box>
   <template v-else>
-    <div v-bind="gridStyle.attrs" :class="gridClass">
+    <c-box v-bind="mergedRootAttrs" :data-auto-cols="autoColsAttr">
       <slot />
-    </div>
+    </c-box>
   </template>
 </template>
 
 <script setup lang="ts">
-import { inject, ref } from 'vue'
-import type { SimpleGridProps } from './simple-grid.types'
+import { computed, onUnmounted, ref, watchEffect } from 'vue'
 import {
-  DEFAULT_THEME,
+  CBox,
   responsiveStyleManager,
-  THEME_KEY,
-  useRandomClassName
-} from '../../core'
-import { useNamespace } from '@cck-ui/hooks'
-import { computed } from 'vue'
+  useRandomClassName,
+  useStyles
+} from '@cck-ui/core'
+import type { SimpleGridFactory, SimpleGridProps } from './simple-grid.types'
+import classes from './simple-grid.module.css'
 import { useSimpleGridStyle } from './simple-grid-custom'
-import { watchEffect, onUnmounted } from 'vue'
 
 defineOptions({
   name: 'CSimpleGrid'
@@ -35,17 +33,53 @@ const props = withDefaults(defineProps<SimpleGridProps>(), {
   type: 'media'
 })
 
-const theme = inject(THEME_KEY, DEFAULT_THEME)
+const {
+  classNames,
+  className,
+  style,
+  styles,
+  unstyled,
+  vars,
+  cols,
+  verticalSpacing,
+  spacing,
+  type,
+  minColWidth,
+  autoFlow,
+  autoRows,
+  attributes,
+  ...others
+} = props
+
+const getStyles = useStyles<SimpleGridFactory>({
+  name: 'SimpleGrid',
+  classes,
+  props,
+  className,
+  style,
+  classNames,
+  styles,
+  unstyled,
+  attributes,
+  vars
+})
 
 const responsiveClassname = useRandomClassName()
-const gridStyle = useSimpleGridStyle(
-  { selector: responsiveClassname, ...props },
-  theme
-)
 
-const ns = useNamespace('simple-grid')
-const containerClass = computed(() => [ns.e('container')])
-const gridClass = computed(() => [ns.e('root'), responsiveClassname])
+const autoColsAttr =
+  minColWidth !== undefined ? autoFlow || 'auto-fill' : undefined
+
+const rootAttrs = computed(() =>
+  getStyles('root', { className: responsiveClassname })
+)
+const mergedRootAttrs = computed(() => ({ ...others, ...rootAttrs.value }))
+
+const containerAttrs = computed(() => getStyles('container'))
+
+const gridStyle = useSimpleGridStyle({
+  selector: responsiveClassname,
+  ...props
+})
 
 const currentStyleKey = ref<string | null>(null)
 watchEffect(() => {
