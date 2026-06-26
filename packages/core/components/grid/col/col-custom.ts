@@ -1,13 +1,15 @@
-import { computed } from 'vue'
+import { computed, inject } from 'vue'
 import { ColProps, ColSpan } from './col.types'
 import {
   CTheme,
+  DEFAULT_THEME,
   filterProps,
   getBaseValue,
   getSortedBreakpoints,
   keys,
   StyleProp,
-  stylesToString
+  stylesToString,
+  THEME_KEY
 } from '../../../core'
 import { GridContextValue } from '../grid.context'
 import type { GridBreakpoints } from '../grid.types'
@@ -66,10 +68,11 @@ const getColumnOffset = (offset: number | undefined, columns: number) => {
 
 export function useColCustomStyle(
   { align, offset, order, selector, span }: ColVariablesProps,
-  gridContext: GridContextValue,
-  theme: CTheme
+  gridContext: GridContextValue
 ) {
   return computed(() => {
+    const theme = inject(THEME_KEY, DEFAULT_THEME)
+
     const _breakpoints = gridContext.breakpoints || theme.breakpoints
     const baseValue = getBaseValue(span)
     const baseSpan = baseValue === undefined ? 12 : baseValue

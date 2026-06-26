@@ -1,24 +1,32 @@
 import {
   CTheme,
+  DEFAULT_THEME,
   filterProps,
   getBaseValue,
   getSortedBreakpoints,
   getSpacing,
   keys,
-  stylesToString
+  stylesToString,
+  THEME_KEY
 } from '../../core'
 import { GridBreakpoints, GridProps } from './grid.types'
-import { computed } from 'vue'
+import { computed, inject } from 'vue'
 
 interface GridVariablesProps extends GridProps {
   selector: string
 }
 
-export function useGridCustomStyle(
-  { breakpoints, columnGap, gap, rowGap, selector, type }: GridVariablesProps,
-  theme: CTheme
-) {
+export function useGridCustomStyle({
+  breakpoints,
+  columnGap,
+  gap,
+  rowGap,
+  selector,
+  type
+}: GridVariablesProps) {
   return computed(() => {
+    const theme = inject(THEME_KEY, DEFAULT_THEME)
+
     const _breakpoints = breakpoints || theme.breakpoints
 
     const styles: Record<string, string | undefined> = filterProps({

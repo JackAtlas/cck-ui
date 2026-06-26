@@ -1,34 +1,34 @@
 <template>
-  <div v-if="type === 'container' && breakpoints" :class="containerClass">
-    <div :class="gridClass">
-      <div :class="innerClass">
+  <c-box v-if="type === 'container' && breakpoints" v-bind="containerAttrs">
+    <c-box v-bind="mergedRootAttrs">
+      <c-box v-bind="innerAttrs">
         <slot />
-      </div>
-    </div>
-  </div>
+      </c-box>
+    </c-box>
+  </c-box>
   <template v-else>
-    <div :class="gridClass">
-      <div :class="innerClass">
+    <c-box v-bind="mergedRootAttrs">
+      <c-box v-bind="innerAttrs">
         <slot />
-      </div>
-    </div>
+      </c-box>
+    </c-box>
   </template>
 </template>
 
 <script setup lang="ts">
-import { computed, inject, onUnmounted, provide, ref, watchEffect } from 'vue'
-import { useNamespace } from '@cck-ui/hooks'
+import { computed, onUnmounted, provide, ref, watchEffect } from 'vue'
+import {
+  createVarsResolver,
+  isNumberLike,
+  responsiveStyleManager,
+  useRandomClassName,
+  useStyles
+} from '@cck-ui/core'
 import { useGridCustomStyle } from './grid-custom'
 import { DEFAULT_COLUMNS, GRID_CONTEXT_KEY } from './grid.constants'
 import { GridContextValue } from './grid.context'
-import type { GridProps } from './grid.types'
-import {
-  DEFAULT_THEME,
-  isNumberLike,
-  responsiveStyleManager,
-  THEME_KEY,
-  useRandomClassName
-} from '../../core'
+import type { GridFactory, GridProps } from './grid.types'
+import classes from './grid.module.css'
 
 defineOptions({
   name: 'CGrid'
@@ -36,22 +36,60 @@ defineOptions({
 
 const props = withDefaults(defineProps<GridProps>(), {
   columns: DEFAULT_COLUMNS,
-  gap: 'md',
-  grow: false,
-  justify: 'flex-start'
+  gap: 'md'
 })
 
-const theme = inject(THEME_KEY, DEFAULT_THEME)
+const varsResolver = createVarsResolver(() => ({}))
+
+const {
+  classNames,
+  className,
+  style,
+  styles,
+  unstyled,
+  vars,
+  grow,
+  gap,
+  rowGap,
+  columnGap,
+  columns,
+  align,
+  justify,
+  breakpoints,
+  type,
+  attributes,
+  ...others
+} = props
+
+const getStyles = useStyles<GridFactory>({
+  name: 'Grid',
+  classes,
+  props,
+  className,
+  style,
+  classNames,
+  styles,
+  unstyled,
+  attributes,
+  vars,
+  varsResolver
+})
 
 const responsiveClassname = useRandomClassName()
-const gridStyle = useGridCustomStyle(
-  { selector: responsiveClassname, ...props },
-  theme
+
+const rootAttrs = computed(() =>
+  getStyles('root', { className: responsiveClassname })
 )
-const ns = useNamespace('grid')
-const containerClass = computed(() => [ns.e('container')])
-const gridClass = computed(() => [ns.e('root'), responsiveClassname])
-const innerClass = computed(() => [ns.e('inner')])
+const mergedRootAttrs = computed(() => ({ ...others, ...rootAttrs.value }))
+
+const innerAttrs = computed(() => getStyles('inner'))
+
+const containerAttrs = computed(() => getStyles('container'))
+
+const gridStyle = useGridCustomStyle({
+  selector: responsiveClassname,
+  ...props
+})
 
 const currentStyleKey = ref<string | null>(null)
 watchEffect(() => {
@@ -90,6 +128,7 @@ const _grow = computed(() => props.grow)
 const _type = computed(() => props.type)
 
 const context: GridContextValue = {
+  getStyles,
   get breakpoints() {
     return _breakpoints.value
   },

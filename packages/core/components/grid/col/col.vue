@@ -1,26 +1,21 @@
 <template>
-  <div :class="gridClass">
+  <c-box v-bind="mergedAttrs">
     <slot />
-  </div>
+  </c-box>
 </template>
 
 <script setup lang="ts">
-import { useNamespace } from '@cck-ui/hooks'
+import cx from 'clsx'
+import { computed, inject, onUnmounted, ref, watchEffect } from 'vue'
+import {
+  normalizeNumberLikeStringProp,
+  responsiveStyleManager,
+  useRandomClassName
+} from '@cck-ui/core'
 import type { ColProps } from './col.types'
-import { computed, inject } from 'vue'
 import { useColCustomStyle } from './col-custom'
 import { GridContextValue } from '../grid.context'
 import { GRID_CONTEXT_KEY } from '../grid.constants'
-import {
-  DEFAULT_THEME,
-  normalizeNumberLikeStringProp,
-  responsiveStyleManager,
-  THEME_KEY,
-  useRandomClassName
-} from '../../../core'
-import { ref } from 'vue'
-import { watchEffect } from 'vue'
-import { onUnmounted } from 'vue'
 
 defineOptions({
   name: 'CCol'
@@ -30,10 +25,33 @@ const props = withDefaults(defineProps<ColProps>(), {
   span: 12
 })
 
+const {
+  classNames,
+  className,
+  style,
+  styles,
+  vars,
+  span,
+  order,
+  offset,
+  align,
+  ...others
+} = props
+
 const gridContext = inject(GRID_CONTEXT_KEY) as GridContextValue
-const theme = inject(THEME_KEY, DEFAULT_THEME)
 
 const responsiveClassname = useRandomClassName()
+
+const rootAttrs = computed(() =>
+  gridContext.getStyles('col', {
+    className: cx(className, responsiveClassname),
+    style,
+    classNames,
+    styles
+  })
+)
+const mergedAttrs = computed(() => ({ ...others, ...rootAttrs.value }))
+
 const _offset = normalizeNumberLikeStringProp(props.offset)
 const _order = normalizeNumberLikeStringProp(props.order)
 const colStyle = useColCustomStyle(
@@ -44,11 +62,8 @@ const colStyle = useColCustomStyle(
     order: _order,
     span: props.span
   },
-  gridContext,
-  theme
+  gridContext
 )
-const ns = useNamespace('grid')
-const gridClass = computed(() => [ns.e('col'), responsiveClassname])
 
 const currentStyleKey = ref<string | null>(null)
 watchEffect(() => {

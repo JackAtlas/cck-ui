@@ -1,10 +1,37 @@
 import type { Property } from 'csstype'
-import { BoxProps, CSize, CSpacing, ElementProps, StyleProp } from '../../core'
+import {
+  BoxProps,
+  CSize,
+  CSpacing,
+  ElementProps,
+  Factory,
+  StyleProp,
+  StylesApiProps
+} from '@cck-ui/core'
+import Col from './col/col.vue'
 
 export type GridBreakpoints = Record<CSize, string>
 
+export type GridStylesNames = 'root' | 'col' | 'inner' | 'container'
+export type GridCssVariables = {
+  root: '--grid-justify' | '--grid-align' | '--grid-overflow'
+}
+
+export type GridFactory = Factory<{
+  props: GridProps
+  ref: HTMLDivElement
+  stylesNames: GridStylesNames
+  vars: GridCssVariables
+  staticComponents: {
+    Col: typeof Col
+  }
+}>
+
 export interface GridProps
-  extends BoxProps, /* @vue-ignore */ ElementProps<'div'> {
+  extends
+    BoxProps,
+    StylesApiProps<GridFactory>,
+    /* @vue-ignore */ ElementProps<'div'> {
   /**
    * @description Gap between columns and rows, key of `theme.spacing` or any valid CSS
    * @default 'md'

@@ -1,10 +1,27 @@
-import { BoxProps, ElementProps, StyleProp } from '../../../core'
 import { Property } from 'csstype'
+import {
+  BoxProps,
+  CompoundStylesApiProps,
+  ElementProps,
+  Factory,
+  StyleProp
+} from '@cck-ui/core'
 
+export type GridColStylesNames = 'col'
 export type ColSpan = number | 'auto' | 'content'
 
+export type GridColFactory = Factory<{
+  props: GridColFactory
+  ref: HTMLDivElement
+  stylesNames: GridColStylesNames
+  compound: true
+}>
+
 export interface ColProps
-  extends BoxProps, /* @vue-ignore */ ElementProps<'div'> {
+  extends
+    BoxProps,
+    CompoundStylesApiProps<GridColFactory>,
+    /* @vue-ignore */ ElementProps<'div'> {
   /**
    * @description Column span
    * @default 12
