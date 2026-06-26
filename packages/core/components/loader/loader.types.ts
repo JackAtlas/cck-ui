@@ -1,6 +1,13 @@
-import { CColor, CSize } from '@cck-ui/constants'
 import { Component } from 'vue'
-import { ElementProps } from '../../core/box/box.types'
+import {
+  BoxProps,
+  CColor,
+  CSize,
+  ElementProps,
+  Factory,
+  StylesApiProps
+} from '@cck-ui/core'
+import { CDefaultLoaders } from '.'
 
 export type CLoaderComponent = Component<
   // Props: HTML attributes + ref support
@@ -18,10 +25,26 @@ export type CLoadersRecord = Partial<
 >
 export type CLoaderType = keyof CLoadersRecord
 
-export interface LoaderProps extends /* @vue-ignore */ ElementProps<
-  'svg',
-  'display' | 'opacity'
-> {
+export type LoaderStylesNames = 'root'
+export type LoaderCssVariables = {
+  root: '--loader-size' | '--loader-color'
+}
+
+export type LoaderFactory = Factory<{
+  props: LoaderProps
+  ref: SVGSVGElement
+  stylesNames: LoaderStylesNames
+  vars: LoaderCssVariables
+  staticComponents: {
+    defaultLoaders: typeof CDefaultLoaders
+  }
+}>
+
+export interface LoaderProps
+  extends
+    BoxProps,
+    StylesApiProps<LoaderFactory>,
+    /* @vue-ignore */ ElementProps<'svg', 'display' | 'opacity'> {
   /**
    * @description Key of `theme.colors` or any valid CSS color
    * @default theme.primaryColor

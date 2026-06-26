@@ -1,10 +1,13 @@
 <template>
-  <span v-bind="$attrs" :class="loaderClass" />
+  <c-box tag="span" v-bind="others" :class="loaderClass" />
 </template>
 
 <script setup lang="ts">
-import { useNamespace } from '@cck-ui/hooks'
+import cx from 'clsx'
+import type { LoaderProps } from '../loader.types'
+import classes from '../loader.module.css'
 
-const ns = useNamespace('loader')
-const loaderClass = [ns.b('oval'), ns.e('root')]
+const { className, ...others } = defineProps<LoaderProps>()
+
+const loaderClass = cx(classes.ovalLoader, className)
 </script>

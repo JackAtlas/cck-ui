@@ -1,43 +1,82 @@
 <template>
-  <component :is="activeLoader" :ref="_ref" :style="loaderStyle" />
+  <c-box v-if="$slots.default" v-bind="mergedAttrs">
+    <slot />
+  </c-box>
+  <c-box
+    v-else
+    v-bind="mergedAttrs"
+    :tag="loaders[type]"
+    :variant="variant"
+    :size="size"
+  ></c-box>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import {
+  createVarsResolver,
+  getSize,
+  getThemeColor,
+  useStyles
+} from '@cck-ui/core'
 import type { LoaderProps } from './loader.types'
 import { useLoader } from './use-loader'
-import { useLoaderCustomStyle } from './loader-custom'
-import { CDefaultLoaders } from '.'
+import { CDefaultLoaders, LoaderFactory } from '.'
+import classes from './loader.module.css'
 
 defineOptions({
   name: 'CLoader'
 })
 
 const props = withDefaults(defineProps<LoaderProps>(), {
-  size: 'md'
+  loaders: () => CDefaultLoaders,
+  type: 'oval'
 })
 
-const mergedLoaders = computed(() => ({
-  ...CDefaultLoaders,
-  ...props.loaders
-}))
+const {
+  size,
+  color,
+  type,
+  vars,
+  className,
+  style,
+  classNames,
+  styles,
+  unstyled,
+  loaders,
+  variant,
+  attributes,
+  ...others
+} = props
 
-const activeLoader = computed(() => {
-  if (!props.type) return CDefaultLoaders.oval
+const varsResolver = createVarsResolver<LoaderFactory>(
+  (theme, { size, color }) => ({
+    root: {
+      '--loader-size': getSize(size, 'loader-size'),
+      '--loader-color': color ? getThemeColor(color, theme) : undefined
+    }
+  })
+)
 
-  const loader = mergedLoaders.value[props.type]
-  if (!loader) {
-    console.warn(
-      `[Loader] Unknown type "${props.type}", falling back to "oval".`
-    )
-    return CDefaultLoaders.oval
-  }
-  return loader
+const getStyles = useStyles<LoaderFactory>({
+  name: 'Loader',
+  props,
+  classes,
+  className,
+  style,
+  classNames,
+  styles,
+  unstyled,
+  attributes,
+  vars,
+  varsResolver
 })
+
+const rootAttrs = computed(() => getStyles('root'))
+
+const mergedAttrs = computed(() => ({ ...others, ...rootAttrs.value }))
 
 const { _ref } = useLoader()
-
-const loaderStyle = useLoaderCustomStyle(props)
 
 defineExpose({
   /** @description loader html element */
