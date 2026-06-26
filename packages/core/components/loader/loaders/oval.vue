@@ -7,7 +7,7 @@ import cx from 'clsx'
 import type { LoaderProps } from '../loader.types'
 import classes from '../loader.module.css'
 
-const { className, ...others } = defineProps<LoaderProps>()
+const { className, attributes, ...others } = defineProps<LoaderProps>()
 
 const loaderClass = cx(classes.ovalLoader, className)
 </script>
