@@ -2,12 +2,19 @@ import {
   BoxProps,
   CSpacing,
   ElementProps,
+  Factory,
   NumberLikeString,
-  StyleProp
-} from '../../../core'
+  StyleProp,
+  StylesApiProps
+} from '@cck-ui/core'
+
+export type SimpleGridStylesNames = 'root' | 'container'
 
 export interface SimpleGridProps
-  extends BoxProps, /* @vue-ignore */ ElementProps<'div'> {
+  extends
+    BoxProps,
+    StylesApiProps<SimpleGridFactory>,
+    /* @vue-ignore */ ElementProps<'div'> {
   /**
    * @description Number of columns
    * @default 1
@@ -48,3 +55,9 @@ export interface SimpleGridProps
    */
   autoRows?: string
 }
+
+export type SimpleGridFactory = Factory<{
+  props: SimpleGridProps
+  ref: HTMLDivElement
+  stylesNames: SimpleGridStylesNames
+}>

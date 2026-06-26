@@ -1,7 +1,9 @@
-import { computed } from 'vue'
+import { computed, inject } from 'vue'
 import {
   CBreakpoint,
   CTheme,
+  DEFAULT_THEME,
+  THEME_KEY,
   filterProps,
   getBaseValue,
   getSortedBreakpoints,
@@ -159,18 +161,16 @@ function getContainerStyle({
   )
 
   const container = uniqueBreakpoints.map((breakpoint) => ({
-    query: `c-simple-grid (min-width: ${breakpoint})`,
+    query: `simple-grid (min-width: ${breakpoint})`,
     styles: queries[breakpoint]
   }))
 
   return container
 }
 
-export function useSimpleGridStyle(
-  props: SimpleGridVariablesProps,
-  theme: CTheme
-) {
+export function useSimpleGridStyle(props: SimpleGridVariablesProps) {
   return computed(() => {
+    const theme = inject(THEME_KEY, DEFAULT_THEME)
     const {
       autoFlow,
       autoRows,
