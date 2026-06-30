@@ -1,26 +1,39 @@
-.idea
+# os
+.DS_Store
+Thumbs.db
 
+# editor
+.idea/
+.nova/
+.gitpod.yml
+
+# node
 node_modules
 .pnpm-store
 
+# logs
+logs
 *.log
 npm-debug.log*
 pnpm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# env
+.env.test
+.env*.local
 
-.DS_Store
-Thumbs.db
+# build
+lib/
+cjs/
+esm/
+.buildinfo.json
 
-dist
-coverage
+# typescript
+*.tsbuildinfo
 
-.env
-*.local
-.eslintcache
-tmp
-*.tmp
-*.temp
-
-.husky/_
+# project
+packages/*/*/styles.css
+packages/*/*/styles.layer.css
+packages/@cck-ui/core/styles
+packages/*/*/LICENSE
