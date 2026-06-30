@@ -1,8 +1,26 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.web.json" },
-    { "path": "./tsconfig.play.json" },
-    { "path": "./tsconfig.node.json" }
-  ]
+  "include": ["./scripts", "./@types", "./packages/@cck-ui/*/src", "./play/*"],
+  "exclude": [
+    "node_modules",
+    "./packages/@cck-ui/*/lib/**/*",
+    "./packages/@cck-ui/*/esm/**/*",
+    "./packages/@cck-ui/*/cjs/**/*"
+  ],
+  "compilerOptions": {
+    "types": ["node"],
+    "target": "es2015",
+    "lib": ["DOM", "ESNext"],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "jsx": "preserve",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "noEmitOnError": true,
+    "allowJs": true,
+    "strict": true,
+    "paths": {
+      "@cck-ui/*": ["./packages/@cck-ui/*/src"]
+    }
+  }
 }
