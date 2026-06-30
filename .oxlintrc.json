@@ -1,0 +1,101 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oxc-project/oxc/main/npm/oxlint/configuration_schema.json",
+  "plugins": ["vue", "typescript", "jsx-a11y", "jest"],
+  "ignorePatterns": ["**/*.{mjs,cjs,js,d.ts,d.mts}"],
+  "rules": {
+    "array-callback-return": "error",
+    "no-duplicate-imports": "error",
+    "no-var": "error",
+    "no-self-compare": "error",
+    "no-template-curly-in-string": "error",
+    "curly": "error",
+    "default-case": "off",
+    "default-case-last": "error",
+    "no-alert": "error",
+    "no-else-return": "error",
+    "no-eval": "error",
+    "no-lonely-if": "error",
+    "no-multi-assign": "error",
+    "no-multi-str": "error",
+    "no-param-reassign": "error",
+    "no-return-assign": "error",
+    "no-script-url": "error",
+    "no-sequences": "error",
+    "no-throw-literal": "error",
+    "no-unneeded-ternary": "error",
+    "no-useless-call": "error",
+    "no-useless-constructor": "error",
+    "no-useless-return": "error",
+    "operator-assignment": "error",
+    "prefer-const": "error",
+    "prefer-exponentiation-operator": "error",
+    "prefer-object-has-own": "error",
+    "prefer-promise-reject-errors": "error",
+    "prefer-object-spread": "error",
+    "prefer-template": "error",
+    "yoda": "error",
+    "radix": "error",
+    "eqeqeq": ["error", "smart"],
+    "no-undef": "off",
+    "no-empty": "off",
+    "no-unused-expressions": "off",
+    "no-redeclare": "off",
+    "no-use-before-define": "off",
+    "no-loop-func": "off",
+
+    "typescript/no-explicit-any": "off",
+    "typescript/ban-ts-comment": "off",
+    "typescript/consistent-generic-constructors": "error",
+    "typescript/no-empty-object-type": "off",
+    "typescript/no-namespace": "off",
+    "typescript/no-unsafe-function-type": "off",
+    "typescript/no-deprecated": "warn",
+    "no-unused-vars": [
+      "error",
+      {
+        "args": "all",
+        "argsIgnorePattern": "^_",
+        "caughtErrors": "none",
+        "caughtErrorsIgnorePattern": "^_",
+        "destructuredArrayIgnorePattern": "^_",
+        "ignoreRestSiblings": true
+      }
+    ],
+
+    "vue/component-definition-name-casing": ["error", "PascalCase"],
+    "vue/no-expose-after-await": "error",
+    "vue/no-required-prop-with-default": "error",
+    "vue/no-reserved-component-names": [
+      "error",
+      {
+        "disallowVue3BuiltInComponents": true,
+        "disallowVueBuiltInComponents": true
+      }
+    ],
+    "vue/no-watch-after-await": "error",
+    "vue/prefer-import-from-vue": "error",
+    "vue/return-in-computed-property": "error",
+    "vue/return-in-emits-validator": "error",
+    "vue/valid-define-options": "error",
+    "vue/valid-define-props": "error",
+
+    "jest/no-export": "off",
+    "jest/expect-expect": "off",
+    "jest/valid-title": "off",
+    "jest/require-to-throw-message": "off"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.test.ts", "**/*.test.tsx"],
+      "rules": {
+        "no-unsafe-optional-chaining": "off"
+      }
+    },
+    {
+      "files": ["**/*.story.tsx"],
+      "rules": {
+        "no-console": "off"
+      }
+    }
+  ]
+}

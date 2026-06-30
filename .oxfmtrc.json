@@ -1,0 +1,31 @@
+{
+  "printWidth": 100,
+  "singleQuote": true,
+  "trailingComma": "es5",
+  "semi": false,
+  "importOrder": [
+    ".*styles.css$",
+    "",
+    "dayjs",
+    "^vue$",
+    "^nuxt$",
+    "^nuxt/.*$",
+    "<BUILTIN_MODULES>",
+    "<THIRD_PARTY_MODULES>",
+    "^@cck-ui/(.*)$",
+    "^@/.*$",
+    "^../(?!.*\\.css$).*$",
+    "^./(?!.*\\.css$).*$",
+    "\\.module\\.css$",
+    "(?<!\\.module)\\.css$"
+  ],
+  "sortPackageJson": false,
+  "ignorePatterns": [
+    "*.d.ts",
+    "*.mdx",
+    "*.md",
+    "packages/*/*/styles.css",
+    "packages/*/*/styles.layer.css",
+    "packages/*/*/styles/*.css"
+  ]
+}
