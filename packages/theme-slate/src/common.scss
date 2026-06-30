@@ -1,9 +1,0 @@
-.c-focus-auto:focus-visible,
-.c-focus-always:focus {
-  outline-offset: calc(0.125rem * var(--c-scale));
-  outline: 2px solid var(--c-primary-color-filled);
-}
-
-.c-active:active {
-  transform: translateY(calc(0.0625rem * var(--c-scale)));
-}
