@@ -1,7 +1,6 @@
 packages:
-  - packages/*
+  - packages/@cck-ui/*
   - play
-  - internal/*
 
 allowBuilds:
   '@parcel/watcher': true
@@ -9,10 +8,11 @@ allowBuilds:
 
 catalog:
   '@ctrl/tinycolor': ^4.2.0
-  '@vue/shared': ^3.5.38
+  '@vue/shared': ^3.5.39
   '@vueuse/core': ^14.3.0
   es-toolkit: ^1.47.0
-  vue: ^3.5.38
+  type-fest: ^5.7.0
+  vue: ^3.5.39
   vue-component-type-helpers: ^3.3.2
   tsx: ^4.22.4
 
@@ -26,5 +26,6 @@ minimumReleaseAgeExclude:
   - '@vue/runtime-core@3.5.37'
   - '@vue/runtime-dom@3.5.37'
   - '@vue/server-renderer@3.5.37'
-  - '@vue/shared@3.5.37'
-  - vue@3.5.37
+  - '@vue/shared'
+  - vue
+  - postcss-preset-cck
