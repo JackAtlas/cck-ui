@@ -1,5 +1,0 @@
-export const PKG_PREFIX = '@cck-ui'
-export const PKG_NAME = 'cck-ui'
-export const PKG_CAMELCASE_NAME = 'CckUi'
-export const PKG_CAMELCASE_LOCAL_NAME = 'CckUiLocale'
-export const PKG_BRAND_NAME = 'CCK UI'
