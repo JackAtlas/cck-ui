@@ -1,0 +1,56 @@
+[data-respect-reduced-motion] {
+  @media (prefers-reduced-motion: reduce) {
+    [data-reduce-motion] {
+      transition: none;
+      animation: none;
+    }
+  }
+}
+
+.c-light-hidden {
+  @mixin light {
+    display: none;
+  }
+}
+
+.c-dark-hidden {
+  @mixin dark {
+    display: none;
+  }
+}
+
+.c-focus-auto {
+  &:focus-visible {
+    outline: 2px solid var(--c-primary-color-filled);
+    outline-offset: 2px;
+  }
+}
+
+.c-focus-always {
+  &:focus {
+    outline: 2px solid var(--c-primary-color-filled);
+    outline-offset: 2px;
+  }
+}
+
+.c-focus-never {
+  &:focus {
+    outline: none;
+  }
+}
+
+.c-active {
+  &:active {
+    transform: translateY(rem(1px));
+  }
+
+  fieldset:disabled &:active {
+    transform: none;
+  }
+}
+
+.c-rotate-rtl {
+  @mixin where-rtl {
+    transform: rotate(180deg);
+  }
+}
