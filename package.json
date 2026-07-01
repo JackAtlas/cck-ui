@@ -11,9 +11,9 @@
   "scripts": {
     "build": "tsx scripts/build",
     "changeset": "changeset",
-    "clean": "pnpm run clean:dist && pnpm run -r -parallel clean",
-    "clean:dist": "rimraf dist",
+    "clean": "rimraf --glob packages/*/*/{esm,cjs,lib,dist} packages/*/*/*.tsbuildinfo packages/*/*/styles.css packages/*/*/styles.layer.css packages/@cck-ui/core/styles",
     "commit": "cz",
+    "generate-css-variables": "tsx scripts/codegen/generate-default-css-variables && oxfmt packages/@cck-ui/core/src/core/config-provider/default-css-variables.css",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
     "play:dev": "pnpm run -C play dev",
