@@ -2,7 +2,6 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { convertCssVariables } from '../../packages/@cck-ui/core/src/core/config-provider/convert-css-variables/convert-css-variables'
 import { DEFAULT_THEME } from '../../packages/@cck-ui/core/src/core/config-provider/default-theme'
-import {} from '../../packages/@cck-ui/core/src/core/config-provider/'
 import { defaultCssVariablesResolver } from '../../packages/@cck-ui/core/src/core/config-provider/cck-css-variables/default-css-variables-resolver'
 
 fs.writeFileSync(

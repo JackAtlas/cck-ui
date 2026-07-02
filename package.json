@@ -12,6 +12,7 @@
     "build": "tsx scripts/build",
     "changeset": "changeset",
     "clean": "rimraf --glob packages/*/*/{esm,cjs,lib,dist} packages/*/*/*.tsbuildinfo packages/*/*/styles.css packages/*/*/styles.layer.css packages/@cck-ui/core/styles",
+    "codegen": "pnpm generate-css-variables",
     "commit": "cz",
     "generate-css-variables": "tsx scripts/codegen/generate-default-css-variables && oxfmt packages/@cck-ui/core/src/core/config-provider/default-css-variables.css",
     "lint": "oxlint",
