@@ -27,6 +27,16 @@ const { argv }: { argv: any } = yargs(hideBin(process.argv))
     default: 'latest',
     description: 'Tag',
   })
+  .option('ci', {
+    type: 'boolean',
+    default: false,
+    description: 'Run in CI mode (no git operations, no version bump)',
+  })
+  .option('no-publish', {
+    type: 'boolean',
+    default: false,
+    description: 'Skip publishing to npm (useful for local testing)',
+  })
 
 async function release() {
   const status = await git.status()
@@ -38,13 +48,25 @@ async function release() {
 
   logger.log('Releasing all packages')
 
-  const increasedVersion = getNextVersion(packageJson.version, {
-    type: argv._[0],
-    stage: argv.stage,
-  })
+  let increasedVersion: string
 
-  logger.log(`New version: ${chalk.cyan(increasedVersion)}`)
-  await setPackagesVersion(increasedVersion)
+  if (argv.ci) {
+    increasedVersion = packageJson.version
+    logger.log(`CI mode: using current version ${chalk.cyan(increasedVersion)}`)
+  } else {
+    if (!['patch', 'minor', 'major'].includes(argv._[0])) {
+      logger.error('Version type (patch/minor/major) is required when not in CI mode')
+      process.exit(1)
+    }
+
+    increasedVersion = getNextVersion(packageJson.version, {
+      type: argv._[0],
+      stage: argv.stage,
+    })
+
+    logger.log(`New version: ${chalk.cyan(increasedVersion)}`)
+    await setPackagesVersion(increasedVersion)
+  }
 
   await buildAllPackages()
   logger.success('All packages have been built successfully')
@@ -55,23 +77,38 @@ async function release() {
     argv.tag = 'next'
   }
 
-  const cckPackages = await getCckPackagesList()
+  const shouldPublish = argv.ci || !argv.noPublish
 
-  await Promise.all(
-    cckPackages.map((p) =>
-      publishPackage({ packagePath: p!.path, name: p!.packageJson.name!, tag: argv.tag })
+  if (shouldPublish) {
+    const cckPackages = await getCckPackagesList()
+
+    await Promise.all(
+      cckPackages.map((p) =>
+        publishPackage({
+          packagePath: p!.path,
+          name: p!.packageJson.name!,
+          tag: argv.tag,
+          provenance: argv.ci,
+        })
+      )
     )
-  )
 
-  logger.success('All packages have been published successfully')
+    logger.success('All packages have been published successfully')
+  } else {
+    logger.log('Skipping npm publish (--no-publish)')
+  }
 
-  await $`pnpm install`
-  await git.add([getPath('packages'), getPath('package.json'), getPath('pnpm-lock.yaml')])
-  await git.commit(`[release] Version: ${increasedVersion}`)
-  await git.addTag(`v${increasedVersion}`)
-  await git.push()
+  if (!argv.ci) {
+    await $`pnpm install`
+    await git.add([getPath('packages'), getPath('package.json'), getPath('pnpm-lock.yaml')])
+    await git.commit(`[release] Version: ${increasedVersion}`)
+    await git.addTag(`v${increasedVersion}`)
+    await git.push()
 
-  openGithubRelease(increasedVersion)
+    openGithubRelease(increasedVersion)
+  } else {
+    logger.log('CI mode: skipping git commit/tag and release page.')
+  }
 }
 
 release()

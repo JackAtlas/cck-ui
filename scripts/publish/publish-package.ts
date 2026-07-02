@@ -8,11 +8,20 @@ interface PublishPackage {
   packagePath: string
   name: string
   tag: string
+  provenance?: boolean
 }
 
-export async function publishPackage({ packagePath, name, tag }: PublishPackage) {
+export async function publishPackage({
+  packagePath,
+  name,
+  tag,
+  provenance = false,
+}: PublishPackage) {
   try {
-    await $({ cwd: packagePath })`npm publish --access public --tag ${tag}`
+    const cmd = provenance
+      ? `npm publish --access public --tag ${tag} --provenance`
+      : `npm publish --access public --tag ${tag}`
+    await $({ cwd: packagePath })`${cmd}`
     logger.success(`Package ${chalk.cyan(name)} has been published`)
   } catch (error: any) {
     logger.error(`Failed to publish package ${chalk.red(name)}`)

@@ -24,9 +24,10 @@
     "publish:package:alpha": "tsx scripts/publish --stage alpha --tag next",
     "publish:package:beta": "tsx scripts/publish --stage beta --tag next",
     "release": "pnpm clean && tsx scripts/release",
-    "release:patch": "pnpm release patch",
-    "release:minor": "pnpm release minor",
-    "release:major": "pnpm release major",
+    "release:ci": "tsx script/release --ci",
+    "release:patch": "pnpm release patch --no-publish",
+    "release:minor": "pnpm release minor --no-publish",
+    "release:major": "pnpm release major --no-publish",
     "stub": "pnpm run -r --parallel stub",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
