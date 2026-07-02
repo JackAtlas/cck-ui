@@ -28,15 +28,13 @@
     "release:minor": "pnpm release minor",
     "release:major": "pnpm release major",
     "stub": "pnpm run -r --parallel stub",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "version": "changeset version"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "type-fest": "catalog:",
     "vue": "catalog:"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.31.0",
     "@commitlint/cli": "^21.0.1",
     "@commitlint/config-conventional": "^21.0.1",
     "@types/fs-extra": "^11.0.4",
