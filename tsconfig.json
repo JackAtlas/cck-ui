@@ -1,5 +1,5 @@
 {
-  "include": ["./scripts", "./@types", "./packages/@cck-ui/*/src", "./play/*"],
+  "include": ["./scripts", "./@types", "./packages/@cck-ui/*/src"],
   "exclude": [
     "node_modules",
     "./packages/@cck-ui/*/lib/**/*",
