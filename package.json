@@ -32,8 +32,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "type-fest": "catalog:",
-    "vue": "catalog:"
+    "type-fest": "^5.7.0",
+    "vue": "^3.5.39"
   },
   "devDependencies": {
     "@commitlint/cli": "^21.0.1",
