@@ -14,7 +14,7 @@
       },
     ]"
   >
-    <c-box v-bind="innerAttrs">
+    <c-box tag="span" v-bind="innerAttrs">
       <c-box
         v-if="$slots['left-section']"
         v-bind="sectionAttrs"
@@ -140,7 +140,9 @@ const getStyles = useStyles<ButtonFactory>({
   varsResolver,
 })
 
-const rootAttrs = computed(() => getStyles('root'))
+const rootAttrs = computed(() =>
+  getStyles('root', { active: !disabled && !loading && !dataDisabled })
+)
 const mergedRootAttrs = computed(() => ({ ...others, ...rootAttrs.value }))
 
 const innerAttrs = computed(() => getStyles('inner'))
