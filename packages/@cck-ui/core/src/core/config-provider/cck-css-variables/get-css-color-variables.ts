@@ -26,7 +26,7 @@ export function getCSSColorVariables({
     const dynamicVariables = {
       [`--c-color-${name}-text`]: `var(--c-color-${name}-filled)`,
       [`--c-color-${name}-filled`]: `var(--c-color-${name}-${primaryShade})`,
-      [`--c-color-${name}-filled-hover`]: `var(--color-${name}-${primaryShade === 9 ? 8 : primaryShade + 1})`,
+      [`--c-color-${name}-filled-hover`]: `var(--c-color-${name}-${primaryShade === 9 ? 8 : primaryShade + 1})`,
       [`--c-color-${name}-light`]: `var(--c-color-${name}-${1})`,
       [`--c-color-${name}-light-hover`]: `var(--c-color-${name}-${2})`,
       [`--c-color-${name}-light-color`]: `var(--c-color-${name}-${9})`,
@@ -57,7 +57,7 @@ export function getCSSColorVariables({
   const dynamicVariables = {
     [`--c-color-${name}-text`]: `var(--c-color-${name}-4)`,
     [`--c-color-${name}-filled`]: `var(--c-color-${name}-${primaryShade})`,
-    [`--c-color-${name}-filled-hover`]: `var(--color-${name}-${primaryShade === 9 ? 8 : primaryShade + 1})`,
+    [`--c-color-${name}-filled-hover`]: `var(--c-color-${name}-${primaryShade === 9 ? 8 : primaryShade + 1})`,
     [`--c-color-${name}-light`]: darken(theme.colors[color][9], 0.5),
     [`--c-color-${name}-light-hover`]: darken(theme.colors[color][9], 0.3),
     [`--c-color-${name}-light-color`]: `var(--c-color-${name}-0)`,
