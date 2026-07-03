@@ -1,5 +1,7 @@
 <template>
-  <c-box v-bind="mergedAttrs" :tag="tag" :type="tag === 'button' ? 'button' : undefined" />
+  <c-box v-bind="mergedAttrs" :tag="tag" :type="tag === 'button' ? 'button' : undefined">
+    <slot />
+  </c-box>
 </template>
 
 <script setup lang="ts">
