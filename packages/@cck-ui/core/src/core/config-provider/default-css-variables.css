@@ -27,8 +27,8 @@
   --c-primary-color-filled: var(--c-color-blue-filled);
   --c-primary-color-filled-hover: var(--c-color-blue-filled-hover);
   --c-primary-color-light: var(--c-color-blue-light);
-  --c-primary-color-light-hover: var(--c-coloar-blue-light-hover);
-  --c-primary-color-light-color: var(--c-coloar-blue-light-color);
+  --c-primary-color-light-hover: var(--c-color-blue-light-hover);
+  --c-primary-color-light-color: var(--c-color-blue-light-color);
   --c-breakpoint-xs: 36em;
   --c-breakpoint-sm: 48em;
   --c-breakpoint-md: 62em;
