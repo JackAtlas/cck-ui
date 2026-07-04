@@ -1,6 +1,6 @@
 {
   "extends": "./tsconfig.json",
-  "exclude": ["./esm", "./cjs"],
+  "exclude": ["./esm", "./cjs", "**/*.story.ts"],
   "compilerOptions": {
     "declarationDir": "./lib"
   }
