@@ -1,3 +1,4 @@
+import { CColorSchemeManager } from './color-scheme-managers/types'
 import { CStylesTransform } from './config-provider.context'
 import { CColorScheme, CThemeOverride } from './theme.types'
 
@@ -10,6 +11,11 @@ export interface ConfigProviderProps {
    * @description Theme override object
    */
   theme?: CThemeOverride
+
+  /**
+   * @description Used to retrieve/set color scheme value in external storage, by default was `window.localStorage`
+   */
+  colorSchemeManager?: CColorSchemeManager
 
   /**
    * @description Default color scheme value used when `colorSchemeManager` cannot retrieve value from external storage
