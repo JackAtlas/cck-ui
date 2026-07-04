@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@cck-ui/core": "workspace:^",
+    "@cck-ui/hooks": "workspace:*",
     "@lucide/vue": "^1.17.0",
     "clsx": "^2.1.1",
     "vue": "catalog:",
