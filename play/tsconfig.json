@@ -3,7 +3,8 @@
   "compilerOptions": {
     "paths": {
       "@cck-ui/core": ["../packages/@cck-ui/core/src/index.ts"],
-      "@cck-ui/core/*": ["../packages/@cck-ui/core/src/*"]
+      "@cck-ui/core/*": ["../packages/@cck-ui/core/src/*"],
+      "@cck-ui/hooks": ["../packages/@cck-ui/hooks/src/index.ts"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]

@@ -8,6 +8,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@cck-ui/core': path.resolve(__dirname, '../packages/@cck-ui/core/src/index.ts'),
+      '@cck-ui/hooks': path.resolve(__dirname, '../packages/@cck-ui/hooks/src/index.ts'),
     },
   },
 })
