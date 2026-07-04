@@ -14,6 +14,16 @@
     white-space: nowrap;
   }
 
+  &:where([data-truncate='start']) {
+    direction: rtl;
+    text-align: end;
+
+    @mixin where-rtl {
+      direction: ltr;
+      text-align: start;
+    }
+  }
+
   &:where([data-variant='gradient']) {
     background-image: var(--text-gradient);
     -webkit-text-fill-color: transparent;
