@@ -1,4 +1,6 @@
-.root {
+/* hack: use .root.root to make sure button styles has higher priority than unstyled-button */
+/* looking for better solution */
+.root.root {
   --button-height-xs: 30px;
   --button-height-sm: 36px;
   --button-height-md: 42px;
