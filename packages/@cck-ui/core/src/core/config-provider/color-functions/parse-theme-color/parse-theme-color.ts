@@ -21,7 +21,7 @@ interface ParseThemeColorResult {
 export function parseThemeColor({
   color,
   colorScheme,
-  theme
+  theme,
 }: ParseThemeColorOptions): ParseThemeColorResult {
   if (typeof color !== 'string') {
     throw new Error(
@@ -39,22 +39,21 @@ export function parseThemeColor({
         colorScheme === 'dark' ? theme.white : theme.black,
         theme.luminanceThreshold
       ),
-      variable: '--c-color-bright'
+      variable: '--c-color-bright',
     }
   }
 
   if (color === 'dimmed') {
     return {
       color,
-      value:
-        colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[7],
+      value: colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[7],
       shade: undefined,
       isThemeColor: false,
       isLight: isLightColor(
         colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
         theme.luminanceThreshold
       ),
-      variable: '--c-color-dimmed'
+      variable: '--c-color-dimmed',
     }
   }
 
@@ -68,7 +67,7 @@ export function parseThemeColor({
         color === 'white' ? theme.white : theme.black,
         theme.luminanceThreshold
       ),
-      variable: `--c-color-${color}`
+      variable: `--c-color-${color}`,
     }
   }
 
@@ -88,9 +87,7 @@ export function parseThemeColor({
       shade: colorShade,
       isThemeColor,
       isLight: isLightColor(colorValue, theme.luminanceThreshold),
-      variable: shade
-        ? `--c-color-${_color}-${colorShade}`
-        : `--c-color-${_color}-filled`
+      variable: shade ? `--c-color-${_color}-${colorShade}` : `--c-color-${_color}-filled`,
     }
   }
 
@@ -100,6 +97,6 @@ export function parseThemeColor({
     isThemeColor,
     isLight: isLightColor(color, theme.luminanceThreshold),
     shade: colorShade,
-    variable: undefined
+    variable: undefined,
   }
 }
