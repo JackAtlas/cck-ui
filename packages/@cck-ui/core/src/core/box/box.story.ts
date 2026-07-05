@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { DEFAULT_THEME, rgba } from '../config-provider'
 
-import { CBox } from '..'
+import { CBox } from '.'
 
 const pink = rgba(DEFAULT_THEME.colors.pink[5], 1)
 
