@@ -41,7 +41,7 @@ export type ButtonFactory = PolymorphicFactory<{
 }>
 
 export interface ButtonProps extends BoxProps, StylesApiProps<ButtonFactory> {
-  'data-disabled'?: boolean
+  dataDisabled?: boolean
 
   /**
    * @description If set, adjusts text color based on background color for `filled` variant

@@ -119,7 +119,7 @@ const {
   classNames,
   styles,
   unstyled,
-  'data-disabled': dataDisabled,
+  dataDisabled,
   autoContrast,
   mod,
   attributes,
