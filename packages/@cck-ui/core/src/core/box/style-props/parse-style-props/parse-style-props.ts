@@ -7,18 +7,24 @@ import { SortMediaQueriesResult, sortMediaQueries } from './sort-media-queries'
 import { resolvers } from '../resolvers'
 
 function hasResponsiveStyles(styleProp: StyleProp<unknown>) {
-  if (typeof styleProp !== 'object' || styleProp === null) return false
+  if (typeof styleProp !== 'object' || styleProp === null) {
+    return false
+  }
 
   const breakpoints = Object.keys(styleProp)
 
-  if (breakpoints.length === 1 && breakpoints[0] === 'base') return false
+  if (breakpoints.length === 1 && breakpoints[0] === 'base') {
+    return false
+  }
 
   return true
 }
 
 function getBaseValue(value: StyleProp<unknown>) {
   if (typeof value === 'object' && value !== null) {
-    if ('base' in value) return value.base
+    if ('base' in value) {
+      return value.base
+    }
 
     return undefined
   }
@@ -58,7 +64,7 @@ export interface ParseStylePropsResult {
 export function parseStyleProps({
   data,
   styleProps,
-  theme
+  theme,
 }: ParseStylePropsOptions): SortMediaQueriesResult {
   return sortMediaQueries(
     keys(styleProps).reduce<{
@@ -84,10 +90,7 @@ export function parseStyleProps({
 
         if (!hasResponsiveStyles(styleProps[styleProp])) {
           properties.forEach((property) => {
-            acc.inlineStyles[property] = resolvers[propertyData.type](
-              baseValue,
-              theme
-            )
+            acc.inlineStyles[property] = resolvers[propertyData.type](baseValue, theme)
           })
 
           return acc
@@ -99,10 +102,7 @@ export function parseStyleProps({
 
         properties.forEach((property) => {
           if (baseValue !== null) {
-            acc.styles[property] = resolvers[propertyData.type](
-              baseValue,
-              theme
-            )
+            acc.styles[property] = resolvers[propertyData.type](baseValue, theme)
           }
 
           breakpoints.forEach((breakpoint) => {
@@ -112,7 +112,7 @@ export function parseStyleProps({
               [property]: resolvers[propertyData.type](
                 getBreakpointValue(styleProps[styleProp], breakpoint),
                 theme
-              )
+              ),
             }
           })
         })
@@ -123,7 +123,7 @@ export function parseStyleProps({
         hasResponsiveStyles: false,
         styles: {},
         inlineStyles: {},
-        media: {}
+        media: {},
       }
     )
   )
