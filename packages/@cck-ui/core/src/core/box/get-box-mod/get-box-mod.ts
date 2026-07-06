@@ -8,12 +8,7 @@ export function getMod(props: Record<string, any>) {
   return Object.keys(props).reduce<Record<string, any>>((acc, key) => {
     const value = props[key]
 
-    if (
-      value === undefined ||
-      value === '' ||
-      value === false ||
-      value === null
-    ) {
+    if (value === undefined || value === '' || value === false || value === null) {
       return acc
     }
 
@@ -23,7 +18,9 @@ export function getMod(props: Record<string, any>) {
 }
 
 export function getBoxMod(mod?: any): Record<string, any> | null {
-  if (!mod) return null
+  if (!mod) {
+    return null
+  }
 
   if (typeof mod === 'string') {
     return { [transformModKey(mod)]: true }
