@@ -117,7 +117,21 @@ const _props = computed(() => {
     [`c-visible-from-${props.visibleFrom}`]: props.visibleFrom,
   })
 
-  const { style: _style, className: _className, size: _size, ...restProps } = rest || {}
+  const {
+    tag,
+    style,
+    __vars,
+    className,
+    variant,
+    mod,
+    size,
+    hiddenFrom,
+    visibleFrom,
+    lightHidden,
+    darkHidden,
+    __size,
+    ...restProps
+  } = rest || {}
 
   return {
     ...restProps,
