@@ -8,6 +8,7 @@
 import cx from 'clsx'
 import { computed, inject, onUnmounted, ref, watchEffect } from 'vue'
 import {
+  CBox,
   normalizeNumberLikeStringProp,
   responsiveStyleManager,
   useRandomClassName,

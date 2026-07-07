@@ -18,6 +18,7 @@
 <script setup lang="ts">
 import { computed, onUnmounted, provide, ref, watchEffect } from 'vue'
 import {
+  CBox,
   createVarsResolver,
   isNumberLike,
   responsiveStyleManager,
