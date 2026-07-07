@@ -5,6 +5,9 @@ import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 import { mergeConfig } from 'vite'
 
+import presetCck from 'postcss-preset-cck'
+import simpleVars from 'postcss-simple-vars'
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const { argv } = yargs(hideBin(process.argv))
@@ -43,6 +46,22 @@ const config: StorybookConfig = {
       resolve: {
         alias: {
           '@cck-ui/hooks': path.resolve(__dirname, '../packages/@cck-ui/hooks/src'),
+        },
+      },
+      css: {
+        postcss: {
+          plugins: [
+            ...presetCck({ autoRem: true }),
+            simpleVars({
+              variables: {
+                'c-breakpoint-xs': '36em',
+                'c-breakpoint-sm': '48em',
+                'c-breakpoint-md': '62em',
+                'c-breakpoint-lg': '75em',
+                'c-breakpoint-xl': '88em',
+              },
+            }),
+          ],
         },
       },
     })
