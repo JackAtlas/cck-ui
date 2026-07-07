@@ -40,46 +40,59 @@ const props = withDefaults(defineProps<GridProps>(), {
   gap: 'md',
 })
 
-const varsResolver = createVarsResolver(() => ({}))
+const knownProps = [
+  'classNames',
+  'className',
+  'style',
+  'styles',
+  'unstyled',
+  'vars',
+  'grow',
+  'gap',
+  'rowGap',
+  'columnGap',
+  'columns',
+  'align',
+  'justify',
+  'breakpoints',
+  'type',
+  'attributes',
+]
 
-const {
-  classNames,
-  className,
-  style,
-  styles,
-  unstyled,
-  vars,
-  grow,
-  gap,
-  rowGap,
-  columnGap,
-  columns,
-  align,
-  justify,
-  breakpoints,
-  type,
-  attributes,
-  ...others
-} = props
+const varsResolver = createVarsResolver<GridFactory>((_, { justify, align, overflow }) => ({
+  root: {
+    '--grid-align': align,
+    '--grid-justify': justify,
+    '--grid-overflow': overflow,
+  },
+}))
 
 const getStyles = useStyles<GridFactory>({
   name: 'Grid',
   classes,
   props,
-  className,
-  style,
-  classNames,
-  styles,
-  unstyled,
-  attributes,
-  vars,
+  className: props.className,
+  style: props.style,
+  classNames: props.classNames,
+  styles: props.styles,
+  unstyled: props.unstyled,
+  attributes: props.attributes,
+  vars: props.vars,
   varsResolver,
 })
 
 const responsiveClassname = useRandomClassName()
 
 const rootAttrs = computed(() => getStyles('root', { className: responsiveClassname }))
-const mergedRootAttrs = computed(() => ({ ...others, ...rootAttrs.value }))
+const mergedRootAttrs = computed(() => {
+  const others: Record<string, any> = {}
+  for (const key in props) {
+    if (!knownProps.includes(key)) {
+      others[key] = props[key as keyof typeof props]
+    }
+  }
+  return { ...others, ...rootAttrs.value }
+})
 
 const innerAttrs = computed(() => getStyles('inner'))
 
