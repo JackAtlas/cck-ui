@@ -1,10 +1,11 @@
+import { ComputedRef, InjectionKey } from 'vue'
 import { CColorSchemeManager } from './color-scheme-managers/types'
-import { CStylesTransform } from './config-provider.context'
-import { CColorScheme, CThemeOverride } from './theme.types'
+import { CContextValue, CStylesTransform } from './config-provider.context'
+import { CColorScheme, CTheme, CThemeOverride } from './theme.types'
 
-export const CONFIG_KEY = Symbol('CCK_CONFIG_KEY')
+export const CONFIG_KEY: InjectionKey<CContextValue> = Symbol('CCK_CONFIG_KEY')
 
-export const THEME_KEY = Symbol('THEME_SLATE')
+export const THEME_KEY: InjectionKey<ComputedRef<CTheme>> = Symbol('CCK_THEME')
 
 export interface ConfigProviderProps {
   /**

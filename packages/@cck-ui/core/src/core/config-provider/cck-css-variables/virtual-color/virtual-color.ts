@@ -15,7 +15,7 @@ type VirtualColor = CColorsTuple & {
   light: CColor
 }
 
-export function VirtualColor(input: VirtualColorInput): CColorsTuple {
+export function virtualColor(input: VirtualColorInput): CColorsTuple {
   const result = colorsTuple(
     Array.from({ length: 10 }).map((_, i) => `var(--c-color-${input.name}-${i})`)
   )

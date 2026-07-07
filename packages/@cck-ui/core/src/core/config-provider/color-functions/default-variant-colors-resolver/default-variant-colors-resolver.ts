@@ -133,6 +133,33 @@ export const defaultVariantColorsResolver: VariantColorsResolver = ({
     }
   }
 
+  if (variant === 'dashed') {
+    if (parsed.isThemeColor) {
+      if (parsed.shade === undefined) {
+        return {
+          background: 'transparent',
+          hover: `var(--c-color-${color}-outline-hover)`,
+          color: `var(--c-color-${color}-outline)`,
+          border: `${rem(1)} dashed var(--c-color-${color}-outline)`,
+        }
+      }
+
+      return {
+        background: 'transparent',
+        hover: rgba(theme.colors[parsed.color][parsed.shade], 0.05),
+        color: `var(--c-color-${parsed.color}-${parsed.shade})`,
+        border: `${rem(1)} dashed var(--c-color-${parsed.color}-${parsed.shade})`,
+      }
+    }
+
+    return {
+      background: 'transparent',
+      hover: rgba(color!, 0.05),
+      color: color!,
+      border: `${rem(1)} dashed ${color}`,
+    }
+  }
+
   if (variant === 'subtle') {
     if (parsed.isThemeColor) {
       if (parsed.shade === undefined) {

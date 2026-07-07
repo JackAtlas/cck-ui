@@ -1,8 +1,9 @@
 export type {
   VariantColorsResolverInput,
   VariantColorsResolverResult,
-  VariantColorsResolver
+  VariantColorsResolver,
 } from './default-variant-colors-resolver/default-variant-colors-resolver'
+export { colorsTuple } from './colors-tuple/colors-tuple'
 export { darken } from './darken/darken'
 export { defaultVariantColorsResolver } from './default-variant-colors-resolver/default-variant-colors-resolver'
 export { getGradient } from './get-gradient/get-gradient'

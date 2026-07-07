@@ -1,15 +1,16 @@
 import { CColorScheme, CTheme } from './theme.types'
 import { ConvertCSSVariablesInput } from './convert-css-variables'
-import { inject } from 'vue'
-import { CONFIG_KEY } from './config-provider.types'
+import { computed, ComputedRef, inject } from 'vue'
+import { CONFIG_KEY, THEME_KEY } from './config-provider.types'
+import { DEFAULT_THEME } from './default-theme'
 
 export interface CStylesTransform {
   sx?: () => (sx: any) => string
   styles?: () => (styles: any, payload: any) => Record<string, string>
 }
 
-interface CContextValue {
-  colorScheme: CColorScheme
+export interface CContextValue {
+  colorScheme: ComputedRef<CColorScheme>
   setColorScheme: (colorScheme: CColorScheme) => void
   clearColorScheme: () => void
   getRootElement: () => HTMLElement | undefined
@@ -23,8 +24,15 @@ interface CContextValue {
   env?: 'default' | 'test'
 }
 
+export function useCckTheme(): ComputedRef<CTheme> {
+  return inject(
+    THEME_KEY,
+    computed(() => DEFAULT_THEME)
+  )
+}
+
 export function useConfigContext() {
-  const ctx = inject<CContextValue>(CONFIG_KEY)
+  const ctx = inject(CONFIG_KEY)
 
   if (!ctx) {
     throw new Error('[@cck-ui/core] ConfigProvider was not found in tree')
