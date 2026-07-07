@@ -88,7 +88,7 @@ const varsResolver = createVarsResolver<ButtonFactory>(
         '--button-bg': color || variant ? colors.background : undefined,
         '--button-hover': color || variant ? colors.hover : undefined,
         '--button-color': colors.color,
-        '--button-bd': color || variant ? colors.color : undefined,
+        '--button-bd': color || variant ? colors.border : undefined,
         '--button-hover-color': color || variant ? colors.hoverColor : undefined,
       },
     }
