@@ -1,15 +1,14 @@
 import {
-  DEFAULT_THEME,
   filterProps,
   getBaseValue,
   getSortedBreakpoints,
   getSpacing,
   keys,
   stylesToString,
-  THEME_KEY,
+  useCckTheme,
 } from '../../core'
 import { GridBreakpoints, GridProps } from './grid.types'
-import { computed, inject } from 'vue'
+import { computed } from 'vue'
 
 interface GridVariablesProps extends GridProps {
   selector: string
@@ -24,7 +23,8 @@ export function useGridCustomStyle({
   type,
 }: GridVariablesProps) {
   return computed(() => {
-    const theme = inject(THEME_KEY, DEFAULT_THEME)
+    const _theme = useCckTheme()
+    const theme = _theme.value
 
     const _breakpoints = breakpoints || theme.breakpoints
 

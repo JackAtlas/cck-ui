@@ -1,4 +1,3 @@
-import { inject } from 'vue'
 import {
   Attributes,
   ClassNames,
@@ -18,10 +17,9 @@ import { getStyle } from './get-style/get-style'
 import { FactoryPayload } from '../../factory'
 import { CStyleProp } from '../../box'
 import {
-  DEFAULT_THEME,
-  THEME_KEY,
   useCckClassNamesPrefix,
   useCckIsHeadless,
+  useCckTheme,
   useCckWithStaticClasses,
 } from '../../config-provider'
 
@@ -64,7 +62,8 @@ export function useStyles<Payload extends FactoryPayload>({
   varsResolver,
   attributes,
 }: UseStylesInput<Payload>): GetStylesApi<Payload> {
-  const theme = inject(THEME_KEY, DEFAULT_THEME)
+  const _theme = useCckTheme()
+  const theme = _theme.value
   const classNamesPrefix = useCckClassNamesPrefix()
   const withStaticClasses = useCckWithStaticClasses()
   const headless = useCckIsHeadless()

@@ -1,14 +1,13 @@
-import { computed, inject } from 'vue'
+import { computed } from 'vue'
 import { ColProps, ColSpan } from './col.types'
 import {
-  DEFAULT_THEME,
   filterProps,
   getBaseValue,
   getSortedBreakpoints,
   keys,
   StyleProp,
   stylesToString,
-  THEME_KEY,
+  useCckTheme,
 } from '../../../core'
 import { GridContextValue } from '../grid.context'
 import type { GridBreakpoints } from '../grid.types'
@@ -85,7 +84,8 @@ export function useColCustomStyle(
   gridContext: GridContextValue
 ) {
   return computed(() => {
-    const theme = inject(THEME_KEY, DEFAULT_THEME)
+    const _theme = useCckTheme()
+    const theme = _theme.value
 
     const _breakpoints = gridContext.breakpoints || theme.breakpoints
     const baseValue = getBaseValue(span)

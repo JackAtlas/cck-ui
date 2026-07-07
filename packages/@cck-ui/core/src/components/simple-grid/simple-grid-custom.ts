@@ -1,9 +1,7 @@
-import { computed, inject } from 'vue'
+import { computed } from 'vue'
 import {
   CBreakpoint,
   CTheme,
-  DEFAULT_THEME,
-  THEME_KEY,
   filterProps,
   getBaseValue,
   getSortedBreakpoints,
@@ -13,6 +11,7 @@ import {
   px,
   rem,
   stylesToString,
+  useCckTheme,
 } from '../../core'
 import { SimpleGridProps } from './simple-grid.types'
 
@@ -142,7 +141,8 @@ function getContainerStyle({ cols, minColWidth, spacing, verticalSpacing }: Simp
 
 export function useSimpleGridStyle(props: SimpleGridVariablesProps) {
   return computed(() => {
-    const theme = inject(THEME_KEY, DEFAULT_THEME)
+    const _theme = useCckTheme()
+    const theme = _theme.value
     const { autoFlow, autoRows, cols, minColWidth, selector, spacing, verticalSpacing } = props
     const _verticalSpacing = verticalSpacing === undefined ? spacing : verticalSpacing
     const useAutoColumns = minColWidth !== undefined
