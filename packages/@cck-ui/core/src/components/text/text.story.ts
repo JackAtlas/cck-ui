@@ -8,27 +8,20 @@ const lorem =
 const meta = {
   title: 'Text',
   component: CText,
-  tags: ['autodocs'],
-  args: {
-    default: 'The quick brown fox jumps over the lazy dog',
-  },
   render: (args) => ({
     components: { CText },
     setup() {
       return { args }
     },
-    template: `<CText v-bind="args">{{ args.default }}</CText>`,
+    template: `<c-text v-bind="args">Just text</c-text>`,
   }),
 } satisfies Meta<typeof CText>
 
 export default meta
+
 type Story = StoryObj<typeof meta>
 
-export const Usage: Story = {
-  args: {
-    default: 'Just text',
-  },
-}
+export const Usage: Story = {}
 
 export const Sizes: Story = {
   args: {
