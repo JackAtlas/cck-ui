@@ -26,7 +26,17 @@ const props = withDefaults(defineProps<ColProps>(), {
   span: 12,
 })
 
-const { classNames, className, style, styles, vars, span, order, offset, align, ...others } = props
+const knownProps = [
+  'classNames',
+  'className',
+  'style',
+  'styles',
+  'vars',
+  'span',
+  'order',
+  'offset',
+  'align',
+]
 
 const gridContext = inject(GRID_CONTEXT_KEY) as GridContextValue
 
@@ -34,13 +44,21 @@ const responsiveClassname = useRandomClassName()
 
 const rootAttrs = computed(() =>
   gridContext.getStyles('col', {
-    className: cx(className, responsiveClassname),
-    style,
-    classNames,
-    styles,
+    className: cx(props.className, responsiveClassname),
+    style: props.style,
+    classNames: props.classNames,
+    styles: props.styles,
   })
 )
-const mergedAttrs = computed(() => ({ ...others, ...rootAttrs.value }))
+const mergedAttrs = computed(() => {
+  const others: Record<string, any> = {}
+  for (const key in props) {
+    if (!knownProps.includes(key)) {
+      others[key] = props[key as keyof typeof props]
+    }
+  }
+  return { ...others, ...rootAttrs.value }
+})
 
 const _offset = normalizeNumberLikeStringProp(props.offset)
 const _order = normalizeNumberLikeStringProp(props.order)
