@@ -77,7 +77,9 @@ export function parseStyleProps({
         if (
           (styleProp as string) === 'hiddenFrom' ||
           (styleProp as string) === 'visibleFrom' ||
-          (styleProp as string) === 'sx'
+          (styleProp as string) === 'sx' ||
+          (styleProp as string) === 'lightHidden' ||
+          (styleProp as string) === 'darkHidden'
         ) {
           return acc
         }

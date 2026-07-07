@@ -6,10 +6,10 @@
 
 <script setup lang="ts">
 import cx from 'clsx'
-import { computed, inject, onBeforeUnmount, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, ref, watch } from 'vue'
 import { isNumberLike } from '../utils'
 import type { BoxComponentProps } from './box.types'
-import { DEFAULT_THEME, THEME_KEY } from '../config-provider'
+import { useCckTheme } from '../config-provider'
 import { extractStyleProps, parseStyleProps, STYLE_PROPS_DATA } from './style-props'
 import { getBoxStyle } from './get-box-style/get-box-style'
 import {
@@ -28,31 +28,19 @@ const props = withDefaults(defineProps<BoxComponentProps & { className: string; 
   tag: 'div',
 })
 
-const {
-  __size,
-  __vars,
-  className,
-  darkHidden,
-  hiddenFrom,
-  lightHidden,
-  mod,
-  size,
-  style,
-  tag,
-  variant,
-  visibleFrom,
-  ...others
-} = props
+const theme = useCckTheme()
 
-const theme = inject(THEME_KEY, DEFAULT_THEME)
-const { styleProps, rest } = extractStyleProps(others)
-const parsedStyleProps = computed(() =>
-  parseStyleProps({
-    styleProps,
-    theme,
-    data: STYLE_PROPS_DATA,
-  })
-)
+const parsedStyleProps = computed(() => {
+  const { styleProps, rest } = extractStyleProps(props)
+  return {
+    ...parseStyleProps({
+      styleProps,
+      theme: theme.value,
+      data: STYLE_PROPS_DATA,
+    }),
+    rest,
+  }
+})
 
 const hasResponsive = computed(() => parsedStyleProps.value.hasResponsiveStyles)
 const responsiveClassName = ref<string | null>(null)
@@ -112,23 +100,33 @@ onBeforeUnmount(() => {
   }
 })
 
-const _props = {
-  style: getBoxStyle({
-    theme,
-    style,
-    vars: __vars,
-    styleProps: parsedStyleProps.value.inlineStyles,
-  }),
-  className: cx(className, responsiveClassName.value, {
-    'c-light-hidden': lightHidden,
-    'c-dark-hidden': darkHidden,
-    [`c-hidden-from-${hiddenFrom}`]: hiddenFrom,
-    [`c-visible-from-${visibleFrom}`]: visibleFrom,
-  }),
-  'data-variant': variant,
-  'data-size': isNumberLike(size) ? undefined : size || undefined,
-  size: __size,
-  ...getBoxMod(mod),
-  ...rest,
-}
+const _props = computed(() => {
+  const { rest, inlineStyles } = parsedStyleProps.value
+
+  const finalStyle = getBoxStyle({
+    theme: theme.value,
+    style: props.style,
+    vars: props.__vars,
+    styleProps: inlineStyles,
+  })
+
+  const finalClassName = cx(props.className, responsiveClassName.value, {
+    'c-light-hidden': props.lightHidden,
+    'c-dark-hidden': props.darkHidden,
+    [`c-hidden-from-${props.hiddenFrom}`]: props.hiddenFrom,
+    [`c-visible-from-${props.visibleFrom}`]: props.visibleFrom,
+  })
+
+  const { style: _style, className: _className, size: _size, ...restProps } = rest || {}
+
+  return {
+    ...restProps,
+    style: finalStyle,
+    className: finalClassName,
+    'data-variant': props.variant,
+    'data-size': isNumberLike(props.size) ? undefined : props.size || undefined,
+    size: props.__size,
+    ...getBoxMod(props.mod),
+  }
+})
 </script>

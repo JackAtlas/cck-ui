@@ -4,15 +4,7 @@
     :disabled="disabled || loading"
     :unstyled="unstyled"
     :variant="variant"
-    :mod="[
-      {
-        disabled: disabled || dataDisabled,
-        loading,
-        block: fullWidth,
-        'with-left-section': hasLeftSlot || leftSection,
-        'with-right-section': hasRightSlot || rightSection,
-      },
-    ]"
+    :mod="modList"
   >
     <c-box tag="span" v-bind="innerAttrs">
       <c-box
@@ -24,6 +16,7 @@
         <slot name="left-section"></slot>
       </c-box>
       <c-box v-else-if="leftSection" v-bind="sectionAttrs" tag="span" :mod="{ position: 'left' }">
+        <!-- TODO -->
         <component :is="leftSection" />
       </c-box>
       <c-box v-bind="labelAttrs" tag="span" :mod="{ loading }">
@@ -38,6 +31,7 @@
         <slot name="right-section"></slot>
       </c-box>
       <c-box v-else-if="rightSection" v-bind="sectionAttrs" tag="span" :mod="{ position: 'right' }">
+        <!-- TODO -->
         <component :is="rightSection" />
       </c-box>
     </c-box>
@@ -148,4 +142,14 @@ const mergedRootAttrs = computed(() => ({ ...others, ...rootAttrs.value }))
 const innerAttrs = computed(() => getStyles('inner'))
 const sectionAttrs = computed(() => getStyles('section'))
 const labelAttrs = computed(() => getStyles('label'))
+
+const modList = computed(() => [
+  {
+    disabled: props.disabled || props.dataDisabled,
+    loading: props.loading,
+    block: props.fullWidth,
+    'with-left-section': hasLeftSlot.value || !!props.leftSection,
+    'with-right-section': hasRightSlot.value || !!props.rightSection,
+  },
+])
 </script>
