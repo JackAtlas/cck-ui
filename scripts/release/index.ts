@@ -37,6 +37,11 @@ const { argv }: { argv: any } = yargs(hideBin(process.argv))
     default: false,
     description: 'Skip publishing to npm (useful for local testing)',
   })
+  .option('publish', {
+    type: 'boolean',
+    default: true,
+    description: 'Publish to npm (use --no-publish to skip)',
+  })
 
 async function release() {
   const status = await git.status()
@@ -77,7 +82,7 @@ async function release() {
     argv.tag = 'next'
   }
 
-  const shouldPublish = argv.ci || !argv.noPublish
+  const shouldPublish = argv.publish
 
   if (shouldPublish) {
     const cckPackages = await getCckPackagesList()
