@@ -22,7 +22,7 @@ export async function publishPackage({
     if (provenance) {
       args.push('--provenance')
     }
-    await $({ cwd: packagePath })`pnpm ${args}`
+    await $({ cwd: packagePath })`npm ${args}`
     logger.success(`Package ${chalk.cyan(name)} has been published`)
   } catch (error: any) {
     logger.error(`Failed to publish package ${chalk.red(name)}`)
