@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, toRef } from 'vue'
 import { useCckEnv } from '../../core'
 import { TransitionProps } from './transition.types'
 import { useTransition } from './use-transition'
@@ -24,8 +24,10 @@ const props = withDefaults(defineProps<TransitionProps>(), {
 
 const env = useCckEnv()
 
+const mountedRef = toRef(props, 'mounted')
+
 const { transitionDuration, transitionStatus, transitionTimingFunction } = useTransition({
-  mounted: props.mounted,
+  mounted: mountedRef,
   exitDuration: props.exitDuration ?? props.duration,
   duration: props.duration,
   timingFunction: props.timingFunction,
@@ -42,7 +44,7 @@ const shouldRenderSlot = computed(() => {
     return true
   }
   const status = transitionStatus.value
-  return status !== 'exited' && status !== 'pre-exiting'
+  return status !== 'exited'
 })
 
 const computedStyles = computed(() => {
@@ -83,13 +85,5 @@ const computedStyles = computed(() => {
         state: status,
         timingFunction: transitionTimingFunction,
       })
-})
-
-const showSlot = computed(() => {
-  if (props.keepMounted) {
-    return true
-  }
-  const status = transitionStatus.value
-  return status !== 'exited' && status !== 'pre-exiting'
 })
 </script>

@@ -1,6 +1,6 @@
 import { usePreferredReducedMotion } from '@vueuse/core'
 import { useCckTheme } from '../../core'
-import { nextTick, onUnmounted, ref, watch } from 'vue'
+import { nextTick, onUnmounted, Ref, ref, watch } from 'vue'
 
 export type TransitionStatus =
   | 'entered'
@@ -14,7 +14,7 @@ interface UseTransitionOptions {
   duration: number
   exitDuration: number
   timingFunction: string
-  mounted: boolean
+  mounted: Ref<boolean>
   onEnter?: () => void
   onExit?: () => void
   onEntered?: () => void
@@ -40,7 +40,7 @@ export function useTransition({
   const reduceMotion = theme.respectReducedMotion ? shouldReduceMotion : false
 
   const transitionDuration = ref(reduceMotion ? 0 : duration)
-  const transitionStatus = ref<TransitionStatus>(mounted ? 'entered' : 'exited')
+  const transitionStatus = ref<TransitionStatus>(mounted.value ? 'entered' : 'exited')
 
   let transitionTimeout: number | null = null
   let delayTimeout: number | null = null
@@ -101,12 +101,17 @@ export function useTransition({
     }, delay)
   }
 
+  let isInitial = true
   watch(
-    () => mounted,
+    mounted,
     (newVal) => {
+      if (isInitial) {
+        isInitial = false
+        return
+      }
       handleTransitionWithDelay(newVal)
     },
-    { immediate: false }
+    { immediate: true }
   )
 
   onUnmounted(() => {
