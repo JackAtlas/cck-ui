@@ -3,7 +3,6 @@
     v-bind="mergedRootAttrs"
     :disabled="disabled || loading"
     :unstyled="unstyled"
-    :variant="variant"
     :mod="modList"
   >
     <c-box tag="span" v-bind="innerAttrs">
@@ -89,55 +88,56 @@ const varsResolver = createVarsResolver<ButtonFactory>(
   }
 )
 
-const props = withDefaults(defineProps<ButtonProps>(), {
-  radius: '4px',
-  size: 'sm',
-  tag: 'button',
-  variant: 'default',
-})
+const props = defineProps<ButtonProps>()
 
-const {
-  style,
-  vars,
-  className,
-  color,
-  disabled,
-  leftSection,
-  rightSection,
-  fullWidth,
-  variant,
-  radius,
-  loading,
-  loaderProps,
-  gradient,
-  classNames,
-  styles,
-  unstyled,
-  dataDisabled,
-  autoContrast,
-  mod,
-  attributes,
-  ...others
-} = props
+const knownProps = [
+  'style',
+  'vars',
+  'className',
+  'color',
+  'disabled',
+  'leftSection',
+  'rightSection',
+  'fullWidth',
+  'radius',
+  'loading',
+  'loaderProps',
+  'gradient',
+  'classNames',
+  'styles',
+  'unstyled',
+  'dataDisabled',
+  'autoContrast',
+  'mod',
+  'attributes',
+]
 
 const getStyles = useStyles<ButtonFactory>({
   name: 'Button',
   props,
   classes,
-  className,
-  style,
-  classNames,
-  styles,
-  unstyled,
-  attributes,
-  vars,
+  className: props.className,
+  style: props.style,
+  classNames: props.classNames,
+  styles: props.styles,
+  unstyled: props.unstyled,
+  attributes: props.attributes,
+  vars: props.vars,
   varsResolver,
 })
 
 const rootAttrs = computed(() =>
-  getStyles('root', { active: !disabled && !loading && !dataDisabled })
+  getStyles('root', { active: !props.disabled && !props.loading && !props.dataDisabled })
 )
-const mergedRootAttrs = computed(() => ({ ...others, ...rootAttrs.value }))
+const mergedRootAttrs = computed(() => {
+  const others: Record<string, any> = {}
+  for (const key in props) {
+    if (!knownProps.includes(key)) {
+      others[key] = props[key as keyof typeof props]
+    }
+  }
+  return { ...others, ...rootAttrs.value }
+})
 
 const innerAttrs = computed(() => getStyles('inner'))
 const sectionAttrs = computed(() => getStyles('section'))
