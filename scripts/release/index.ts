@@ -106,9 +106,9 @@ async function release() {
   if (!argv.ci) {
     await $`pnpm install`
     await git.add([getPath('packages'), getPath('package.json'), getPath('pnpm-lock.yaml')])
-    await git.commit(`[release] Version: ${increasedVersion}`)
+    await git.commit(`chore(release): v${increasedVersion}`)
     await git.addTag(`v${increasedVersion}`)
-    await git.push()
+    await git.push(['--tags'])
 
     openGithubRelease(increasedVersion)
   } else {
