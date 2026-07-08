@@ -82,7 +82,7 @@ async function release() {
     argv.tag = 'next'
   }
 
-  const shouldPublish = argv.publish
+  const shouldPublish = argv.ci || argv.publish
 
   if (shouldPublish) {
     const cckPackages = await getCckPackagesList()
