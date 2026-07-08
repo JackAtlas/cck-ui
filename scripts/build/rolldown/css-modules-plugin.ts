@@ -10,8 +10,16 @@ export function cssModulesPlugin(): Plugin {
     name: 'css-module',
 
     async transform(code, id) {
-      if (!id.endsWith('.module.css')) {
+      if (!id.endsWith('.css')) {
         return null
+      }
+
+      if (!id.endsWith('.module.css')) {
+        collectedCSS.push(code)
+        return {
+          code: `export default {}`,
+          map: null,
+        }
       }
 
       let classMap: Record<string, string> = {}

@@ -69,6 +69,7 @@ export function createPackageConfig(packagePath: string): RolldownOptions {
     ],
     moduleTypes: {
       '.module.css': 'js',
+      '.css': 'js',
     },
     external: [...ROLLDOWN_EXTERNALS, ...pkgDeps],
     plugins,
