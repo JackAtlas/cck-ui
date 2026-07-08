@@ -76,8 +76,6 @@ async function release() {
   await buildAllPackages()
   logger.success('All packages have been built successfully')
 
-  logger.log('Publishing packages to npm')
-
   if (argv.stage && argv.tag === 'latest') {
     argv.tag = 'next'
   }
@@ -85,6 +83,7 @@ async function release() {
   const shouldPublish = argv.ci || argv.publish
 
   if (shouldPublish) {
+    logger.log('Publishing packages to npm')
     const cckPackages = await getCckPackagesList()
 
     await Promise.all(
@@ -101,6 +100,7 @@ async function release() {
     logger.success('All packages have been published successfully')
   } else {
     logger.log('Skipping npm publish (--no-publish)')
+    logger.log('git push to trigger ci release')
   }
 
   if (!argv.ci) {
