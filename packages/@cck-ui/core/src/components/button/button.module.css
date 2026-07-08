@@ -39,9 +39,9 @@
   display: inline-block;
   border-radius: var(--button-radius, var(--c-radius-default));
   font-size: var(--button-fz, var(--c-font-size-sm));
-  background: var(--button-bg, var(--c-primary-color-filled));
-  border: var(--button-bd, rem(1px) solid transparent);
-  color: var(--button-color, var(--c-color-white));
+  background: var(--button-bg, var(--c-color-default));
+  border: var(--button-bd, rem(1px) solid var(--c-color-default-border));
+  color: var(--button-color, var(--c-color-default-color));
   height: var(--button-height, var(--button-height-sm));
   padding-inline: var(--button-padding-x, var(--button-padding-x-sm));
   vertical-align: middle;
@@ -106,7 +106,7 @@
 
   @mixin hover {
     &:where(:not([data-loading], :disabled, [data-disabled])) {
-      background-color: var(--button-hover, var(--c-primary-color-filled-hover));
+      background-color: var(--button-hover, var(--c-color-default-hover));
       color: var(--button-hover-color, var(--button-color));
     }
   }
