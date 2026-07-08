@@ -97,14 +97,4 @@ export interface ButtonProps extends BoxProps, StylesApiProps<ButtonFactory> {
    * @default 'sm'
    */
   size?: ButtonSize
-  /**
-   * @description custom element tag
-   * @default 'button'
-   */
-  tag?: string | Component
-  /**
-   * @description variants of button
-   * @default 'default'
-   */
-  variant?: ButtonVariant
 }
