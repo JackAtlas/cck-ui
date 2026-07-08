@@ -28,43 +28,50 @@ const props = withDefaults(defineProps<SimpleGridProps>(), {
   type: 'media',
 })
 
-const {
-  classNames,
-  className,
-  style,
-  styles,
-  unstyled,
-  vars,
-  cols,
-  verticalSpacing,
-  spacing,
-  type,
-  minColWidth,
-  autoFlow,
-  autoRows,
-  attributes,
-  ...others
-} = props
+const knownProps = [
+  'classNames',
+  'className',
+  'style',
+  'styles',
+  'unstyled',
+  'vars',
+  'cols',
+  'verticalSpacing',
+  'spacing',
+  'type',
+  'minColWidth',
+  'autoFlow',
+  'autoRows',
+  'attributes',
+]
 
 const getStyles = useStyles<SimpleGridFactory>({
   name: 'SimpleGrid',
   classes,
   props,
-  className,
-  style,
-  classNames,
-  styles,
-  unstyled,
-  attributes,
-  vars,
+  className: props.className,
+  style: props.style,
+  classNames: props.classNames,
+  styles: props.styles,
+  unstyled: props.unstyled,
+  attributes: props.attributes,
+  vars: props.vars,
 })
 
 const responsiveClassname = useRandomClassName()
 
-const autoColsAttr = minColWidth !== undefined ? autoFlow || 'auto-fill' : undefined
+const autoColsAttr = props.minColWidth !== undefined ? props.autoFlow || 'auto-fill' : undefined
 
 const rootAttrs = computed(() => getStyles('root', { className: responsiveClassname }))
-const mergedRootAttrs = computed(() => ({ ...others, ...rootAttrs.value }))
+const mergedRootAttrs = computed(() => {
+  const others: Record<string, any> = {}
+  for (const key in props) {
+    if (!knownProps.includes(key)) {
+      others[key] = props[key as keyof typeof props]
+    }
+  }
+  return { ...others, ...rootAttrs.value }
+})
 
 const containerAttrs = computed(() => getStyles('container'))
 
