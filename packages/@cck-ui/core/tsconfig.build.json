@@ -2,6 +2,7 @@
   "extends": "./tsconfig.json",
   "exclude": ["./esm", "./cjs", "**/*.story.ts"],
   "compilerOptions": {
+    "rootDir": "./src",
     "declarationDir": "./lib"
   }
 }
