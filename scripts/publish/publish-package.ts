@@ -18,10 +18,11 @@ export async function publishPackage({
   provenance = false,
 }: PublishPackage) {
   try {
-    const cmd = provenance
-      ? `npm publish --access public --tag ${tag} --provenance`
-      : `npm publish --access public --tag ${tag}`
-    await $({ cwd: packagePath })`${cmd}`
+    const args = ['publish', '--access', 'public', '--tag', tag]
+    if (provenance) {
+      args.push('--provenance')
+    }
+    await $({ cwd: packagePath })`pnpm ${args}`
     logger.success(`Package ${chalk.cyan(name)} has been published`)
   } catch (error: any) {
     logger.error(`Failed to publish package ${chalk.red(name)}`)
