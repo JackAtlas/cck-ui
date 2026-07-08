@@ -5,6 +5,23 @@
     :unstyled="unstyled"
     :mod="modList"
   >
+    <c-transition
+      v-if="typeof props.loading === 'boolean'"
+      :mounted="props.loading"
+      :transition="loaderTransition"
+      :duration="150"
+    >
+      <template #default="{ styles }">
+        <c-box tag="span" v-bind="getStyles('loader', { style: styles })" aria-hidden="true">
+          <c-loader
+            color="var(--button-color)"
+            size="calc(var(--button-height) / 1.8)"
+            v-bind="props.loaderProps"
+          ></c-loader>
+        </c-box>
+      </template>
+    </c-transition>
+
     <c-box tag="span" v-bind="innerAttrs">
       <c-box
         v-if="$slots['left-section']"
@@ -39,10 +56,20 @@
 
 <script setup lang="ts">
 import { computed, useSlots } from 'vue'
-import { CBox, createVarsResolver, getFontSize, getRadius, getSize, useStyles } from '../../core'
+import {
+  CBox,
+  createVarsResolver,
+  getFontSize,
+  getRadius,
+  getSize,
+  rem,
+  useStyles,
+} from '../../core'
 import { UnstyledButton } from '../unstyled-button'
 import { ButtonFactory, type ButtonProps } from './button.types'
 import classes from './button.module.css'
+import { CLoader } from '../loader'
+import { CTransition, CckTransition } from '../transition'
 
 defineOptions({
   name: 'CButton',
@@ -58,6 +85,13 @@ const slots = useSlots()
 
 const hasLeftSlot = computed(() => !!slots['left-section'])
 const hasRightSlot = computed(() => !!slots['right-section'])
+
+const loaderTransition: CckTransition = {
+  in: { opacity: 1, transform: `translate(-50%, calc(-50% + ${rem(1)}))` },
+  out: { opacity: 0, transform: 'translate(-50%, -200%)' },
+  common: { transformOrigin: 'center' },
+  transitionProperty: 'transform, opacity',
+}
 
 const varsResolver = createVarsResolver<ButtonFactory>(
   (theme, { radius, color, gradient, variant, size, justify, autoContrast }) => {
