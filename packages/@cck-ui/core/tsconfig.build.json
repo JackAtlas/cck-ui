@@ -3,6 +3,10 @@
   "exclude": ["./esm", "./cjs", "**/*.story.ts"],
   "compilerOptions": {
     "rootDir": "./src",
-    "declarationDir": "./lib"
+    "declarationDir": "./lib",
+    "paths": {
+      "@cck-ui/hooks": ["../hooks/lib/index"]
+    },
+    "skipLibCheck": true
   }
 }
