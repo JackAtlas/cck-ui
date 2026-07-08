@@ -40,6 +40,7 @@
   },
   "dependencies": {
     "@ctrl/tinycolor": "^4.2.0",
+    "@vueuse/core": "^14.3.0",
     "clsx": "^2.1.1",
     "type-fest": "^5.7.0"
   },

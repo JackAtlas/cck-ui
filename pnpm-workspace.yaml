@@ -9,7 +9,6 @@ allowBuilds:
 catalog:
   '@ctrl/tinycolor': ^4.2.0
   '@vue/shared': ^3.5.39
-  '@vueuse/core': ^14.3.0
   es-toolkit: ^1.47.0
   type-fest: ^5.7.0
   vue: ^3.5.39
