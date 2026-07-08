@@ -22,21 +22,20 @@ const props = withDefaults(defineProps<LoaderProps>(), {
   type: 'oval',
 })
 
-const {
-  size,
-  color,
-  type,
-  vars,
-  className,
-  style,
-  classNames,
-  styles,
-  unstyled,
-  loaders,
-  variant,
-  attributes,
-  ...others
-} = props
+const knownProps = [
+  'size',
+  'color',
+  'type',
+  'vars',
+  'className',
+  'style',
+  'classNames',
+  'styles',
+  'unstyled',
+  'loaders',
+  'variant',
+  'attributes',
+]
 
 const varsResolver = createVarsResolver<LoaderFactory>((theme, { size, color }) => ({
   root: {
@@ -49,19 +48,27 @@ const getStyles = useStyles<LoaderFactory>({
   name: 'Loader',
   props,
   classes,
-  className,
-  style,
-  classNames,
-  styles,
-  unstyled,
-  attributes,
-  vars,
+  className: props.className,
+  style: props.style,
+  classNames: props.classNames,
+  styles: props.styles,
+  unstyled: props.unstyled,
+  attributes: props.attributes,
+  vars: props.vars,
   varsResolver,
 })
 
 const rootAttrs = computed(() => getStyles('root'))
 
-const mergedAttrs = computed(() => ({ ...others, ...rootAttrs.value }))
+const mergedAttrs = computed(() => {
+  const others: Record<string, any> = {}
+  for (const key in props) {
+    if (!knownProps.includes(key)) {
+      others[key] = props[key as keyof typeof props]
+    }
+  }
+  return { ...others, ...rootAttrs.value }
+})
 
 const { _ref } = useLoader()
 
