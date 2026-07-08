@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { createVarsResolver, getSize, getThemeColor, useStyles } from '../../core'
+import { CBox, createVarsResolver, getSize, getThemeColor, useStyles } from '../../core'
 import type { LoaderProps } from './loader.types'
 import { useLoader } from './use-loader'
 import { CDefaultLoaders, LoaderFactory } from '.'
