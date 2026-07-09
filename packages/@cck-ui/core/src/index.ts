@@ -1,6 +1,8 @@
 import type { App, Plugin } from 'vue'
 import {
   CButton,
+  CButtonGroup,
+  CButtonGroupSection,
   CCol,
   CGrid,
   CGroup,
@@ -18,6 +20,8 @@ const components = [
   CckConfigProvider,
   CBox,
   CButton,
+  CButtonGroup,
+  CButtonGroupSection,
   CGrid,
   CCol,
   CGroup,
