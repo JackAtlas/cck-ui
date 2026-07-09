@@ -1,9 +1,12 @@
+import path from 'node:path'
 import type { Plugin } from 'rolldown'
 import postcss from 'postcss'
 import postcssModules from 'postcss-modules'
 import { generateScopedName } from 'hash-css-selector'
 
-let collectedCSS: string[] = []
+let collectedCSS: { id: string; css: string }[] = []
+
+const GLOBAL_STYLES = ['baseline.css', 'global.css', 'default-css-variables.css']
 
 export function cssModulesPlugin(): Plugin {
   return {
@@ -15,7 +18,7 @@ export function cssModulesPlugin(): Plugin {
       }
 
       if (!id.endsWith('.module.css')) {
-        collectedCSS.push(code)
+        collectedCSS.push({ id, css: code })
         return {
           code: `export default {}`,
           map: null,
@@ -33,7 +36,7 @@ export function cssModulesPlugin(): Plugin {
         }),
       ]).process(code, { from: id })
 
-      collectedCSS.push(result.css)
+      collectedCSS.push({ id, css: result.css })
 
       return {
         code: `export default ${JSON.stringify(classMap)}`,
@@ -46,7 +49,44 @@ export function cssModulesPlugin(): Plugin {
         return
       }
 
-      const css = collectedCSS.join('\n')
+      const uniqueMap = new Map<string, string>()
+      for (const item of collectedCSS) {
+        if (!uniqueMap.has(item.id)) {
+          uniqueMap.set(item.id, item.css)
+        }
+      }
+
+      const uniqueItems = Array.from(uniqueMap.entries()).map(([id, css]) => ({ id, css }))
+
+      const sorted = uniqueItems.sort((a, b) => {
+        const aBase = path.basename(a.id)
+        const bBase = path.basename(b.id)
+
+        const aIsGlobal = GLOBAL_STYLES.includes(aBase)
+        const bIsGlobal = GLOBAL_STYLES.includes(bBase)
+        if (aIsGlobal && !bIsGlobal) {
+          return -1
+        } else if (!aIsGlobal && bIsGlobal) {
+          return 1
+        } else if (aIsGlobal && bIsGlobal) {
+          return GLOBAL_STYLES.indexOf(aBase) - GLOBAL_STYLES.indexOf(bBase)
+        }
+
+        if (aBase === 'unstyled-button.module.css') {
+          return -1
+        } else if (aBase === 'button.module.css') {
+          return 1
+        }
+        if (bBase === 'unstyled-button.module.css') {
+          return 1
+        } else if (bBase === 'button.module.css') {
+          return -1
+        }
+
+        return aBase.localeCompare(bBase)
+      })
+
+      const css = sorted.map((item) => item.css).join('\n')
       this.emitFile({
         type: 'asset',
         fileName: 'index.css',
