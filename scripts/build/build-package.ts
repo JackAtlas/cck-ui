@@ -133,6 +133,12 @@ export async function buildPackage(_packageName: string) {
       await fs.remove(path.join(packagePath, 'cjs/index.css'))
     }
 
+    const stylesCssPath = path.join(packagePath, 'styles.css')
+    if (await fs.pathExists(stylesCssPath)) {
+      const content = await fs.readFile(stylesCssPath, 'utf-8')
+      await fs.writeFile(path.join(packagePath, 'styles.layer.css'), `@layer cck {${content}`)
+    }
+
     const repoRoot = path.resolve(__dirname, '../../')
     const licenseSource = path.join(repoRoot, 'LICENSE')
     const licenseDestination = path.join(packagePath, 'LICENSE')
