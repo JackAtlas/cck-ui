@@ -3,6 +3,9 @@ import type { Plugin } from 'rolldown'
 import postcss from 'postcss'
 import postcssModules from 'postcss-modules'
 import { generateScopedName } from 'hash-css-selector'
+import { createLogger } from '../../utils/consola'
+
+const logger = createLogger('css-module-plugin')
 
 let collectedCSS: { id: string; css: string }[] = []
 
@@ -13,18 +16,24 @@ export function cssModulesPlugin(): Plugin {
     name: 'css-module',
 
     async transform(code, id) {
+      logger.log(`[transform] processing: ${id}`)
+
       if (!id.endsWith('.css')) {
+        logger.log(`[transform] skipped (not .css): ${id}`)
         return null
       }
 
       if (!id.endsWith('.module.css')) {
+        logger.log(`[transform] plain CSS: ${id}`)
         collectedCSS.push({ id, css: code })
+        logger.log(`[transform] collectedCSS length now: ${collectedCSS.length}`)
         return {
           code: `export default {}`,
           map: null,
         }
       }
 
+      logger.log(`[transform] CSS Module: ${id}`)
       let classMap: Record<string, string> = {}
 
       const result = await postcss([
@@ -37,6 +46,7 @@ export function cssModulesPlugin(): Plugin {
       ]).process(code, { from: id })
 
       collectedCSS.push({ id, css: result.css })
+      logger.log(`[transform] collectedCSS length now: ${collectedCSS.length}`)
 
       return {
         code: `export default ${JSON.stringify(classMap)}`,
@@ -45,7 +55,10 @@ export function cssModulesPlugin(): Plugin {
     },
 
     generateBundle() {
+      logger.log(`[generateBundle] start, collectedCSS length: ${collectedCSS.length}`)
+
       if (collectedCSS.length === 0) {
+        logger.log('[generateBundle] no CSS collected, skipping')
         return
       }
 
@@ -55,9 +68,10 @@ export function cssModulesPlugin(): Plugin {
           uniqueMap.set(item.id, item.css)
         }
       }
-
       const uniqueItems = Array.from(uniqueMap.entries()).map(([id, css]) => ({ id, css }))
+      logger.log(`[generateBundle] after dedup: ${uniqueItems.length} unique files`)
 
+      // 排序
       const sorted = uniqueItems.sort((a, b) => {
         const aBase = path.basename(a.id)
         const bBase = path.basename(b.id)
@@ -86,14 +100,22 @@ export function cssModulesPlugin(): Plugin {
         return aBase.localeCompare(bBase)
       })
 
+      const sortedNames = sorted.map((item) => path.basename(item.id)).join(', ')
+      logger.log(`[generateBundle] sorted order: ${sortedNames}`)
+
       const css = sorted.map((item) => item.css).join('\n')
+      logger.log(`[generateBundle] combined CSS length: ${css.length} characters`)
+
       this.emitFile({
         type: 'asset',
         fileName: 'index.css',
         source: css,
       })
+      logger.log('[generateBundle] emitted index.css')
 
+      // 清空收集器
       collectedCSS = []
+      logger.log('[generateBundle] collectedCSS cleared')
     },
   }
 }
