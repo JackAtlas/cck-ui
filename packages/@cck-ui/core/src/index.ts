@@ -1,10 +1,32 @@
 import type { App, Plugin } from 'vue'
-import { CButton } from './components'
+import {
+  CButton,
+  CCol,
+  CGrid,
+  CGroup,
+  CLoader,
+  CSimpleGrid,
+  CText,
+  CTransition,
+  UnstyledButton,
+} from './components'
 import { CckConfigProvider, CBox } from './core'
 
 const INSTALLED_KEY = Symbol('INSTALLED_KEY')
 
-const components = [CckConfigProvider, CBox, CButton]
+const components = [
+  CckConfigProvider,
+  CBox,
+  CButton,
+  CGrid,
+  CCol,
+  CGroup,
+  CLoader,
+  CSimpleGrid,
+  CText,
+  CTransition,
+  UnstyledButton,
+]
 
 const CckUI: Plugin = {
   install(app: App) {
