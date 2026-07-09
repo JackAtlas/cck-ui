@@ -123,19 +123,6 @@ export async function buildPackage(_packageName: string) {
     await compile(config)
     await validateEsmOutput(packagePath)
 
-    if (await fs.pathExists(path.join(packagePath, 'esm/index.css'))) {
-      logger.log(`[build-package]: ${path.join(packagePath, 'esm/index.css')} exist.`)
-      await fs.copyFile(
-        path.join(packagePath, 'esm/index.css'),
-        path.join(packagePath, 'styles.css')
-      )
-
-      await fs.remove(path.join(packagePath, 'esm/index.css'))
-      await fs.remove(path.join(packagePath, 'cjs/index.css'))
-    } else {
-      logger.log(`[build-package]: ${path.join(packagePath, 'esm/index.css')} not exist.`)
-    }
-
     const stylesCssPath = path.join(packagePath, 'styles.css')
     if (await fs.pathExists(stylesCssPath)) {
       const content = await fs.readFile(stylesCssPath, 'utf-8')
