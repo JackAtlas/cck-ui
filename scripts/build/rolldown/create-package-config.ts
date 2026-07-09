@@ -58,6 +58,7 @@ export function createPackageConfig(packagePath: string): RolldownOptions {
         dir: path.resolve(packagePath, 'esm'),
         preserveModules: true,
         sourcemap: true,
+        exports: 'named',
       },
       {
         format: 'cjs',
@@ -65,6 +66,7 @@ export function createPackageConfig(packagePath: string): RolldownOptions {
         dir: path.resolve(packagePath, 'cjs'),
         preserveModules: true,
         sourcemap: true,
+        exports: 'named',
       },
     ],
     moduleTypes: {
