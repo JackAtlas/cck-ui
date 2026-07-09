@@ -16,24 +16,18 @@ export function cssModulesPlugin(): Plugin {
     name: 'css-module',
 
     async transform(code, id) {
-      logger.log(`[transform] processing: ${id}`)
-
       if (!id.endsWith('.css')) {
-        logger.log(`[transform] skipped (not .css): ${id}`)
         return null
       }
 
       if (!id.endsWith('.module.css')) {
-        logger.log(`[transform] plain CSS: ${id}`)
         collectedCSS.push({ id, css: code })
-        logger.log(`[transform] collectedCSS length now: ${collectedCSS.length}`)
         return {
           code: `export default {}`,
           map: null,
         }
       }
 
-      logger.log(`[transform] CSS Module: ${id}`)
       let classMap: Record<string, string> = {}
 
       const result = await postcss([
@@ -46,7 +40,6 @@ export function cssModulesPlugin(): Plugin {
       ]).process(code, { from: id })
 
       collectedCSS.push({ id, css: result.css })
-      logger.log(`[transform] collectedCSS length now: ${collectedCSS.length}`)
 
       return {
         code: `export default ${JSON.stringify(classMap)}`,
@@ -55,8 +48,6 @@ export function cssModulesPlugin(): Plugin {
     },
 
     generateBundle() {
-      logger.log(`[generateBundle] start, collectedCSS length: ${collectedCSS.length}`)
-
       if (collectedCSS.length === 0) {
         logger.log('[generateBundle] no CSS collected, skipping')
         return
@@ -115,7 +106,6 @@ export function cssModulesPlugin(): Plugin {
 
       // 清空收集器
       collectedCSS = []
-      logger.log('[generateBundle] collectedCSS cleared')
     },
   }
 }
