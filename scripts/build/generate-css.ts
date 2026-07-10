@@ -3,6 +3,7 @@ import { convertPathToPattern, glob } from 'tinyglobby'
 import fs from 'fs-extra'
 import { generateScopedName } from 'hash-css-selector'
 import postcss from 'postcss'
+import postcssPresetCck from 'postcss-preset-cck'
 import postcssModules from 'postcss-modules'
 import { getPath } from '../utils/get-path'
 import { createLogger } from '../utils/consola'
@@ -19,6 +20,9 @@ async function processFile(
   outputFolder: string
 ) {
   const result = await postcss([
+    ...postcssPresetCck({
+      autoRem: true,
+    }),
     postcssModules({ generateScopedName, getJSON: () => {}, scopeBehaviour }),
   ]).process(fs.readFileSync(filePath, 'utf-8'), {
     from: path.basename(filePath),

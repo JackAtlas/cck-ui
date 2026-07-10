@@ -1,5 +1,6 @@
 import type { Plugin } from 'rolldown'
 import postcss from 'postcss'
+import postcssPresetCck from 'postcss-preset-cck'
 import postcssModules from 'postcss-modules'
 import { generateScopedName } from 'hash-css-selector'
 
@@ -22,6 +23,9 @@ export function cssModulesPlugin(): Plugin {
       let classMap: Record<string, string> = {}
 
       await postcss([
+        ...postcssPresetCck({
+          autoRem: true,
+        }),
         postcssModules({
           generateScopedName,
           getJSON(_, json) {
