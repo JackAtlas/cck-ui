@@ -1,4 +1,5 @@
 <template>
+  <cck-classes-style v-if="withGlobalClasses" />
   <slot />
 </template>
 
@@ -8,6 +9,7 @@ import { CONFIG_KEY, type ConfigProviderProps, THEME_KEY } from './config-provid
 import { useProviderColorScheme } from './use-cck-color-scheme/use-provider-color-scheme'
 import { localStorageColorSchemeManager } from './color-scheme-managers'
 import { useRespectReduceMotion } from './use-respect-reduce-motion/use-respect-reduce-motion'
+import { CckClassesStyle } from './cck-classes-style'
 import { DEFAULT_THEME } from './default-theme'
 import { mergeCckTheme } from './merge-cck-theme'
 import { CContextValue } from './config-provider.context'
