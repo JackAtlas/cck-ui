@@ -67,5 +67,5 @@ export const STYLE_PROPS_DATA: Record<keyof CStyleProps, SystemPropData> = {
   inset: { type: 'size', property: 'inset' },
 
   display: { type: 'identity', property: 'display' },
-  flex: { type: 'identity', property: 'flex' }
+  flex: { type: 'identity', property: 'flex' },
 }

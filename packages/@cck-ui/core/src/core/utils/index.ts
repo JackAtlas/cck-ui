@@ -8,7 +8,7 @@ export {
   getShadow,
   getRadius,
   getFontSize,
-  getLineHeight
+  getLineHeight,
 } from './get-size/get-size'
 export { getSortedBreakpoints } from './get-sorted-breakpoints/get-sorted-breakpoints'
 export { isNumberLike } from './is-number-like/is-number-like'
@@ -16,11 +16,7 @@ export { numberLikeStringToNumber } from './number-like-string-to-number/number-
 export { keys } from './keys/keys'
 export { px, rem, em } from './units-converters'
 export { getComponentName, withInstall, withPropsDefaultSetter } from './vue'
-export type {
-  SFCInstallWithContext,
-  SFCWithInstall,
-  SFCWithPropsDefaultSetter
-} from './vue'
+export type { SFCInstallWithContext, SFCWithInstall, SFCWithPropsDefaultSetter } from './vue'
 export * from './color'
 export * from './dom'
 export { isNumber, isString, isStringNumber, isUndefined } from './types'

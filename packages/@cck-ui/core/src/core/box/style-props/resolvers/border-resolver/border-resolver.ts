@@ -3,16 +3,15 @@ import { CTheme } from '../../../../config-provider'
 import { colorResolver } from '../color-resolver/color-resolver'
 
 export function borderResolver(value: unknown, theme: CTheme) {
-  if (typeof value === 'number') return rem(value)
+  if (typeof value === 'number') {
+    return rem(value)
+  }
 
   if (typeof value === 'string') {
-    const [size, style, ...colorTuple] = value
-      .split(' ')
-      .filter((val) => val.trim() !== '')
+    const [size, style, ...colorTuple] = value.split(' ').filter((val) => val.trim() !== '')
     let result = `${rem(size)}`
     style && (result += ` ${style}`)
-    colorTuple.length > 0 &&
-      (result += ` ${colorResolver(colorTuple.join(' '), theme)}`)
+    colorTuple.length > 0 && (result += ` ${colorResolver(colorTuple.join(' '), theme)}`)
     return result.trim()
   }
 

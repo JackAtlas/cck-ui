@@ -1,12 +1,10 @@
 import { isNumberLike } from '../is-number-like/is-number-like'
 import { rem } from '../units-converters'
 
-export function getSize(
-  size: unknown,
-  prefix = 'size',
-  convertToRem = true
-): string | undefined {
-  if (size === undefined) return undefined
+export function getSize(size: unknown, prefix = 'size', convertToRem = true): string | undefined {
+  if (size === undefined) {
+    return undefined
+  }
 
   return isNumberLike(size)
     ? convertToRem
@@ -36,7 +34,9 @@ export function getLineHeight(size: unknown) {
 }
 
 export function getShadow(size: unknown) {
-  if (!size) return undefined
+  if (!size) {
+    return undefined
+  }
 
   return getSize(size, 'c-shadow', false)
 }

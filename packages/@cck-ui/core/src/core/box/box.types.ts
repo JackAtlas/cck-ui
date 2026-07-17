@@ -14,9 +14,7 @@ export type CStyleProp = CStyle | CStyle[] | CStyleProp[] | undefined
 
 export type CssVariable = `--${string}`
 
-export type CssVariables<Variable extends string = CssVariable> = Partial<
-  Record<Variable, string>
->
+export type CssVariables<Variable extends string = CssVariable> = Partial<Record<Variable, string>>
 
 export type CssVars<Variable extends string = CssVariable> =
   | CssVariables<Variable>
@@ -85,7 +83,7 @@ export interface BoxProps extends CStyleProps {
  */
 export type ElementProps<
   Tag extends keyof JSX.IntrinsicElements,
-  PropsToOmit extends string = never
+  PropsToOmit extends string = never,
 > = Omit<JSX.IntrinsicElements[Tag], 'style' | PropsToOmit>
 
 export interface BoxComponentProps extends BoxProps {

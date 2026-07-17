@@ -1,11 +1,15 @@
 function scaleRem(remValue: string) {
-  if (remValue === '0rem') return '0rem'
+  if (remValue === '0rem') {
+    return '0rem'
+  }
   return `calc(${remValue} * var(--c-scale))`
 }
 
 function createConverter(units: string, { shouldScale = false } = {}) {
   function converter(value: unknown): string {
-    if (value === 0 || value === '0') return `0${units}`
+    if (value === 0 || value === '0') {
+      return `0${units}`
+    }
 
     if (typeof value === 'number') {
       const val = `${value / 16}${units}`
@@ -13,14 +17,13 @@ function createConverter(units: string, { shouldScale = false } = {}) {
     }
 
     if (typeof value === 'string') {
-      if (value === '') return value
-
-      if (
-        value.startsWith('calc(') ||
-        value.startsWith('clamp(') ||
-        value.includes('rgba(')
-      )
+      if (value === '') {
         return value
+      }
+
+      if (value.startsWith('calc(') || value.startsWith('clamp(') || value.includes('rgba(')) {
+        return value
+      }
 
       if (value.includes(',')) {
         return value

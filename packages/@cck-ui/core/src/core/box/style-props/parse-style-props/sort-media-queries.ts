@@ -1,10 +1,7 @@
 import { StylesMediaQuery } from '../../../responsive-style-manager'
 import { ParseStylePropsResult } from './parse-style-props'
 
-export interface SortMediaQueriesResult extends Omit<
-  ParseStylePropsResult,
-  'media'
-> {
+export interface SortMediaQueriesResult extends Omit<ParseStylePropsResult, 'media'> {
   media: StylesMediaQuery[]
 }
 

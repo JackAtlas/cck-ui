@@ -5,12 +5,9 @@ import type {
   EmitsOptions,
   ObjectPlugin,
   SetupContext,
-  VNodeProps
+  VNodeProps,
 } from 'vue'
-import {
-  type ComponentEmit,
-  type ComponentProps
-} from 'vue-component-type-helpers'
+import { type ComponentEmit, type ComponentProps } from 'vue-component-type-helpers'
 
 type NativeType =
   | null
@@ -33,19 +30,13 @@ type ExtractEventNames<T> =
     ? never
     : keyof {
         [K in keyof ComponentProps<T> as K extends `on${infer Event}`
-          ? ComponentEmit<T> extends (
-              event: Uncapitalize<Event>,
-              ...args: any[]
-            ) => any
+          ? ComponentEmit<T> extends (event: Uncapitalize<Event>, ...args: any[]) => any
             ? K
             : never
           : never]: unknown
       }
 
-type ExcludeProps<T> =
-  | ExtractEventNames<T>
-  | keyof VNodeProps
-  | keyof AllowedComponentProps
+type ExcludeProps<T> = ExtractEventNames<T> | keyof VNodeProps | keyof AllowedComponentProps
 
 export type SFCWithInstall<T> = T & ObjectPlugin & SFCWithPropsDefaultSetter<T>
 

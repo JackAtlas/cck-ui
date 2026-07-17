@@ -6,7 +6,7 @@ export const useButtonGroupSection = (props: ButtonGroupSectionProps) => {
 
   const _props = computed(() => {
     const _attrs: Record<string, any> = {
-      'data-variant': props.variant || 'default'
+      'data-variant': props.variant || 'default',
     }
 
     return _attrs
@@ -14,6 +14,6 @@ export const useButtonGroupSection = (props: ButtonGroupSectionProps) => {
 
   return {
     _ref,
-    _props
+    _props,
   }
 }

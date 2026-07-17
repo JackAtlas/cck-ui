@@ -11,9 +11,7 @@ export function colorResolver(color: unknown, theme: CTheme) {
     return 'var(--c-color-bright)'
   }
 
-  return parsedColor.variable
-    ? `var(${parsedColor.variable})`
-    : parsedColor.color
+  return parsedColor.variable ? `var(${parsedColor.variable})` : parsedColor.color
 }
 
 export function textColorResolver(color: unknown, theme: CTheme) {

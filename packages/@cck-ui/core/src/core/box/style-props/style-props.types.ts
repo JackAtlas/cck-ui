@@ -1,15 +1,7 @@
 import { Property } from 'csstype'
-import {
-  CBreakpoint,
-  CColor,
-  CFontSize,
-  CLineHeight,
-  CSpacing
-} from '../../config-provider'
+import { CBreakpoint, CColor, CFontSize, CLineHeight, CSpacing } from '../../config-provider'
 
-export type StyleProp<Value> =
-  | Value
-  | Partial<Record<CBreakpoint | (string & {}), Value>>
+export type StyleProp<Value> = Value | Partial<Record<CBreakpoint | (string & {}), Value>>
 
 export interface CStyleProps {
   /** Margin */
@@ -72,9 +64,7 @@ export interface CStyleProps {
   /** FontFamily */
   ff?: StyleProp<'monospace' | 'text' | 'heading' | (string & {})>
   /** FontSize */
-  fz?: StyleProp<
-    CFontSize | `h${1 | 2 | 3 | 4 | 5 | 6}` | number | (string & {})
-  >
+  fz?: StyleProp<CFontSize | `h${1 | 2 | 3 | 4 | 5 | 6}` | number | (string & {})>
   /** FontWeight */
   fw?: StyleProp<Property.FontWeight>
   /** LetterSpacing */
@@ -82,9 +72,7 @@ export interface CStyleProps {
   /** TextAlign */
   ta?: StyleProp<Property.TextAlign>
   /** LineHeight */
-  lh?: StyleProp<
-    CLineHeight | `h${1 | 2 | 3 | 4 | 5 | 6}` | number | (string & {})
-  >
+  lh?: StyleProp<CLineHeight | `h${1 | 2 | 3 | 4 | 5 | 6}` | number | (string & {})>
   /** FontStyle */
   fs?: StyleProp<Property.FontSize>
   /** TextTransform */

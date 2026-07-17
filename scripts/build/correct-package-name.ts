@@ -37,9 +37,7 @@ export function correctPackagesName(input: string): string {
   const maxDistance = Math.max(2, Math.floor(input.length / 2))
 
   if (dist <= maxDistance) {
-    process.stdout.write(
-      chalk.yellow(`Autocorrected "${input}" → "${match}"\n`)
-    )
+    process.stdout.write(chalk.yellow(`Autocorrected "${input}" → "${match}"\n`))
     return match
   }
 

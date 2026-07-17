@@ -112,8 +112,7 @@
     border-radius: 10000px;
     border-width: calc(var(--loader-size) / 8);
     border-style: solid;
-    border-color: var(--loader-color) var(--loader-color) var(--loader-color)
-      transparent;
+    border-color: var(--loader-color) var(--loader-color) var(--loader-color) transparent;
     animation: oval-loader-animation 1.2s linear infinite;
   }
 }

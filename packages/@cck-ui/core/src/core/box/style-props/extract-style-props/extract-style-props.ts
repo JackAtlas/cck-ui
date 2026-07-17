@@ -126,7 +126,7 @@ export function extractStyleProps<T extends Record<string, any>>(
     visibleFrom,
     lightHidden,
     darkHidden,
-    sx
+    sx,
   })
 
   return { styleProps, rest: rest as unknown as T }

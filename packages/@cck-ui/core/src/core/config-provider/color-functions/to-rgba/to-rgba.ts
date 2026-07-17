@@ -22,7 +22,7 @@ function hexToRgba(color: string): RGBA {
       shorthandHex[1],
       shorthandHex[1],
       shorthandHex[2],
-      shorthandHex[2]
+      shorthandHex[2],
     ].join('')
   }
 
@@ -33,7 +33,7 @@ function hexToRgba(color: string): RGBA {
       r: Number.parseInt(hexString.slice(0, 2), 16),
       g: Number.parseInt(hexString.slice(2, 4), 16),
       b: Number.parseInt(hexString.slice(4, 6), 16),
-      a: alpha
+      a: alpha,
     }
   }
 
@@ -46,7 +46,7 @@ function hexToRgba(color: string): RGBA {
     r,
     g,
     b,
-    a: 1
+    a: 1,
   }
 }
 
@@ -69,7 +69,7 @@ function hslStringToRgba(hslaString: string): RGBA {
       r: 0,
       g: 0,
       b: 0,
-      a: 1
+      a: 1,
     }
   }
 
@@ -117,7 +117,7 @@ function hslStringToRgba(hslaString: string): RGBA {
     r: Math.round((r + m) * 255),
     g: Math.round((g + m) * 255),
     b: Math.round((b + m) * 255),
-    a: a || 1
+    a: a || 1,
   }
 }
 
@@ -138,6 +138,6 @@ export function toRgba(color: string): RGBA {
     r: 0,
     g: 0,
     b: 0,
-    a: 1
+    a: 1,
   }
 }

@@ -8,7 +8,9 @@ const shadeCache = new Map<string, string[]>()
 
 function getNormalizedKey(colorStr: string): string | null {
   const tc = new TinyColor(colorStr)
-  if (!tc.isValid) return null
+  if (!tc.isValid) {
+    return null
+  }
   return tc.toHexString()
 }
 
@@ -52,7 +54,7 @@ export function generateColorShades(originalColor: string): string[] {
     const color = new TinyColor({
       h,
       s: SATURATIONS[i] / 100,
-      l: LIGHTNESSES[i] / 100
+      l: LIGHTNESSES[i] / 100,
     })
 
     let output: string

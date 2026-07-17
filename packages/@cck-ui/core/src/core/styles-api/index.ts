@@ -8,5 +8,5 @@ export type {
   VarsResolver,
   PartialVarsResolver,
   TransformVars,
-  PartialTransformVars
+  PartialTransformVars,
 } from './create-vars-resolver/create-vars-resolver'

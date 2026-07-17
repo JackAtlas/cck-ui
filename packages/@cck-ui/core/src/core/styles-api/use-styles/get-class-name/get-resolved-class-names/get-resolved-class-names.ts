@@ -1,6 +1,6 @@
 import {
   ResolveClassNamesInput,
-  resolveClassNames
+  resolveClassNames,
 } from '../resolve-class-names/resolve-class-names'
 
 interface GetResolvedClassNamesOptions extends ResolveClassNamesInput {
@@ -12,7 +12,7 @@ export function getResolvedClassNames({
   stylesCtx,
   theme,
   classNames,
-  props
+  props,
 }: GetResolvedClassNamesOptions) {
   return resolveClassNames({ theme, classNames, props, stylesCtx })[selector]
 }

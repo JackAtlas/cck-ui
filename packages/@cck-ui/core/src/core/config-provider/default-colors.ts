@@ -11,7 +11,7 @@ export const DEFAULT_COLORS: CThemeColors = {
     '#2e2e2e',
     '#242424',
     '#1f1f1f',
-    '#141414'
+    '#141414',
   ],
 
   gray: [
@@ -24,7 +24,7 @@ export const DEFAULT_COLORS: CThemeColors = {
     '#868e96',
     '#495057',
     '#343a40',
-    '#212529'
+    '#212529',
   ],
 
   red: [
@@ -37,7 +37,7 @@ export const DEFAULT_COLORS: CThemeColors = {
     '#fa5252',
     '#f03e3e',
     '#e03131',
-    '#c92a2a'
+    '#c92a2a',
   ],
 
   pink: [
@@ -50,7 +50,7 @@ export const DEFAULT_COLORS: CThemeColors = {
     '#e64980',
     '#d6336c',
     '#c2255c',
-    '#a61e4d'
+    '#a61e4d',
   ],
 
   grape: [
@@ -63,7 +63,7 @@ export const DEFAULT_COLORS: CThemeColors = {
     '#be4bdb',
     '#ae3ec9',
     '#9c36b5',
-    '#862e9c'
+    '#862e9c',
   ],
 
   violet: [
@@ -76,7 +76,7 @@ export const DEFAULT_COLORS: CThemeColors = {
     '#7950f2',
     '#7048e8',
     '#6741d9',
-    '#5f3dc4'
+    '#5f3dc4',
   ],
 
   indigo: [
@@ -89,7 +89,7 @@ export const DEFAULT_COLORS: CThemeColors = {
     '#4c6ef5',
     '#4263eb',
     '#3b5bdb',
-    '#364fc7'
+    '#364fc7',
   ],
 
   blue: [
@@ -102,7 +102,7 @@ export const DEFAULT_COLORS: CThemeColors = {
     '#228be6',
     '#1c7ed6',
     '#1971c2',
-    '#1864ab'
+    '#1864ab',
   ],
 
   cyan: [
@@ -115,7 +115,7 @@ export const DEFAULT_COLORS: CThemeColors = {
     '#15aabf',
     '#1098ad',
     '#0c8599',
-    '#0b7285'
+    '#0b7285',
   ],
 
   teal: [
@@ -128,7 +128,7 @@ export const DEFAULT_COLORS: CThemeColors = {
     '#12b886',
     '#0ca678',
     '#099268',
-    '#087f5b'
+    '#087f5b',
   ],
 
   green: [
@@ -141,7 +141,7 @@ export const DEFAULT_COLORS: CThemeColors = {
     '#40c057',
     '#37b24d',
     '#2f9e44',
-    '#2b8a3e'
+    '#2b8a3e',
   ],
 
   lime: [
@@ -154,7 +154,7 @@ export const DEFAULT_COLORS: CThemeColors = {
     '#82c91e',
     '#74b816',
     '#66a80f',
-    '#5c940d'
+    '#5c940d',
   ],
 
   yellow: [
@@ -167,7 +167,7 @@ export const DEFAULT_COLORS: CThemeColors = {
     '#fab005',
     '#f59f00',
     '#f08c00',
-    '#e67700'
+    '#e67700',
   ],
 
   orange: [
@@ -180,6 +180,6 @@ export const DEFAULT_COLORS: CThemeColors = {
     '#fd7e14',
     '#f76707',
     '#e8590c',
-    '#d9480f'
-  ]
+    '#d9480f',
+  ],
 }

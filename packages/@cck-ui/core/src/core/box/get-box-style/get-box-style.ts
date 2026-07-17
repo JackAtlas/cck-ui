@@ -9,10 +9,7 @@ interface GetBoxStyleOptions {
   vars?: CssVarsProp
 }
 
-function mergeStyles(
-  styles: CStyleProp | CssVarsProp | undefined,
-  theme: CTheme
-): Properties {
+function mergeStyles(styles: CStyleProp | CssVarsProp | undefined, theme: CTheme): Properties {
   if (Array.isArray(styles)) {
     return [...styles].reduce<Record<string, any>>(
       (acc, item) => ({ ...acc, ...mergeStyles(item, theme) }),
@@ -31,12 +28,7 @@ function mergeStyles(
   return styles
 }
 
-export function getBoxStyle({
-  style,
-  styleProps,
-  theme,
-  vars
-}: GetBoxStyleOptions): Properties {
+export function getBoxStyle({ style, styleProps, theme, vars }: GetBoxStyleOptions): Properties {
   const _style = mergeStyles(style, theme)
   const _vars = mergeStyles(vars, theme)
   return { ..._style, ..._vars, ...styleProps }

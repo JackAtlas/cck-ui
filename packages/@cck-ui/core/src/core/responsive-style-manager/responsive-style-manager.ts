@@ -14,7 +14,11 @@ function hashString(str: string): string {
 }
 
 class ResponsiveStyleManager {
-  private styleMap: Map<string, StyleManagerEntry> = new Map()
+  private styleMap: Map<string, StyleManagerEntry>
+
+  constructor() {
+    this.styleMap = new Map()
+  }
 
   public register(cssText: string, key?: string): string {
     const finalKey = key || hashString(cssText)
@@ -33,13 +37,13 @@ class ResponsiveStyleManager {
       this.styleMap.set(finalKey, {
         refCount: 1,
         styleEl,
-        cssText
+        cssText,
       })
     } else {
       this.styleMap.set(finalKey, {
         refCount: 1,
         styleEl: null as any,
-        cssText
+        cssText,
       })
     }
 
@@ -48,7 +52,9 @@ class ResponsiveStyleManager {
 
   public unregister(styleKey: string): void {
     const entry = this.styleMap.get(styleKey)
-    if (!entry) return
+    if (!entry) {
+      return
+    }
 
     entry.refCount--
     if (entry.refCount === 0) {

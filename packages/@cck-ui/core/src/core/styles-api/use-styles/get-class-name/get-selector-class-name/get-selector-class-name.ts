@@ -4,10 +4,6 @@ interface GetSelectorClassNameInput {
   unstyled: boolean | undefined
 }
 
-export function getSelectorClassName({
-  selector,
-  classes,
-  unstyled
-}: GetSelectorClassNameInput) {
+export function getSelectorClassName({ selector, classes, unstyled }: GetSelectorClassNameInput) {
   return unstyled ? undefined : classes[selector]
 }

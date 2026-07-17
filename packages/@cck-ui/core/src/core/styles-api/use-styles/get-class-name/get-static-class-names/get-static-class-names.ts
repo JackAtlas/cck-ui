@@ -9,7 +9,7 @@ export function getStaticClassNames({
   themeName,
   classNamesPrefix,
   selector,
-  withStaticClass
+  withStaticClass,
 }: GetStaticClassNamesInput) {
   if (withStaticClass === false) {
     return []

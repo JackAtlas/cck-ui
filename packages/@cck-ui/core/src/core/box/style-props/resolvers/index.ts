@@ -1,8 +1,5 @@
 import { borderResolver } from './border-resolver/border-resolver'
-import {
-  colorResolver,
-  textColorResolver
-} from './color-resolver/color-resolver'
+import { colorResolver, textColorResolver } from './color-resolver/color-resolver'
 import { fontFamilyResolver } from './font-family-resolver/font-family-resolver'
 import { fontSizeResolver } from './font-size-resolver/font-size-resolver'
 import { identityResolver } from './identity-resolver/identity-resolver'
@@ -21,7 +18,7 @@ export const resolvers = {
   radius: radiusResolver,
   size: sizeResolver,
   spacing: spacingResolver,
-  textColor: textColorResolver
+  textColor: textColorResolver,
 }
 
 export type StylePropType = keyof typeof resolvers

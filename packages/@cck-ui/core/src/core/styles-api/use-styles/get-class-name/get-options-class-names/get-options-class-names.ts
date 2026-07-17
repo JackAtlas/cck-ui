@@ -1,13 +1,10 @@
 import { GetStylesApiOptions } from '../../../styles-api.types'
 import {
   ResolveClassNamesInput,
-  resolveClassNames
+  resolveClassNames,
 } from '../resolve-class-names/resolve-class-names'
 
-interface GetOptionsClassNamesInput extends Omit<
-  ResolveClassNamesInput,
-  'classNames'
-> {
+interface GetOptionsClassNamesInput extends Omit<ResolveClassNamesInput, 'classNames'> {
   selector: string
   options: GetStylesApiOptions | undefined
 }
@@ -17,12 +14,12 @@ export function getOptionsClassNames({
   stylesCtx,
   options,
   props,
-  theme
+  theme,
 }: GetOptionsClassNamesInput) {
   return resolveClassNames({
     theme,
     classNames: options?.classNames,
     props: options?.props || props,
-    stylesCtx
+    stylesCtx,
   })[selector]
 }

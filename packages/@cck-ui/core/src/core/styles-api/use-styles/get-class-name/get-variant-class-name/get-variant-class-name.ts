@@ -14,9 +14,7 @@ export function getVariantClassName({
   options,
   classes,
   selector,
-  unstyled
+  unstyled,
 }: GetVariantClassNameInput) {
-  return options?.variant && !unstyled
-    ? classes[`${selector}--${options.variant}`]
-    : undefined
+  return options?.variant && !unstyled ? classes[`${selector}--${options.variant}`] : undefined
 }

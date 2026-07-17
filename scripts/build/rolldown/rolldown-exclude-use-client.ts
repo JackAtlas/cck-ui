@@ -14,7 +14,7 @@ export const ROLLDOWN_EXCLUDE_USE_CLIENT = [
   'core/config-provider/default-theme',
   'core/config-provider/merge-cck-theme/merge-cck-theme',
   'core/config-provider/CckCssVariables/virtual-color/virtual-color',
-  'theme-to-vars'
+  'theme-to-vars',
 ].reduce<string[]>((acc, name) => {
   acc.push(`${name}.js`, `${name}.mjs`, `${name}.cjs`)
   return acc

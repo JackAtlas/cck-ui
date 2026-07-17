@@ -4,10 +4,6 @@ interface GetRootClassNameInput {
   className: string | undefined
 }
 
-export function getRootClassName({
-  rootSelector,
-  selector,
-  className
-}: GetRootClassNameInput) {
+export function getRootClassName({ rootSelector, selector, className }: GetRootClassNameInput) {
   return rootSelector === selector ? className : undefined
 }
