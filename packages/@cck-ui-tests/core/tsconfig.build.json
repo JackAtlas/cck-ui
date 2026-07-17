@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "exclude": ["./esm", "./cjs", "./lib", "**/*.test.tsx", "**/*.test.ts", "**/*.story.ts"],
+  "compilerOptions": {
+    "rootDir": "./src",
+    "declarationDir": "./lib",
+    "skipLibCheck": true,
+    "types": ["vue/jsx-runtime"]
+  }
+}

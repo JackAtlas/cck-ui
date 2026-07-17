@@ -1,0 +1,44 @@
+{
+  "name": "@cck-ui-tests/core",
+  "version": "0.4.10",
+  "description": "Core tests package for CCK UI",
+  "homepage": "https://cck-ui.jackatlas.xyz",
+  "license": "ISC",
+  "author": "JackAtlas <jackatlas8864@gmail.com>",
+  "keywords": [
+    "vitest",
+    "cck-ui",
+    "tests"
+  ],
+  "sideEffects": false,
+  "main": "./cjs/index.cjs",
+  "module": "./esm/index.mjs",
+  "types": "./lib/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/index.d.mts",
+        "default": "./esm/index.mjs"
+      },
+      "require": {
+        "types": "./lib/index.d.ts",
+        "default": "./cjs/index.cjs"
+      }
+    }
+  },
+  "repository": {
+    "url": "https://github.com/JackAtlas/cck-ui",
+    "type": "git",
+    "directory": "packages/@cck-ui-tests/core"
+  },
+  "peerDependencies": {
+    "vue": "^3.5.39"
+  },
+  "devDependencies": {
+    "@cck-ui/core": "workspace:*",
+    "@cck-ui/hooks": "workspace:*",
+    "@vue/test-utils": "^2.4.11",
+    "vi-axe": "^1.0.0",
+    "vue": "catalog:"
+  }
+}

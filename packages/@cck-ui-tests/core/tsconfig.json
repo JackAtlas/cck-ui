@@ -3,19 +3,21 @@
   "exclude": ["./lib", "./esm", "./cjs"],
   "compilerOptions": {
     "declaration": true,
-    "types": ["node"],
+    "types": ["node", "vitest/globals"],
     "target": "es2025",
     "lib": ["DOM", "ESNext"],
     "module": "esnext",
     "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "jsxImportSource": "vue",
     "emitDeclarationOnly": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "strict": true,
     "paths": {
-      "@cck-ui/*": ["../*/src"],
-      "@cck-ui-tests/*": ["../../@cck-ui-tests/*/src"]
+      "@cck-ui/*": ["../../@cck-ui/*/src"],
+      "@cck-ui-tests/*": ["../*/src"]
     }
   }
 }

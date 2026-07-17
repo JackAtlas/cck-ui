@@ -46,6 +46,7 @@
   },
   "devDependencies": {
     "@cck-ui/hooks": "workspace:*",
+    "@cck-ui-tests/core": "workspace:*",
     "@vue/shared": "^3.5.39",
     "csstype": "^3.2.3",
     "es-toolkit": "^1.49.0",

@@ -1,5 +1,6 @@
 packages:
   - packages/@cck-ui/*
+  - packages/@cck-ui-tests/*
   - play
 
 allowBuilds:
