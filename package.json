@@ -32,7 +32,7 @@
     "release:major": "pnpm release major --no-publish",
     "storybook": "storybook dev -p 6006",
     "stub": "pnpm run -r --parallel stub",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "pnpm run format:test && vitest"
   },
   "dependencies": {
     "type-fest": "^5.8.0",
@@ -50,6 +50,7 @@
     "@vitejs/plugin-vue-jsx": "^5.1.6",
     "@vue/shared": "^3.5.39",
     "@vue/test-utils": "^2.4.11",
+    "axe-core": "catalog:",
     "chalk": "^5.6.2",
     "commitizen": "^4.3.2",
     "consola": "^3.4.2",
@@ -78,7 +79,6 @@
     "typescript": "^6.0.3",
     "unplugin-vue": "^7.2.0",
     "version-next": "^1.0.2",
-    "vi-axe": "^1.0.0",
     "vite": "^8.1.4",
     "vitest": "^4.1.10",
     "yargs": "^18.0.0",

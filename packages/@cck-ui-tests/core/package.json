@@ -38,7 +38,7 @@
     "@cck-ui/core": "workspace:*",
     "@cck-ui/hooks": "workspace:*",
     "@vue/test-utils": "^2.4.11",
-    "vi-axe": "^1.0.0",
+    "axe-core": "catalog:",
     "vue": "catalog:"
   }
 }
