@@ -7,6 +7,7 @@ export default defineConfig({
   plugins: [Vue(), VueJsx()],
   resolve: {
     alias: {
+      '@cck-ui/core': resolve(__dirname, 'packages/@cck-ui/core/src'),
       '@cck-ui-tests/core': resolve(__dirname, 'packages/@cck-ui-tests/core/src'),
     },
   },
@@ -15,11 +16,8 @@ export default defineConfig({
     globals: true,
     clearMocks: true,
     environment: 'jsdom',
+    include: ['packages/**/*.test.ts'],
+    execArgv: ['--no-experimental-webstorage'],
     setupFiles: ['./vitest.setup.ts'],
-    reporters: ['default'],
-    coverage: {
-      reporter: ['text', 'json-summary', 'json'],
-      exclude: ['play/**', '.storybook/**', 'scripts/**'],
-    },
   },
 })
