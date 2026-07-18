@@ -21,16 +21,23 @@ defineOptions({
   name: 'CckConfigProvider',
 })
 
-const config = withDefaults(defineProps<ConfigProviderProps>(), {
-  withStaticClasses: true,
-  withGlobalClasses: true,
-  withCssVariables: true,
-  classNamesPrefix: 'c',
-  defaultColorScheme: 'light',
-  cssVariablesSelector: ':root',
-  colorSchemeManager: () => localStorageColorSchemeManager(),
-  getRootElement: () => document.documentElement,
-})
+// withDefaults will be undefined in vitest
+const props = defineProps<ConfigProviderProps>()
+
+const config = {
+  withStaticClasses: props.withStaticClasses ?? true,
+  withGlobalClasses: props.withGlobalClasses ?? true,
+  withCssVariables: props.withCssVariables ?? true,
+  classNamesPrefix: props.classNamesPrefix ?? 'c',
+  defaultColorScheme: props.defaultColorScheme ?? 'light',
+  cssVariablesSelector: props.cssVariablesSelector ?? ':root',
+  colorSchemeManager: props.colorSchemeManager ?? localStorageColorSchemeManager(),
+  getRootElement: props.getRootElement ?? (() => document.documentElement),
+  theme: props.theme,
+  stylesTransform: props.stylesTransform,
+  env: props.env,
+  forceColorScheme: undefined,
+}
 
 const {
   defaultColorScheme,
