@@ -8,8 +8,12 @@ export default defineConfig({
   resolve: {
     alias: {
       '@cck-ui/core': resolve(__dirname, 'packages/@cck-ui/core/src'),
+      '@cck-ui/hooks': resolve(__dirname, 'packages/@cck-ui/hooks/src'),
       '@cck-ui-tests/core': resolve(__dirname, 'packages/@cck-ui-tests/core/src'),
     },
+  },
+  optimizeDeps: {
+    include: ['@cck-ui/core', '@cck-ui/hooks'],
   },
   test: {
     name: 'unit',
@@ -19,5 +23,12 @@ export default defineConfig({
     include: ['packages/**/*.test.ts'],
     execArgv: ['--no-experimental-webstorage'],
     setupFiles: ['./vitest.setup.ts'],
+    deps: {
+      optimizer: {
+        web: {
+          include: ['@cck-ui/core', '@cck-ui/hooks'],
+        },
+      },
+    },
   },
 })
