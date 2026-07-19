@@ -56,17 +56,10 @@
 
 <script setup lang="ts">
 import { computed, useSlots } from 'vue'
-import {
-  CBox,
-  createVarsResolver,
-  getFontSize,
-  getRadius,
-  getSize,
-  rem,
-  useStyles,
-} from '../../core'
+import { CBox, rem, useStyles } from '../../core'
 import { UnstyledButton } from '../unstyled-button'
 import { ButtonFactory, type ButtonProps } from './button.types'
+import { varsResolver } from './button.utils'
 import classes from './button.module.css'
 import { CLoader } from '../loader'
 import { CTransition, CckTransition } from '../transition'
@@ -92,35 +85,6 @@ const loaderTransition: CckTransition = {
   common: { transformOrigin: 'center' },
   transitionProperty: 'transform, opacity',
 }
-
-const varsResolver = createVarsResolver<ButtonFactory>(
-  (theme, { radius, color, gradient, variant, size, justify, autoContrast }) => {
-    const colors = theme.variantColorResolver({
-      color: color || theme.primaryColor,
-      theme,
-      gradient,
-      variant: variant || 'default',
-      autoContrast,
-    })
-
-    return {
-      root: {
-        '--button-justify': justify,
-        '--button-height': getSize(size, 'button-height'),
-        '--button-padding-x': getSize(size, 'button-padding-x'),
-        '--button-fz': size?.includes('compact')
-          ? getFontSize(size.replace('compact-', ''))
-          : getFontSize(size),
-        '--button-radius': radius === undefined ? undefined : getRadius(radius),
-        '--button-bg': color || variant ? colors.background : undefined,
-        '--button-hover': color || variant ? colors.hover : undefined,
-        '--button-color': colors.color,
-        '--button-bd': color || variant ? colors.border : undefined,
-        '--button-hover-color': color || variant ? colors.hoverColor : undefined,
-      },
-    }
-  }
-)
 
 const props = defineProps<ButtonProps>()
 
