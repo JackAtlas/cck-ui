@@ -1,10 +1,11 @@
-import { hasOwn, isArray } from '@vue/shared'
 import { isPlainObject } from 'es-toolkit'
 import type { SFCWithInstall } from './typescript'
 
+const hasOwn = (obj: object, key: string | symbol): boolean => Object.hasOwn(obj, key)
+
 export const withPropsDefaultSetter = (target: any) => {
   const _p = target.props
-  const props = isArray(_p) ? Object.fromEntries(_p.map((key) => [key, {}])) : _p
+  const props = Array.isArray(_p) ? Object.fromEntries(_p.map((key) => [key, {}])) : _p
 
   target.setPropsDefaults = (defaults: Record<string, any>) => {
     if (!props) {
