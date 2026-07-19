@@ -8,6 +8,8 @@ import type {
   VNodeProps,
 } from 'vue'
 import { type ComponentEmit, type ComponentProps } from 'vue-component-type-helpers'
+import { CThemeComponent } from '../../config-provider'
+import { VarsResolver } from '../../styles-api'
 
 type NativeType =
   | null
@@ -55,5 +57,15 @@ export type SFCWithPropsDefaultSetter<T> = T extends Component
       ) => void
     }
   : unknown
+
+export type SFCWithInstallAndClasses<
+  T,
+  Classes extends Record<string, string> = Record<string, string>,
+  VarsFn extends VarsResolver<any> = VarsResolver<any>,
+> = SFCWithInstall<T> & {
+  classes: Classes
+  extend: (config: CThemeComponent) => CThemeComponent
+  varsResolver?: VarsFn
+}
 
 export type EmitFn<E extends EmitsOptions> = SetupContext<E>['emit']
