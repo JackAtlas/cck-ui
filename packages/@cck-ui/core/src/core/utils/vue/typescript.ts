@@ -66,6 +66,7 @@ export type SFCWithInstallAndClasses<
   classes: Classes
   extend: (config: CThemeComponent) => CThemeComponent
   varsResolver?: VarsFn
+  withProps?: (defaultProps: Partial<ComponentProps<T>>) => any
 }
 
 export type EmitFn<E extends EmitsOptions> = SetupContext<E>['emit']

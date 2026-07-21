@@ -21,6 +21,7 @@ export {
   withExtend,
   withInstall,
   withPropsDefaultSetter,
+  withPropsFactory,
   withVarsResolver,
 } from './vue'
 export type {
