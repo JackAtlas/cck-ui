@@ -1,5 +1,5 @@
 <template>
-  <component :is="tag" v-bind="_props">
+  <component :is="rootTag" v-bind="_props">
     <slot />
   </component>
 </template>
@@ -24,9 +24,18 @@ defineOptions({
   name: 'CBox',
 })
 
-const props = withDefaults(defineProps<BoxComponentProps & { className: string; tag?: any }>(), {
-  tag: 'div',
-})
+const props = withDefaults(
+  defineProps<
+    BoxComponentProps & {
+      className: string
+      renderRoot?: (props: Record<string, any>) => any
+      tag?: any
+    }
+  >(),
+  {
+    tag: 'div',
+  }
+)
 
 const theme = useCckTheme()
 
@@ -142,5 +151,13 @@ const _props = computed(() => {
     size: props.__size,
     ...getBoxMod(props.mod),
   }
+})
+
+const rootTag = computed(() => {
+  if (props.renderRoot) {
+    return (p: Record<string, any>) => p.renderRoot(p)
+  }
+
+  return props.tag
 })
 </script>
