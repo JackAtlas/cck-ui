@@ -1,4 +1,4 @@
-import { Component, defineComponent, h, nextTick } from 'vue'
+import { Component, defineComponent, h, markRaw, nextTick } from 'vue'
 import { mount } from '@vue/test-utils'
 import { CckConfigProvider } from '@cck-ui/core'
 
@@ -30,7 +30,16 @@ export function render<
       componentSlots: { type: Object, default: () => ({}) },
     },
     render() {
-      const child = h(ui, { ...this.componentProps, ...this.componentAttrs }, this.componentSlots)
+      const rawProps = { ...this.componentProps }
+      if (rawProps.tag && typeof rawProps.tag === 'object') {
+        rawProps.tag = markRaw(rawProps.tag)
+      }
+
+      const child = h(
+        ui,
+        { ...rawProps, ...this.componentProps, ...this.componentAttrs },
+        this.componentSlots
+      )
       return h(
         CckConfigProvider,
         { env: 'test', withGlobalClasses: false },
