@@ -4,6 +4,7 @@ import {
   withClasses,
   withExtend,
   withInstall,
+  withPropsFactory,
   withVarsResolver,
 } from '../../core'
 import ButtonGroup from './button-group/button-group.vue'
@@ -13,7 +14,9 @@ import classes from './button.module.css'
 
 import { varsResolver } from './button.utils'
 
-const ButtonWithStatic = withExtend(withVarsResolver(withClasses(Button, classes), varsResolver))
+const ButtonWithStatic = withPropsFactory(
+  withExtend(withVarsResolver(withClasses(Button, classes), varsResolver))
+)
 
 export const CButtonGroup: SFCWithInstall<typeof ButtonGroup> = withInstall(ButtonGroup)
 export const CButtonGroupSection: SFCWithInstall<typeof ButtonGroupSection> =
