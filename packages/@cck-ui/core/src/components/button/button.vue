@@ -51,7 +51,7 @@
 
 <script setup lang="ts">
 import { computed, useSlots } from 'vue'
-import { CBox, rem, useStyles } from '../../core'
+import { CBox, rem, useComponentProps, useStyles } from '../../core'
 import { UnstyledButton } from '../unstyled-button'
 import { ButtonFactory, type ButtonProps } from './button.types'
 import { varsResolver } from './button.utils'
@@ -81,7 +81,13 @@ const loaderTransition: CckTransition = {
   transitionProperty: 'transform, opacity',
 }
 
-const props = defineProps<ButtonProps>()
+const rawProps = defineProps<ButtonProps>()
+
+const props = useComponentProps({
+  component: 'CButton',
+  defaultProps: {},
+  props: rawProps,
+})
 
 const knownProps = [
   'style',
@@ -107,39 +113,42 @@ const knownProps = [
 
 const getStyles = useStyles<ButtonFactory>({
   name: 'Button',
-  props,
+  props: props.value,
   classes,
-  className: props.className,
-  style: props.style,
-  classNames: props.classNames,
-  styles: props.styles,
-  unstyled: props.unstyled,
-  attributes: props.attributes,
-  vars: props.vars,
+  className: props.value.className,
+  style: props.value.style,
+  classNames: props.value.classNames,
+  styles: props.value.styles,
+  unstyled: props.value.unstyled,
+  attributes: props.value.attributes,
+  vars: props.value.vars,
   varsResolver,
 })
 
 const modList = computed(() => [
   {
-    disabled: props.disabled || props.dataDisabled,
+    disabled: props.value.disabled || props.value.dataDisabled,
   },
-  { loading: props.loading },
-  { block: props.fullWidth },
-  { 'with-left-section': hasLeftSlot.value || !!props.leftSection },
-  { 'with-right-section': hasRightSlot.value || !!props.rightSection },
+  { loading: props.value.loading },
+  { block: props.value.fullWidth },
+  { 'with-left-section': hasLeftSlot.value || !!props.value.leftSection },
+  { 'with-right-section': hasRightSlot.value || !!props.value.rightSection },
 ])
 
 const rootAttrs = computed(() =>
-  getStyles('root', { active: !props.disabled && !props.loading && !props.dataDisabled })
+  getStyles('root', {
+    active: !props.value.disabled && !props.value.loading && !props.value.dataDisabled,
+  })
 )
 const mergedRootAttrs = computed(() => {
   const others: Record<string, any> = {}
-  for (const key in props) {
+  const propsValue = props.value
+  for (const key in propsValue) {
     if (!knownProps.includes(key)) {
-      others[key] = props[key as keyof typeof props]
+      others[key] = propsValue[key as keyof typeof propsValue]
     }
   }
-  const userMod = props.mod
+  const userMod = props.value.mod
   const mergedMod = [
     ...(Array.isArray(userMod) ? userMod : [userMod].filter(Boolean)),
     ...(modList.value || []),
