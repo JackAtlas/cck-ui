@@ -9,6 +9,7 @@ export * from './create-theme/create-theme'
 export * from './default-theme'
 export * from './theme.types'
 export * from './use-cck-color-scheme'
+export { useComponentProps } from './use-component-props/use-component-props'
 
 export const CckConfigProvider: SFCWithInstall<typeof ConfigProvider> = withInstall(ConfigProvider)
 export default CckConfigProvider
