@@ -1,6 +1,6 @@
 import { Component, defineComponent, h, markRaw, nextTick } from 'vue'
 import { mount } from '@vue/test-utils'
-import { CckConfigProvider } from '@cck-ui/core'
+import { CckConfigProvider, CThemeOverride } from '@cck-ui/core'
 
 export interface RenderOptions<
   Props extends Record<string, any> = Record<string, any>,
@@ -10,6 +10,7 @@ export interface RenderOptions<
   slots?: Slots
   attrs?: Record<string, unknown>
   global?: Record<string, unknown>
+  themeOverride?: CThemeOverride
 }
 
 export function render<
@@ -21,6 +22,7 @@ export function render<
     slots = {} as Slots,
     attrs = {},
     global = { stubs: { transition: false, Transition: false } },
+    themeOverride,
   } = options
 
   const Wrapper = defineComponent({
@@ -42,7 +44,7 @@ export function render<
       )
       return h(
         CckConfigProvider,
-        { env: 'test', withGlobalClasses: false },
+        { env: 'test', withGlobalClasses: false, theme: themeOverride },
         { default: () => child }
       )
     },
