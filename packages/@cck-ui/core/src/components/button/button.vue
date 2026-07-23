@@ -1,10 +1,5 @@
 <template>
-  <unstyled-button
-    v-bind="mergedRootAttrs"
-    :disabled="disabled || loading"
-    :unstyled="unstyled"
-    :mod="modList"
-  >
+  <unstyled-button v-bind="mergedRootAttrs" :disabled="disabled || loading" :unstyled="unstyled">
     <c-transition
       v-if="typeof props.loading === 'boolean'"
       :mounted="props.loading"
@@ -124,6 +119,16 @@ const getStyles = useStyles<ButtonFactory>({
   varsResolver,
 })
 
+const modList = computed(() => [
+  {
+    disabled: props.disabled || props.dataDisabled,
+  },
+  { loading: props.loading },
+  { block: props.fullWidth },
+  { 'with-left-section': hasLeftSlot.value || !!props.leftSection },
+  { 'with-right-section': hasRightSlot.value || !!props.rightSection },
+])
+
 const rootAttrs = computed(() =>
   getStyles('root', { active: !props.disabled && !props.loading && !props.dataDisabled })
 )
@@ -134,20 +139,15 @@ const mergedRootAttrs = computed(() => {
       others[key] = props[key as keyof typeof props]
     }
   }
-  return { ...others, ...rootAttrs.value }
+  const userMod = props.mod
+  const mergedMod = [
+    ...(Array.isArray(userMod) ? userMod : [userMod].filter(Boolean)),
+    ...(modList.value || []),
+  ]
+  return { ...others, mod: mergedMod, ...rootAttrs.value }
 })
 
 const innerAttrs = computed(() => getStyles('inner'))
 const sectionAttrs = computed(() => getStyles('section'))
 const labelAttrs = computed(() => getStyles('label'))
-
-const modList = computed(() => [
-  {
-    disabled: props.disabled || props.dataDisabled,
-    loading: props.loading,
-    block: props.fullWidth,
-    'with-left-section': hasLeftSlot.value || !!props.leftSection,
-    'with-right-section': hasRightSlot.value || !!props.rightSection,
-  },
-])
 </script>
