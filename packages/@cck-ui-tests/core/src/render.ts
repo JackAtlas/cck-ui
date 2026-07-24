@@ -25,6 +25,10 @@ export function render<
     themeOverride,
   } = options
 
+  const elRef = props.ref
+  const _props = { ...props, refProp: props.refProp || 'ref' }
+  delete _props.ref
+
   const Wrapper = defineComponent({
     props: {
       componentProps: { type: Object, default: () => ({}) },
@@ -37,11 +41,7 @@ export function render<
         rawProps.tag = markRaw(rawProps.tag)
       }
 
-      const child = h(
-        ui,
-        { ...rawProps, ...this.componentProps, ...this.componentAttrs },
-        this.componentSlots
-      )
+      const child = h(ui, { ...rawProps, ...this.componentAttrs, ref: elRef }, this.componentSlots)
       return h(
         CckConfigProvider,
         { env: 'test', withGlobalClasses: false, theme: themeOverride },
@@ -52,7 +52,7 @@ export function render<
 
   const wrapper = mount(Wrapper, {
     props: {
-      componentProps: props,
+      componentProps: _props,
       componentAttrs: attrs,
       componentSlots: slots,
     },
