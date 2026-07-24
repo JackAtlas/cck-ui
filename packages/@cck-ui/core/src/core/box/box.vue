@@ -1,5 +1,5 @@
 <template>
-  <component :is="rootTag" v-bind="_props">
+  <component ref="_root" :is="rootTag" v-bind="_props">
     <slot />
   </component>
 </template>
@@ -23,6 +23,8 @@ import { getBoxMod } from './get-box-mod/get-box-mod'
 defineOptions({
   name: 'CBox',
 })
+
+const _root = ref<HTMLElement | null>(null)
 
 const props = withDefaults(
   defineProps<
@@ -159,5 +161,9 @@ const rootTag = computed(() => {
   }
 
   return props.tag
+})
+
+defineExpose({
+  root: _root,
 })
 </script>
