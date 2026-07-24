@@ -1,11 +1,16 @@
 <template>
-  <c-box v-bind="mergedAttrs" :tag="tag" :type="tag === 'button' ? 'button' : undefined">
+  <c-box
+    ref="_root"
+    v-bind="mergedAttrs"
+    :tag="tag"
+    :type="tag === 'button' ? 'button' : undefined"
+  >
     <slot />
   </c-box>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { CBox, useComponentProps, useStyles } from '../../core'
 import type { UnstyledButtonFactory, UnstyledButtonProps } from './unstyled-button.types'
 import classes from './unstyled-button.module.css'
@@ -29,6 +34,8 @@ const props = useComponentProps({
 })
 
 const { tag = 'button' } = props.value
+
+const _root = ref<InstanceType<typeof CBox> | null>(null)
 
 const knownProps = [
   'className',
@@ -63,5 +70,9 @@ const mergedAttrs = computed(() => {
     }
   }
   return { ...others, ...rootAttrs.value }
+})
+
+defineExpose({
+  root: computed(() => _root.value?.root ?? null),
 })
 </script>
