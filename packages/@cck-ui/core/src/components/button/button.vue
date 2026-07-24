@@ -1,5 +1,10 @@
 <template>
-  <unstyled-button v-bind="mergedRootAttrs" :disabled="disabled || loading" :unstyled="unstyled">
+  <unstyled-button
+    ref="_root"
+    v-bind="mergedRootAttrs"
+    :disabled="disabled || loading"
+    :unstyled="unstyled"
+  >
     <c-transition
       v-if="typeof props.loading === 'boolean'"
       :mounted="props.loading"
@@ -7,7 +12,12 @@
       :duration="150"
     >
       <template #default="{ styles }">
-        <c-box tag="span" v-bind="getStyles('loader', { style: styles })" aria-hidden="true">
+        <c-box
+          ref="_inner"
+          tag="span"
+          v-bind="getStyles('loader', { style: styles })"
+          aria-hidden="true"
+        >
           <c-loader
             color="var(--button-color)"
             size="calc(var(--button-height) / 1.8)"
@@ -30,7 +40,7 @@
         <!-- TODO -->
         <component :is="leftSection" />
       </c-box>
-      <c-box v-bind="labelAttrs" tag="span" :mod="{ loading }">
+      <c-box ref="_label" v-bind="labelAttrs" tag="span" :mod="{ loading }">
         <slot />
       </c-box>
       <c-box
@@ -50,7 +60,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, useSlots } from 'vue'
+import { computed, ref, useSlots } from 'vue'
 import { CBox, rem, useComponentProps, useStyles } from '../../core'
 import { UnstyledButton } from '../unstyled-button'
 import { ButtonFactory, type ButtonProps } from './button.types'
@@ -68,6 +78,10 @@ defineSlots<{
   'right-section': any
   default: any
 }>()
+
+const _root = ref<InstanceType<typeof UnstyledButton> | null>(null)
+const _inner = ref<HTMLSpanElement | null>(null)
+const _label = ref<HTMLSpanElement | null>(null)
 
 const slots = useSlots()
 
@@ -159,4 +173,10 @@ const mergedRootAttrs = computed(() => {
 const innerAttrs = computed(() => getStyles('inner'))
 const sectionAttrs = computed(() => getStyles('section'))
 const labelAttrs = computed(() => getStyles('label'))
+
+defineExpose({
+  root: computed(() => _root.value?.root ?? null),
+  inner: _inner.value,
+  label: _label.value,
+})
 </script>
