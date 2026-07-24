@@ -1,5 +1,22 @@
 import { toRgba } from '../to-rgba/to-rgba'
 
+export function rgb(color: string): string {
+  if (typeof color !== 'string') {
+    return 'rgb(0, 0, 0)'
+  }
+
+  if (color.startsWith('var(')) {
+    return color
+  }
+
+  if (color.startsWith('oklch')) {
+    return color
+  }
+
+  const { r, g, b } = toRgba(color)
+  return `rgb(${r}, ${g}, ${b})`
+}
+
 export function rgba(color: string, alpha: number) {
   if (typeof color !== 'string' || alpha > 1 || alpha < 0) {
     return `rgba(0, 0, 0, 1)`
