@@ -36,11 +36,19 @@ export function useComponentProps<T extends Record<string, any>, U extends Parti
     return result
   })
 
-  const mergedProps = computed(() => ({
-    ...(defaultProps as any),
-    ...contextProps.value,
-    ...props,
-  })) as ComputedRef<T>
+  const mergedProps = computed(() => {
+    const filteredProps: Partial<T> = {}
+    for (const key in props) {
+      if (props[key] !== undefined) {
+        filteredProps[key] = props[key]
+      }
+    }
+    return {
+      ...(defaultProps as any),
+      ...contextProps.value,
+      ...filteredProps,
+    }
+  }) as ComputedRef<T>
 
   return mergedProps
 }
