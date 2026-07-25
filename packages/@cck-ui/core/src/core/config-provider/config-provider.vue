@@ -1,5 +1,5 @@
 <template>
-  <cck-classes-style v-if="withGlobalClasses" />
+  <cck-classes-style v-if="props.withGlobalClasses" />
   <slot />
 </template>
 
@@ -13,6 +13,7 @@ import { CckClassesStyle } from './cck-classes-style'
 import { DEFAULT_THEME } from './default-theme'
 import { mergeCckTheme } from './merge-cck-theme'
 import { CContextValue } from './config-provider.context'
+import { useComponentProps } from './use-component-props/use-component-props'
 import './baseline.css'
 import './global.css'
 import './default-css-variables.css'
@@ -21,15 +22,21 @@ defineOptions({
   name: 'CckConfigProvider',
 })
 
-const config = withDefaults(defineProps<ConfigProviderProps>(), {
-  withStaticClasses: true,
-  withGlobalClasses: true,
-  withCssVariables: true,
-  classNamesPrefix: 'c',
-  defaultColorScheme: 'light',
-  cssVariablesSelector: ':root',
-  colorSchemeManager: () => localStorageColorSchemeManager(),
-  getRootElement: () => document.documentElement,
+const rawProps = defineProps<ConfigProviderProps>()
+
+const props = useComponentProps({
+  component: 'ConfigProvider',
+  defaultProps: {
+    withStaticClasses: true,
+    withGlobalClasses: true,
+    withCssVariables: true,
+    classNamesPrefix: 'c',
+    defaultColorScheme: 'light',
+    cssVariablesSelector: ':root',
+    colorSchemeManager: localStorageColorSchemeManager(),
+    getRootElement: () => document.documentElement,
+  },
+  props: rawProps,
 })
 
 const {
@@ -38,7 +45,7 @@ const {
   colorSchemeManager,
   getRootElement,
   theme: userTheme,
-} = config
+} = props.value
 
 const finalTheme = computed(() => {
   if (userTheme) {
@@ -49,21 +56,24 @@ const finalTheme = computed(() => {
 })
 
 const { colorScheme, setColorScheme, clearColorScheme } = useProviderColorScheme({
-  defaultColorScheme,
+  defaultColorScheme: defaultColorScheme!,
   forceColorScheme,
-  manager: colorSchemeManager,
-  getRootElement,
+  manager: colorSchemeManager!,
+  getRootElement: getRootElement!,
 })
 
 useRespectReduceMotion({
-  respectReduceMotion: config.theme?.respectReducedMotion || false,
-  getRootElement,
+  respectReduceMotion: props.value.theme?.respectReducedMotion || false,
+  getRootElement: getRootElement!,
 })
 
-const { theme: _excludedTheme, ...configWithoutTheme } = config
+const { theme: _excludedTheme, ...configWithoutTheme } = props.value
 provide<CContextValue>(CONFIG_KEY, {
   ...configWithoutTheme,
-  colorScheme,
+  getRootElement: getRootElement!,
+  classNamesPrefix: props.value.classNamesPrefix!,
+  colorScheme: colorScheme!,
+  cssVariablesSelector: props.value.cssVariablesSelector!,
   setColorScheme,
   clearColorScheme,
 })
