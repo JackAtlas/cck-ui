@@ -60,7 +60,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, useSlots } from 'vue'
+import { computed, ref, useAttrs, useSlots } from 'vue'
 import { CBox, rem, useComponentProps, useStyles } from '../../core'
 import { UnstyledButton } from '../unstyled-button'
 import { ButtonFactory, type ButtonProps } from './button.types'
@@ -83,6 +83,7 @@ const _root = ref<InstanceType<typeof UnstyledButton> | null>(null)
 const _inner = ref<HTMLSpanElement | null>(null)
 const _label = ref<HTMLSpanElement | null>(null)
 
+const attrs = useAttrs()
 const slots = useSlots()
 
 const hasLeftSlot = computed(() => !!slots['left-section'])
@@ -127,7 +128,7 @@ const knownProps = [
 
 const getStyles = useStyles<ButtonFactory>({
   name: 'Button',
-  props: props.value,
+  props: { ...props.value, ...attrs } as ButtonProps,
   classes,
   className: props.value.className,
   style: props.value.style,
@@ -157,11 +158,11 @@ const rootAttrs = computed(() =>
 const mergedRootAttrs = computed(() => {
   const others: Record<string, any> = {}
   const propsValue = props.value
-  for (const key in propsValue) {
+  Object.keys(propsValue).forEach((key) => {
     if (!knownProps.includes(key)) {
       others[key] = propsValue[key as keyof typeof propsValue]
     }
-  }
+  })
   const userMod = props.value.mod
   const mergedMod = [
     ...(Array.isArray(userMod) ? userMod : [userMod].filter(Boolean)),
