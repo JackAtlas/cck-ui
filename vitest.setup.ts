@@ -18,4 +18,16 @@ Object.defineProperty(window, 'matchMedia', {
 
 vi.stubGlobal('ResizeObserver', ResizeObserver)
 
+const originalWarn = console.warn
+console.warn = (...args) => {
+  const msg = args[0]
+  if (
+    typeof msg === 'string' &&
+    msg.includes('Avoid app logic that relies on enumerating keys on a component instance')
+  ) {
+    return
+  }
+  originalWarn(...args)
+}
+
 config.global.stubs = {}
