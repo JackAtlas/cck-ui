@@ -11,6 +11,7 @@ export interface RenderOptions<
   attrs?: Record<string, unknown>
   global?: Record<string, unknown>
   themeOverride?: CThemeOverride
+  providerProps?: Record<string, any>
 }
 
 export function render<
@@ -23,6 +24,7 @@ export function render<
     attrs = {},
     global = { stubs: { transition: false, Transition: false } },
     themeOverride,
+    providerProps = {},
   } = options
 
   const elRef = props.ref
@@ -44,7 +46,13 @@ export function render<
       const child = h(ui, { ...rawProps, ...this.componentAttrs, ref: elRef }, this.componentSlots)
       return h(
         CckConfigProvider,
-        { env: 'test', withGlobalClasses: false, theme: themeOverride },
+        {
+          env: 'test',
+          withGlobalClasses: false,
+          withStaticClasses: true,
+          theme: themeOverride,
+          ...providerProps,
+        },
         { default: () => child }
       )
     },
