@@ -29,7 +29,11 @@ describe('@cck-ui/core/button', () => {
     varsResolver: true,
     polymorphic: true,
     name: 'CButton',
+    staticName: 'Button',
     stylesApiSelectors: ['root', 'inner', 'label', 'loader', 'section'],
+    slots: {
+      'left-section': () => 'L',
+    },
   })
 
   it('sets disabled and data-loading attribute when loading prop is true', async () => {
