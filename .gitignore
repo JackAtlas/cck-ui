@@ -37,3 +37,6 @@ packages/*/*/styles.css
 packages/*/*/styles.layer.css
 packages/@cck-ui/core/styles
 packages/*/*/LICENSE
+
+# vitest
+__snapshots__
