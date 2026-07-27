@@ -1,3 +1,4 @@
+export { deepMerge } from './deep-merge/deep-merge'
 export { camelToKebabCase } from './camel-to-kebab-case/camel-to-kebab-case'
 export { filterProps } from './filter-props/filter-props'
 export { getBaseValue } from './get-base-value/get-base-value'
