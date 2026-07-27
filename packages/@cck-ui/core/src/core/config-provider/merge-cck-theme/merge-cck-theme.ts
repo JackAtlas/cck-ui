@@ -1,4 +1,4 @@
-import { merge } from 'es-toolkit'
+import { deepMerge } from '../../utils'
 import type { CTheme, CThemeOverride } from '../theme.types'
 
 export const INVALID_PRIMARY_COLOR_ERROR =
@@ -40,7 +40,7 @@ export function mergeCckTheme(currentTheme: CTheme, themeOverride?: CThemeOverri
     return currentTheme
   }
 
-  const result = merge(currentTheme, themeOverride)
+  const result = deepMerge(currentTheme, themeOverride)
 
   if (themeOverride.fontFamily && !themeOverride.headings?.fontFamily) {
     result.headings = { ...result.headings, fontFamily: themeOverride.fontFamily }
