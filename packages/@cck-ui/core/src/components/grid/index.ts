@@ -1,5 +1,4 @@
 import {
-  type SFCWithInstall,
   type SFCWithInstallAndClasses,
   withClasses,
   withExtend,
@@ -15,8 +14,9 @@ import { varsResolver } from '../button/button.utils'
 const GridWithStatic = withPropsFactory(
   withExtend(withVarsResolver(withClasses(Grid, classes), varsResolver))
 )
+const ColWithStatic = withPropsFactory(withExtend(withClasses(Col, classes)))
 
-export const CCol: SFCWithInstall<typeof Col> = withInstall(Col)
+export const CCol: SFCWithInstallAndClasses<typeof Col> = withInstall(ColWithStatic)
 export const CGrid: SFCWithInstallAndClasses<typeof Grid, typeof classes> & { Col: typeof Col } =
   withInstall(GridWithStatic, { Col })
 export default CGrid
