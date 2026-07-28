@@ -1,3 +1,4 @@
+import { computed, defineComponent, defineExpose, h, ref } from 'vue'
 import { itHasClasses } from './shared/it-has-classes'
 import { itHasExtend } from './shared/it-has-extend'
 import { itHasStaticVarsResolver } from './shared/it-has-static-vars-resolver'
@@ -53,6 +54,7 @@ interface Options<Props extends Record<string, any>, StylesApiSelectors extends 
   compound?: boolean
   attributes?: boolean
   slots?: Record<string, any>
+  wrapper?: any
 }
 
 const defaultOptions: Partial<Options<Record<string, any>, string>> = {
@@ -78,46 +80,69 @@ export function itSupportsSystemProps<
     const stylesApiName = options.stylesApiName || providerName
     const staticName = options.staticName
 
-    itSupportsClassName(options)
-    itSupportsHiddenVisible(options)
-    itSupportsLightDarkHidden(options)
-    itSupportsStyle(options)
-    itSupportsOthers(options)
+    const wrappedComponent = options.wrapper
+      ? defineComponent({
+          name: options.component.name || 'WrappedComponent',
+          inheritAttrs: true,
+          props: options.component.props || {},
+          setup(props, { slots, attrs, expose }) {
+            const componentRef = ref<InstanceType<typeof options.component> | null>(null)
+            expose({
+              root: computed(() => componentRef.value?.root ?? null),
+            })
+            return () => {
+              const child = h(options.component, { ...props, ...attrs, ref: componentRef }, slots)
+              return h(options.wrapper, null, { default: () => child })
+            }
+          },
+        })
+      : options.component
+
+    const renderOptions = { ...options, component: wrappedComponent }
+
+    itSupportsClassName(renderOptions)
+    itSupportsHiddenVisible(renderOptions)
+    itSupportsLightDarkHidden(renderOptions)
+    itSupportsStyle(renderOptions)
+    itSupportsOthers(renderOptions)
 
     options.refType !== null &&
-      itSupportsRef({ ...options, refType: options.refType || HTMLElement })
+      itSupportsRef({ ...renderOptions, refType: options.refType || HTMLElement })
     options.polymorphic &&
-      itIsPolymorphic({ ...options, selector: options.polymorphicSelector || options.selector })
-    options.children && itRendersChildren(options)
+      itIsPolymorphic({
+        ...renderOptions,
+        selector: options.polymorphicSelector || options.selector,
+      })
+    options.children && itRendersChildren(renderOptions)
     typeof providerName === 'string' &&
       options.providerName !== null &&
-      itSupportsProviderDefaultProps({ ...options, providerName })
+      itSupportsProviderDefaultProps({ ...renderOptions, providerName })
 
     if (options.styleProps) {
-      itSupportsMarginsProps(options)
-      itSupportsPaddingsProps(options)
-      itSupportsColorsProps(options)
-      itSupportsFontsProps(options)
-      itSupportsSizeProps(options)
-      itSupportsBackgroundProps(options)
-      itSupportsPositionProps(options)
+      itSupportsMarginsProps(renderOptions)
+      itSupportsPaddingsProps(renderOptions)
+      itSupportsColorsProps(renderOptions)
+      itSupportsFontsProps(renderOptions)
+      itSupportsSizeProps(renderOptions)
+      itSupportsBackgroundProps(renderOptions)
+      itSupportsPositionProps(renderOptions)
     }
 
     if (options.variant) {
-      itSupportsVariant({ ...options, selector: options.variantSelector || options.selector })
+      itSupportsVariant({ ...renderOptions, selector: options.variantSelector || options.selector })
     }
 
     if (options.size) {
-      itSupportsSize({ ...options, selector: options.sizeSelector || options.selector })
+      itSupportsSize({ ...renderOptions, selector: options.sizeSelector || options.selector })
     }
 
     if (options.mod) {
-      itSupportsMod({ ...options, selector: options.sizeSelector || options.selector })
+      itSupportsMod({ ...renderOptions, selector: options.sizeSelector || options.selector })
     }
 
     if (Array.isArray(options.stylesApiSelectors) && stylesApiName) {
       itSupportsStylesApi<Props, StylesApiSelectors>({
-        ...options,
+        ...renderOptions,
         selectors: options.stylesApiSelectors,
         providerName: stylesApiName,
         staticName,
@@ -141,7 +166,7 @@ export function itSupportsSystemProps<
     }
 
     if (options.id) {
-      itSupportsId(options)
+      itSupportsId(renderOptions)
     }
 
     if (options.name) {
