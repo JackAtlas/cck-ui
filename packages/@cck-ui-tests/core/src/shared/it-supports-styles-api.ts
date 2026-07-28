@@ -201,79 +201,79 @@ export function itSupportsStylesApi<
         expect(el.exists()).toBe(true)
       })
     })
-  }
 
-  it(`${name}: styles (Provider object)`, () => {
-    const classNames = getTestObjectClassNames(selectors)
-    const styles = selectors.reduce<Record<string, Record<string, string>>>((acc, selector) => {
-      acc[selector] = { fontSize: `${randomNumber()}px` }
-      return acc
-    }, {})
-
-    const { wrapper } = render(component, {
-      props,
-      themeOverride: {
-        components: {
-          [staticName]: {
-            styles,
-            classNames,
-          },
-        },
-      },
-      slots,
-    })
-
-    selectors.forEach((selector) => {
-      const el = wrapper.find(`.${classNames[selector]}`)
-      expect(el.exists()).toBe(true)
-      const elStyle = el.element as HTMLElement
-      expect(elStyle.style.fontSize).toBe(styles[selector].fontSize)
-    })
-  })
-
-  it(`${name}: styles (Provider function)`, () => {
-    const classNames = getTestObjectClassNames(selectors)
-    const stylesFn = (theme: CTheme, props: any) =>
-      selectors.reduce<Record<string, Record<string, string>>>((acc, selector) => {
-        acc[selector] = {
-          outlineColor: props['data-test'],
-          boxShadow: theme?.shadows?.xl || '0 0 0 0',
-        }
+    it(`${name}: styles (Provider object)`, () => {
+      const classNames = getTestObjectClassNames(selectors)
+      const styles = selectors.reduce<Record<string, Record<string, string>>>((acc, selector) => {
+        acc[selector] = { fontSize: `${randomNumber()}px` }
         return acc
       }, {})
 
-    const { wrapper } = render(component, {
-      props: { ...props, 'data-test': 'rgb(250, 128, 114)' },
-      themeOverride: {
-        components: {
-          [staticName]: {
-            styles: stylesFn,
-            classNames,
+      const { wrapper } = render(component, {
+        props,
+        themeOverride: {
+          components: {
+            [staticName]: {
+              styles,
+              classNames,
+            },
           },
         },
-      },
-      slots,
+        slots,
+      })
+
+      selectors.forEach((selector) => {
+        const el = wrapper.find(`.${classNames[selector]}`)
+        expect(el.exists()).toBe(true)
+        const elStyle = el.element as HTMLElement
+        expect(elStyle.style.fontSize).toBe(styles[selector].fontSize)
+      })
     })
 
-    const expected = stylesFn({} as CTheme, { 'data-test': 'rgb(250, 128, 114)' })
-    selectors.forEach((selector) => {
-      const el = wrapper.find(`.${classNames[selector]}`)
-      expect(el.exists()).toBe(true)
-      const elStyle = el.element as HTMLElement
-      expect(elStyle.style.outlineColor).toBe(expected[selector].outlineColor)
-    })
-  })
+    it(`${name}: styles (Provider function)`, () => {
+      const classNames = getTestObjectClassNames(selectors)
+      const stylesFn = (theme: CTheme, props: any) =>
+        selectors.reduce<Record<string, Record<string, string>>>((acc, selector) => {
+          acc[selector] = {
+            outlineColor: props['data-test'],
+            boxShadow: theme?.shadows?.xl || '0 0 0 0',
+          }
+          return acc
+        }, {})
 
-  it(`${name}: static classNames (Provider prefix)`, () => {
-    const { wrapper } = render(component, {
-      props,
-      providerProps: { classNamesPrefix: 'test' },
-      slots,
+      const { wrapper } = render(component, {
+        props: { ...props, 'data-test': 'rgb(250, 128, 114)' },
+        themeOverride: {
+          components: {
+            [staticName]: {
+              styles: stylesFn,
+              classNames,
+            },
+          },
+        },
+        slots,
+      })
+
+      const expected = stylesFn({} as CTheme, { 'data-test': 'rgb(250, 128, 114)' })
+      selectors.forEach((selector) => {
+        const el = wrapper.find(`.${classNames[selector]}`)
+        expect(el.exists()).toBe(true)
+        const elStyle = el.element as HTMLElement
+        expect(elStyle.style.outlineColor).toBe(expected[selector].outlineColor)
+      })
     })
 
-    selectors.forEach((selector) => {
-      const el = wrapper.find(`.test-${staticName}-${selector}`)
-      expect(el.exists()).toBe(true)
+    it(`${name}: static classNames (Provider prefix)`, () => {
+      const { wrapper } = render(component, {
+        props,
+        providerProps: { classNamesPrefix: 'test' },
+        slots,
+      })
+
+      selectors.forEach((selector) => {
+        const el = wrapper.find(`.test-${staticName}-${selector}`)
+        expect(el.exists()).toBe(true)
+      })
     })
-  })
+  }
 }
