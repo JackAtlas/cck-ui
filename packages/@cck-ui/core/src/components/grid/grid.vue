@@ -1,14 +1,14 @@
 <template>
-  <c-box v-if="type === 'container' && breakpoints" v-bind="containerAttrs">
-    <c-box v-bind="mergedRootAttrs">
-      <c-box v-bind="innerAttrs">
+  <c-box ref="_container" v-if="type === 'container' && breakpoints" v-bind="containerAttrs">
+    <c-box ref="_root" v-bind="mergedRootAttrs">
+      <c-box ref="_inner" v-bind="innerAttrs">
         <slot />
       </c-box>
     </c-box>
   </c-box>
   <template v-else>
-    <c-box v-bind="mergedRootAttrs">
-      <c-box v-bind="innerAttrs">
+    <c-box ref="_root" v-bind="mergedRootAttrs">
+      <c-box ref="_inner" v-bind="innerAttrs">
         <slot />
       </c-box>
     </c-box>
@@ -16,12 +16,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onUnmounted, provide, ref, watchEffect } from 'vue'
+import { computed, onUnmounted, provide, ref, useAttrs, watchEffect } from 'vue'
 import {
   CBox,
-  createVarsResolver,
   isNumberLike,
   responsiveStyleManager,
+  useComponentProps,
   useRandomClassName,
   useStyles,
 } from '../../core'
@@ -30,14 +30,27 @@ import { DEFAULT_COLUMNS, GRID_CONTEXT_KEY } from './grid.constants'
 import { GridContextValue } from './grid.context'
 import type { GridFactory, GridProps } from './grid.types'
 import classes from './grid.module.css'
+import { varsResolver } from './grid.utils'
 
 defineOptions({
   name: 'CGrid',
 })
 
-const props = withDefaults(defineProps<GridProps>(), {
-  columns: DEFAULT_COLUMNS,
-  gap: 'md',
+const _container = ref<InstanceType<typeof CBox> | null>(null)
+const _root = ref<InstanceType<typeof CBox> | null>(null)
+const _inner = ref<InstanceType<typeof CBox> | null>(null)
+
+const attrs = useAttrs()
+
+const rawProps = defineProps<GridProps>()
+
+const props = useComponentProps({
+  component: 'CGrid',
+  defaultProps: {
+    columns: DEFAULT_COLUMNS,
+    gap: 'md',
+  },
+  props: rawProps,
 })
 
 const knownProps = [
@@ -59,39 +72,35 @@ const knownProps = [
   'attributes',
 ]
 
-const varsResolver = createVarsResolver<GridFactory>((_, { justify, align, overflow }) => ({
-  root: {
-    '--grid-align': align,
-    '--grid-justify': justify,
-    '--grid-overflow': overflow,
-  },
-}))
-
 const getStyles = useStyles<GridFactory>({
   name: 'Grid',
   classes,
-  props,
-  className: props.className,
-  style: props.style,
-  classNames: props.classNames,
-  styles: props.styles,
-  unstyled: props.unstyled,
-  attributes: props.attributes,
-  vars: props.vars,
+  props: { ...props.value, ...attrs } as GridProps,
+  className: props.value.className,
+  style: props.value.style,
+  classNames: props.value.classNames,
+  styles: props.value.styles,
+  unstyled: props.value.unstyled,
+  attributes: props.value.attributes,
+  vars: props.value.vars,
   varsResolver,
 })
 
 const responsiveClassname = useRandomClassName()
 
 const rootAttrs = computed(() => getStyles('root', { className: responsiveClassname }))
+
 const mergedRootAttrs = computed(() => {
   const others: Record<string, any> = {}
-  for (const key in props) {
+  const propsValue = props.value
+  Object.keys(propsValue).forEach((key) => {
     if (!knownProps.includes(key)) {
-      others[key] = props[key as keyof typeof props]
+      others[key] = propsValue[key as keyof typeof propsValue]
     }
-  }
-  return { ...others, ...rootAttrs.value }
+  })
+  const userMod = props.value.mod
+  const mergedMod = [...(Array.isArray(userMod) ? userMod : [userMod].filter(Boolean))]
+  return { ...others, mod: mergedMod, ...rootAttrs.value }
 })
 
 const innerAttrs = computed(() => getStyles('inner'))
@@ -123,19 +132,19 @@ onUnmounted(() => {
   }
 })
 
-const _breakpoints = computed(() => props.breakpoints)
+const _breakpoints = computed(() => props.value.breakpoints)
 const _columns = computed(() => {
-  if (!isNumberLike(props.columns)) {
+  if (!isNumberLike(props.value.columns)) {
     console.warn(
-      `[C-Grid] columns should be number or number-like string, got ${props.columns}. Fallback to default columns ${DEFAULT_COLUMNS}.`
+      `[C-Grid] columns should be number or number-like string, got ${props.value.columns}. Fallback to default columns ${DEFAULT_COLUMNS}.`
     )
     return DEFAULT_COLUMNS
   }
 
-  return Number(props.columns)
+  return Number(props.value.columns)
 })
-const _grow = computed(() => props.grow)
-const _type = computed(() => props.type)
+const _grow = computed(() => props.value.grow)
+const _type = computed(() => props.value.type)
 
 const context: GridContextValue = {
   getStyles,
@@ -154,4 +163,10 @@ const context: GridContextValue = {
 }
 
 provide(GRID_CONTEXT_KEY, context)
+
+defineExpose({
+  container: computed(() => _container.value?.root ?? null),
+  root: computed(() => _root.value?.root ?? null),
+  inner: computed(() => _inner.value?.root ?? null),
+})
 </script>
