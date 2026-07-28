@@ -31,6 +31,4 @@ export type {
   SFCWithInstallAndClasses,
   SFCWithPropsDefaultSetter,
 } from './vue'
-export * from './color'
-export * from './dom'
 export { isNumber, isString, isStringNumber, isUndefined } from './types'
