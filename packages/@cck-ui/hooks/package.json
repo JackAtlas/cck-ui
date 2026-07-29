@@ -1,6 +1,6 @@
 {
   "name": "@cck-ui/hooks",
-  "version": "0.4.10",
+  "version": "0.5.0",
   "description": "A collection of hooks for state and UI management",
   "homepage": "https://cck-ui.jackatlas.xyz",
   "license": "ISC",
