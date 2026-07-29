@@ -32,7 +32,7 @@
     "release:major": "pnpm release major --no-publish",
     "storybook": "storybook dev -p 6006",
     "stub": "pnpm run -r --parallel stub",
-    "test": "pnpm run format:test && vitest",
+    "test": "pnpm run format:test && vitest run",
     "vitest": "vitest"
   },
   "dependencies": {
