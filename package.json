@@ -25,7 +25,7 @@
     "publish:package": "tsx scripts/publish",
     "publish:package:alpha": "tsx scripts/publish --stage alpha --tag next",
     "publish:package:beta": "tsx scripts/publish --stage beta --tag next",
-    "release": "pnpm clean && tsx scripts/release",
+    "release": "pnpm run test && pnpm run clean && tsx scripts/release",
     "release:ci": "tsx scripts/release --ci",
     "release:patch": "pnpm release patch --no-publish",
     "release:minor": "pnpm release minor --no-publish",
