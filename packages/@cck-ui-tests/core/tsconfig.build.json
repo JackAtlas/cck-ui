@@ -4,7 +4,10 @@
   "compilerOptions": {
     "rootDir": "./src",
     "declarationDir": "./lib",
+    "paths": {
+      "@cck-ui/core": ["../../@cck-ui/core/lib/index"]
+    },
     "skipLibCheck": true,
-    "types": ["vue/jsx-runtime"]
+    "types": ["vue/jsx-runtime", "vitest/globals"]
   }
 }
