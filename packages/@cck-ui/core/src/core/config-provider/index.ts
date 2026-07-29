@@ -10,6 +10,7 @@ export * from './default-theme'
 export * from './theme.types'
 export * from './use-cck-color-scheme'
 export { useComponentProps } from './use-component-props/use-component-props'
+export { mergeThemeOverrides } from './merge-theme-overrides/merge-theme-overrides'
 
 export const CckConfigProvider: SFCWithInstall<typeof ConfigProvider> = withInstall(ConfigProvider)
 export default CckConfigProvider
