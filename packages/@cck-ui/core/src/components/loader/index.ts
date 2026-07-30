@@ -1,6 +1,14 @@
-import { SFCWithInstall, withInstall } from '../../core'
+import {
+  SFCWithInstallAndClasses,
+  withClasses,
+  withExtend,
+  withInstall,
+  withPropsFactory,
+  withVarsResolver,
+} from '../../core'
 import Loader from './loader.vue'
 import { CLoadersRecord } from './loader.types.js'
+import classes from './loader.module.css'
 
 import Bars from './loaders/bars.vue'
 import Dots from './loaders/dots.vue'
@@ -12,7 +20,14 @@ export const CDefaultLoaders: CLoadersRecord = {
   oval: Oval,
 }
 
-export const CLoader: SFCWithInstall<typeof Loader> = withInstall(Loader)
+import { varsResolver } from './loader.utils'
+
+const LoaderWithStatic = withPropsFactory(
+  withExtend(withVarsResolver(withClasses(Loader, classes), varsResolver))
+)
+
+export const CLoader: SFCWithInstallAndClasses<typeof Loader, typeof classes> =
+  withInstall(LoaderWithStatic)
 export default CLoader
 
 export * from './loader.types'
