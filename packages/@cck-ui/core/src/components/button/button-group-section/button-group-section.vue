@@ -1,81 +1,80 @@
 <template>
-  <c-box v-bind="mergedAttrs">
+  <c-box ref="_section" v-bind="mergedAttrs">
     <slot />
   </c-box>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import { CBox, createVarsResolver, getFontSize, getRadius, getSize, useStyles } from '../../../core'
+import { computed, ref, useAttrs } from 'vue'
+import { CBox, useComponentProps, useStyles } from '../../../core'
 import type {
   ButtonGroupSectionFactory,
   ButtonGroupSectionProps,
 } from './button-group-section.types'
 import classes from '../button.module.css'
+import { varsResolver } from './button-group-section.utils'
 
 defineOptions({
   name: 'CButtonGroupSection',
 })
 
-const varsResolver = createVarsResolver<ButtonGroupSectionFactory>(
-  (theme, { radius, color, gradient, variant, autoContrast, size }) => {
-    const colors = theme.variantColorResolver({
-      color: color || theme.primaryColor,
-      theme,
-      gradient,
-      variant: variant || 'default',
-      autoContrast,
-    })
+const _section = ref<InstanceType<typeof CBox> | null>(null)
 
-    return {
-      groupSection: {
-        '--section-height': getSize(size, 'section-height'),
-        '--section-padding-x': getSize(size, 'section-padding-x'),
-        '--section-fz': size?.includes('compact')
-          ? getFontSize(size.replace('compact-', ''))
-          : getFontSize(size),
-        '--section-radius': radius === undefined ? undefined : getRadius(radius),
-        '--section-bg': color || variant ? colors.background : undefined,
-        '--section-color': colors.color,
-        '--section-bd': color || variant ? colors.border : undefined,
-      },
-    }
-  }
-)
+const attrs = useAttrs()
 
-const props = withDefaults(defineProps<ButtonGroupSectionProps>(), {
-  variant: 'default',
+const rawProps = defineProps<ButtonGroupSectionProps>()
+
+const props = useComponentProps({
+  component: 'CButtonGroupSection',
+  defaultProps: {
+    variant: 'default',
+  },
+  props: rawProps,
 })
 
-const {
-  className,
-  style,
-  classNames,
-  styles,
-  unstyled,
-  vars,
-  gradient,
-  radius,
-  autoContrast,
-  attributes,
-  ...others
-} = props
+const knownProps = [
+  'className',
+  'style',
+  'classNames',
+  'styles',
+  'unstyled',
+  'vars',
+  'gradient',
+  'radius',
+  'autoContrast',
+  'attributes',
+]
 
 const getStyles = useStyles<ButtonGroupSectionFactory>({
   name: 'ButtonGroupSection',
-  props,
+  props: { ...props.value, ...attrs } as ButtonGroupSectionProps,
   classes,
-  className,
-  style,
-  classNames,
-  styles,
-  unstyled,
-  attributes,
-  vars,
+  className: props.value.className,
+  style: props.value.style,
+  classNames: props.value.classNames,
+  styles: props.value.styles,
+  unstyled: props.value.unstyled,
+  attributes: props.value.attributes,
+  vars: props.value.vars,
   varsResolver,
   rootSelector: 'groupSection',
 })
 
 const sectionAttrs = computed(() => getStyles('groupSection'))
-const mergedAttrs = computed(() => ({ ...others, ...sectionAttrs.value }))
+const mergedAttrs = computed(() => {
+  const others: Record<string, any> = {}
+  const propsValue = props.value
+  Object.keys(propsValue).forEach((key) => {
+    if (!knownProps.includes(key)) {
+      others[key] = propsValue[key as keyof typeof propsValue]
+    }
+  })
+  const userMod = props.value.mod
+  const mergedMod = [...(Array.isArray(userMod) ? userMod : [userMod].filter(Boolean))]
+  return { ...others, mod: mergedMod, ...sectionAttrs.value }
+})
+
+defineExpose({
+  section: computed(() => _section.value?.root ?? null),
+})
 </script>
