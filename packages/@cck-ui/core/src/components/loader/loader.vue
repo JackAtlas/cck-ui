@@ -1,29 +1,44 @@
 <template>
-  <c-box v-if="$slots.default" v-bind="mergedAttrs">
-    <slot />
+  <c-box ref="_root" v-bind="mergedAttrs">
+    <slot v-if="$slots.default" />
+    <component
+      v-else
+      v-bind="componentAttrs"
+      :is="props.loaders![props.type!]"
+      :variant="variant"
+      :size="size"
+    ></component>
   </c-box>
-  <c-box v-else v-bind="mergedAttrs" :tag="loaders[type]" :variant="variant" :size="size"></c-box>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import { CBox, createVarsResolver, getSize, getThemeColor, useStyles } from '../../core'
+import { computed, ref, useAttrs } from 'vue'
+import { CBox, useComponentProps, useStyles } from '../../core'
 import type { LoaderProps } from './loader.types'
-import { useLoader } from './use-loader'
 import { CDefaultLoaders, LoaderFactory } from '.'
 import classes from './loader.module.css'
+import { varsResolver } from './loader.utils'
 
 defineOptions({
   name: 'CLoader',
 })
 
-const props = withDefaults(defineProps<LoaderProps>(), {
-  loaders: () => CDefaultLoaders,
-  type: 'oval',
+const _root = ref<InstanceType<typeof CBox> | null>(null)
+
+const attrs = useAttrs()
+
+const rawProps = defineProps<LoaderProps>()
+
+const props = useComponentProps({
+  component: 'CLoader',
+  defaultProps: {
+    loaders: CDefaultLoaders,
+    type: 'oval',
+  },
+  props: rawProps,
 })
 
 const knownProps = [
-  'size',
   'color',
   'type',
   'vars',
@@ -33,28 +48,20 @@ const knownProps = [
   'styles',
   'unstyled',
   'loaders',
-  'variant',
   'attributes',
 ]
 
-const varsResolver = createVarsResolver<LoaderFactory>((theme, { size, color }) => ({
-  root: {
-    '--loader-size': getSize(size, 'loader-size'),
-    '--loader-color': color ? getThemeColor(color, theme) : undefined,
-  },
-}))
-
 const getStyles = useStyles<LoaderFactory>({
   name: 'Loader',
-  props,
+  props: { ...props.value, ...attrs } as LoaderProps,
   classes,
-  className: props.className,
-  style: props.style,
-  classNames: props.classNames,
-  styles: props.styles,
-  unstyled: props.unstyled,
-  attributes: props.attributes,
-  vars: props.vars,
+  className: props.value.className,
+  style: props.value.style,
+  classNames: props.value.classNames,
+  styles: props.value.styles,
+  unstyled: props.value.unstyled,
+  attributes: props.value.attributes,
+  vars: props.value.vars,
   varsResolver,
 })
 
@@ -62,20 +69,26 @@ const rootAttrs = computed(() => getStyles('root'))
 
 const mergedAttrs = computed(() => {
   const others: Record<string, any> = {}
-  for (const key in props) {
+  const propsValue = props.value
+  Object.keys(propsValue).forEach((key) => {
     if (!knownProps.includes(key)) {
-      others[key] = props[key as keyof typeof props]
+      others[key] = propsValue[key as keyof typeof propsValue]
     }
-  }
-  return { ...others, ...rootAttrs.value }
+  })
+  const userMod = props.value.mod
+  const mergedMod = [...(Array.isArray(userMod) ? userMod : [userMod].filter(Boolean))]
+  return { ...others, mod: mergedMod, ...rootAttrs.value }
 })
 
-const { _ref } = useLoader()
+const componentAttrs = computed(() => {
+  const { className, mod, ...rest } = mergedAttrs.value
+  return rest
+})
 
 defineExpose({
   /** @description loader html element */
-  ref: _ref,
+  root: computed(() => _root.value?.root ?? null),
   /** @description loader size */
-  size: props.size,
+  size: props.value.size,
 })
 </script>
