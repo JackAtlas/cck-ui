@@ -1,5 +1,5 @@
 <template>
-  <c-box rol="group" v-bind="mergedAttrs" :mod="[{ 'data-orientation': orientation }, mod]">
+  <c-box ref="_group" role="group" v-bind="mergedAttrs">
     <template v-for="(child, index) in validChildren" :key="child.key ?? index">
       <component :is="child" />
     </template>
@@ -7,57 +7,86 @@
 </template>
 
 <script setup lang="ts">
-import { computed, useSlots } from 'vue'
-import { CBox, createVarsResolver, rem, useStyles } from '../../../core'
+import { computed, ref, useAttrs, useSlots } from 'vue'
+import { CBox, useComponentProps, useStyles } from '../../../core'
 import classes from '../button.module.css'
 import { ButtonGroupFactory, type ButtonGroupProps } from './button-group.types'
 import { useButtonGroup } from './use-button-group'
+import { varsResolver } from './button-group.utils'
 
 defineOptions({
   name: 'CButtonGroup',
 })
 
+const _group = ref<InstanceType<typeof CBox> | null>(null)
+
+const attrs = useAttrs()
 const slots = useSlots()
 
-const varsResolver = createVarsResolver<ButtonGroupFactory>((_, { borderWidth }) => ({
-  group: { '--button-border-width': rem(borderWidth) },
-}))
+const rawProps = defineProps<ButtonGroupProps>()
 
-const props = withDefaults(defineProps<ButtonGroupProps>(), {
-  orientation: 'horizontal',
+const props = useComponentProps({
+  component: 'CButtonGroup',
+  defaultProps: {
+    orientation: 'horizontal',
+  },
+  props: rawProps,
 })
 
-const {
-  className,
-  style,
-  classNames,
-  styles,
-  unstyled,
-  orientation,
-  vars,
-  borderWidth,
-  mod,
-  attributes,
-  ...others
-} = props
+const knownProps = [
+  'className',
+  'style',
+  'classNames',
+  'styles',
+  'unstyled',
+  'orientation',
+  'vars',
+  'borderWidth',
+  'mod',
+  'attributes',
+]
 
 const getStyles = useStyles<ButtonGroupFactory>({
   name: 'ButtonGroup',
-  props,
+  props: { ...props.value, ...attrs } as ButtonGroupProps,
   classes,
-  className,
-  style,
-  classNames,
-  styles,
-  unstyled,
-  attributes,
-  vars,
+  className: props.value.className,
+  style: props.value.style,
+  classNames: props.value.classNames,
+  styles: props.value.styles,
+  unstyled: props.value.unstyled,
+  attributes: props.value.attributes,
+  vars: props.value.vars,
   varsResolver,
   rootSelector: 'group',
 })
 
+const modList = computed(() => [
+  {
+    orientation: props.value.orientation,
+  },
+])
+
 const groupAttrs = computed(() => getStyles('group'))
-const mergedAttrs = computed(() => ({ ...others, ...groupAttrs.value }))
+const mergedAttrs = computed(() => {
+  const others: Record<string, any> = {}
+  const propsValue = props.value
+  Object.keys(propsValue).forEach((key) => {
+    if (!knownProps.includes(key)) {
+      others[key] = propsValue[key as keyof typeof propsValue]
+    }
+  })
+  const userMod = props.value.mod
+  const mergedMod = [
+    ...(Array.isArray(userMod) ? userMod : [userMod].filter(Boolean)),
+    ...(modList.value || []),
+  ]
+  return { ...others, mod: mergedMod, ...groupAttrs.value }
+})
 
 const { validChildren } = useButtonGroup(slots)
+
+defineExpose({
+  group: computed(() => _group.value?.root ?? null),
+})
 </script>
