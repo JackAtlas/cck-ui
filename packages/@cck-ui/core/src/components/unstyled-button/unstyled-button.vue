@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, useAttrs } from 'vue'
 import { CBox, useComponentProps, useStyles } from '../../core'
 import type { UnstyledButtonFactory, UnstyledButtonProps } from './unstyled-button.types'
 import classes from './unstyled-button.module.css'
@@ -19,9 +19,7 @@ defineOptions({
   name: 'UnstyledButton',
 })
 
-// const props = withDefaults(defineProps<UnstyledButtonProps>(), {
-//   __staticSelector: 'UnstyledButton',
-// })
+const attrs = useAttrs()
 
 const rawProps = defineProps<UnstyledButtonProps>()
 
@@ -50,7 +48,7 @@ const knownProps = [
 
 const getStyles = useStyles<UnstyledButtonFactory>({
   name: props.value.__staticSelector!,
-  props: props.value,
+  props: { ...props.value, ...attrs } as UnstyledButtonProps,
   classes,
   className: props.value.className,
   style: props.value.style,
