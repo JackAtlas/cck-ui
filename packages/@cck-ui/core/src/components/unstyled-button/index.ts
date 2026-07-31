@@ -1,7 +1,17 @@
-import { SFCWithInstall, withInstall } from '../../core'
+import {
+  SFCWithInstallAndClasses,
+  withClasses,
+  withExtend,
+  withInstall,
+  withPropsFactory,
+} from '../../core'
 import _UnstyledButton from './unstyled-button.vue'
+import classes from './unstyled-button.module.css'
 
-export const UnstyledButton: SFCWithInstall<typeof _UnstyledButton> = withInstall(_UnstyledButton)
+const UnstyledButtonWithStatic = withPropsFactory(withExtend(withClasses(_UnstyledButton, classes)))
+
+export const UnstyledButton: SFCWithInstallAndClasses<typeof _UnstyledButton, typeof classes> =
+  withInstall(UnstyledButtonWithStatic)
 export default UnstyledButton
 
 export * from './unstyled-button.types'
