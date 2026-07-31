@@ -1,7 +1,7 @@
 <template>
   <c-box
+    ref="_root"
     v-bind="mergedAttrs"
-    :mod="modList"
     :size="props.size"
     :tag="props.span ? 'span' : 'p'"
     :variant="props.variant"
@@ -11,23 +11,27 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref, useAttrs } from 'vue'
 import type { TextFactory, TextProps, TextTruncate } from './text.types.ts'
 import classes from './text.module.css'
-import {
-  createVarsResolver,
-  getFontSize,
-  getGradient,
-  getLineHeight,
-  useStyles,
-  CBox,
-} from '../../core'
+import { useStyles, CBox, useComponentProps } from '../../core'
+import { varsResolver } from './text.utils.js'
 
 defineOptions({
   name: 'CText',
 })
 
-const props = defineProps<TextProps>()
+const _root = ref<InstanceType<typeof CBox> | null>(null)
+
+const attrs = useAttrs()
+
+const rawProps = defineProps<TextProps>()
+
+const props = useComponentProps({
+  component: 'CText',
+  defaultProps: {},
+  props: rawProps,
+})
 
 function getTextTruncate(truncate: TextTruncate | undefined) {
   if (truncate === 'start') {
@@ -64,37 +68,24 @@ const knownProps = [
 
 const modList = computed(() => [
   {
-    'data-truncate': getTextTruncate(props.truncate),
-    'data-line-clamp': typeof props.lineClamp === 'number',
-    'data-inline': props.inline,
-    'data-inherit': props.inherit,
+    'data-truncate': getTextTruncate(props.value.truncate),
+    'data-line-clamp': typeof props.value.lineClamp === 'number',
+    'data-inline': props.value.inline,
+    'data-inherit': props.value.inherit,
   },
-  props.mod,
 ])
 
-const varsResolver = createVarsResolver<TextFactory>(
-  (theme, { gradient, lineClamp, size, textWrap, variant }) => ({
-    root: {
-      '--text-fz': getFontSize(size),
-      '--text-lh': getLineHeight(size),
-      '--text-gradient': variant === 'gradient' ? getGradient(gradient, theme) : undefined,
-      '--text-line-clamp': typeof lineClamp === 'number' ? lineClamp.toString() : undefined,
-      '--text-text-wrap': textWrap,
-    },
-  })
-)
-
 const getStyles = useStyles<TextFactory>({
-  name: ['Text', props.__staticSelector],
-  props,
+  name: ['Text', props.value.__staticSelector],
+  props: { ...props.value, ...attrs } as TextProps,
   classes,
-  className: props.className,
-  style: props.style,
-  classNames: props.classNames,
-  styles: props.styles,
-  unstyled: props.unstyled,
-  attributes: props.attributes,
-  vars: props.vars,
+  className: props.value.className,
+  style: props.value.style,
+  classNames: props.value.classNames,
+  styles: props.value.styles,
+  unstyled: props.value.unstyled,
+  attributes: props.value.attributes,
+  vars: props.value.vars,
   varsResolver,
 })
 
@@ -102,11 +93,21 @@ const rootAttrs = computed(() => getStyles('root', { focusable: true }))
 
 const mergedAttrs = computed(() => {
   const others: Record<string, any> = {}
-  for (const key in props) {
+  const propsValue = props.value
+  for (const key in propsValue) {
     if (!knownProps.includes(key)) {
-      others[key] = props[key as keyof typeof props]
+      others[key] = propsValue[key as keyof typeof propsValue]
     }
   }
-  return { ...others, ...rootAttrs.value }
+  const userMod = props.value.mod
+  const mergedMod = [
+    ...(Array.isArray(userMod) ? userMod : [userMod].filter(Boolean)),
+    ...(modList.value || []),
+  ]
+  return { ...others, mod: mergedMod, ...rootAttrs.value }
+})
+
+defineExpose({
+  root: computed(() => _root.value?.root ?? null),
 })
 </script>
