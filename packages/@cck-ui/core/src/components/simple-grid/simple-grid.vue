@@ -1,19 +1,25 @@
 <template>
-  <c-box v-if="type === 'container'" v-bind="containerAttrs">
-    <c-box v-bind="mergedRootAttrs" :data-auto-cols="autoColsAttr">
+  <c-box ref="_container" v-if="type === 'container'" v-bind="containerAttrs">
+    <c-box ref="_root" v-bind="mergedRootAttrs" :data-auto-cols="autoColsAttr">
       <slot />
     </c-box>
   </c-box>
   <template v-else>
-    <c-box v-bind="mergedRootAttrs" :data-auto-cols="autoColsAttr">
+    <c-box ref="_root" v-bind="mergedRootAttrs" :data-auto-cols="autoColsAttr">
       <slot />
     </c-box>
   </template>
 </template>
 
 <script setup lang="ts">
-import { computed, onUnmounted, ref, watchEffect } from 'vue'
-import { CBox, responsiveStyleManager, useRandomClassName, useStyles } from '../../core'
+import { computed, onUnmounted, ref, useAttrs, watchEffect } from 'vue'
+import {
+  CBox,
+  responsiveStyleManager,
+  useComponentProps,
+  useRandomClassName,
+  useStyles,
+} from '../../core'
 import type { SimpleGridFactory, SimpleGridProps } from './simple-grid.types'
 import classes from './simple-grid.module.css'
 import { useSimpleGridStyle } from './simple-grid-custom'
@@ -22,10 +28,17 @@ defineOptions({
   name: 'CSimpleGrid',
 })
 
-const props = withDefaults(defineProps<SimpleGridProps>(), {
-  cols: 1,
-  spacing: 'md',
-  type: 'media',
+const _container = ref<InstanceType<typeof CBox> | null>(null)
+const _root = ref<InstanceType<typeof CBox> | null>(null)
+
+const attrs = useAttrs()
+
+const rawProps = defineProps<SimpleGridProps>()
+
+const props = useComponentProps({
+  component: 'CSimpleGrid',
+  defaultProps: {},
+  props: rawProps,
 })
 
 const knownProps = [
@@ -48,28 +61,32 @@ const knownProps = [
 const getStyles = useStyles<SimpleGridFactory>({
   name: 'SimpleGrid',
   classes,
-  props,
-  className: props.className,
-  style: props.style,
-  classNames: props.classNames,
-  styles: props.styles,
-  unstyled: props.unstyled,
-  attributes: props.attributes,
-  vars: props.vars,
+  props: { ...props.value, ...attrs } as SimpleGridProps,
+  className: props.value.className,
+  style: props.value.style,
+  classNames: props.value.classNames,
+  styles: props.value.styles,
+  unstyled: props.value.unstyled,
+  attributes: props.value.attributes,
+  vars: props.value.vars,
 })
 
 const responsiveClassname = useRandomClassName()
 
-const autoColsAttr = props.minColWidth !== undefined ? props.autoFlow || 'auto-fill' : undefined
+const autoColsAttr =
+  props.value.minColWidth !== undefined ? props.value.autoFlow || 'auto-fill' : undefined
 
 const rootAttrs = computed(() => getStyles('root', { className: responsiveClassname }))
 const mergedRootAttrs = computed(() => {
   const others: Record<string, any> = {}
-  for (const key in props) {
+  const propsValue = props.value
+  for (const key in propsValue) {
     if (!knownProps.includes(key)) {
-      others[key] = props[key as keyof typeof props]
+      others[key] = propsValue[key as keyof typeof propsValue]
     }
   }
+  const userMod = props.value.mod
+  const mergedMod = [...(Array.isArray(userMod) ? userMod : [userMod].filter(Boolean))]
   return { ...others, ...rootAttrs.value }
 })
 
@@ -98,5 +115,10 @@ onUnmounted(() => {
   if (currentStyleKey.value) {
     responsiveStyleManager.unregister(currentStyleKey.value)
   }
+})
+
+defineExpose({
+  root: computed(() => _root.value?.root ?? null),
+  container: computed(() => _container.value?.root ?? null),
 })
 </script>
