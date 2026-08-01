@@ -109,7 +109,7 @@ const containerAttrs = computed(() => getStyles('container'))
 
 const gridStyle = useGridCustomStyle({
   selector: responsiveClassname,
-  ...props,
+  ...props.value,
 })
 
 const currentStyleKey = ref<string | null>(null)
