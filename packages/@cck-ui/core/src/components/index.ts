@@ -1,3 +1,4 @@
+export * from './aspect-ratio'
 export * from './button'
 export * from './grid'
 export * from './group'
