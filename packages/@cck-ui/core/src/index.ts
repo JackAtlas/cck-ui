@@ -1,8 +1,10 @@
 import type { App, Plugin } from 'vue'
 import {
+  CAspectRatio,
   CButton,
   CButtonGroup,
   CButtonGroupSection,
+  CCenter,
   CCol,
   CGrid,
   CGroup,
@@ -20,11 +22,13 @@ const INSTALLED_KEY = Symbol('INSTALLED_KEY')
 const components = [
   CckConfigProvider,
   CBox,
+  CAspectRatio,
   CButton,
   CButtonGroup,
   CButtonGroupSection,
-  CGrid,
+  CCenter,
   CCol,
+  CGrid,
   CGroup,
   CLoader,
   CSimpleGrid,
