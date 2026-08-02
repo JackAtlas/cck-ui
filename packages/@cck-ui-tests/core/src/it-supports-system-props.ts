@@ -1,4 +1,4 @@
-import { computed, defineComponent, defineExpose, h, ref } from 'vue'
+import { computed, defineComponent, h, ref } from 'vue'
 import { itHasClasses } from './shared/it-has-classes'
 import { itHasExtend } from './shared/it-has-extend'
 import { itHasStaticVarsResolver } from './shared/it-has-static-vars-resolver'
