@@ -19,7 +19,7 @@ const preview: Preview = {
         return { DEFAULT_THEME }
       },
       template: `
-        <config-provider :theme="DEFAULT_THEME">
+        <config-provider :theme="DEFAULT_THEME" :with-static-classes="true" :with-css-variables="true">
           <story />
         </config-provider>
       `,
