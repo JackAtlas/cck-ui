@@ -23,7 +23,8 @@ console.warn = (...args) => {
   const msg = args[0]
   if (
     typeof msg === 'string' &&
-    msg.includes('Avoid app logic that relies on enumerating keys on a component instance')
+    (msg.includes('Avoid app logic that relies on enumerating keys on a component instance') ||
+      msg.includes('Slot "default" invoked outside of the render function'))
   ) {
     return
   }
