@@ -206,6 +206,7 @@ describe('@cck-ui/core/splitter', () => {
               CSplitter,
               {
                 ref: splitterRef,
+                resetOnDoubleClick: true,
               },
               {
                 default: () =>
@@ -234,43 +235,43 @@ describe('@cck-ui/core/splitter', () => {
     expect(sizes).toEqual([12, 18, 70])
   })
 
-  // it('does not reset on double click when resetOnDoubleClick is false', async () => {
-  //   const splitterRef = ref<SplitterInstance | null>(null)
+  it('does not reset on double click when resetOnDoubleClick is false', async () => {
+    const splitterRef = ref<SplitterInstance | null>(null)
 
-  //   const { wrapper } = render(
-  //     defineComponent({
-  //       setup() {
-  //         return () =>
-  //           h(
-  //             CSplitter,
-  //             {
-  //               ref: splitterRef,
-  //               resetOnDoubleClick: false,
-  //             },
-  //             {
-  //               default: () =>
-  //                 createPanes([
-  //                   { defaultSize: 20, content: 'A' },
-  //                   { defaultSize: 30, content: 'B' },
-  //                   { defaultSize: 50, content: 'C' },
-  //                 ]),
-  //             }
-  //           )
-  //       },
-  //     })
-  //   )
+    const { wrapper } = render(
+      defineComponent({
+        setup() {
+          return () =>
+            h(
+              CSplitter,
+              {
+                ref: splitterRef,
+                resetOnDoubleClick: false,
+              },
+              {
+                default: () =>
+                  createPanes([
+                    { defaultSize: 20, content: 'A' },
+                    { defaultSize: 30, content: 'B' },
+                    { defaultSize: 50, content: 'C' },
+                  ]),
+              }
+            )
+        },
+      })
+    )
 
-  //   const instance = splitterRef.value
-  //   if (instance?.setSizes) {
-  //     instance.setSizes([10, 20, 70])
-  //   }
+    const instance = splitterRef.value
+    if (instance?.setSizes) {
+      instance.setSizes([10, 20, 70])
+    }
 
-  //   await wrapper.vm.$nextTick()
+    await wrapper.vm.$nextTick()
 
-  //   const handles = wrapper.findAll('[role="separator"]')
-  //   await handles[0].trigger('dblclick')
+    const handles = wrapper.findAll('[role="separator"]')
+    await handles[0].trigger('dblclick')
 
-  //   const sizes = (instance as any)?.sizes
-  //   expect(sizes).toEqual([10, 20, 70])
-  // })
+    const sizes = (instance as any)?.sizes
+    expect(sizes).toEqual([10, 20, 70])
+  })
 })
