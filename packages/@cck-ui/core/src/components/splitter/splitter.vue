@@ -118,7 +118,7 @@ watchEffect(() => {
       defaultSize: vProps.defaultSize ?? vProps['default-size'] ?? 0,
       min: vProps.min ?? undefined,
       max: vProps.max ?? undefined,
-      collapsible: vProps.collapsible || false,
+      collapsible: vProps.collapsible ?? false,
       collapseThreshold: vProps.collapseThreshold ?? vProps['collapse-threshold'] ?? undefined,
     }
   })
@@ -197,6 +197,20 @@ const getPaneStyle = (index: number) => {
   const magnitude = typeof size === 'number' ? size : parseFloat(size as string)
   return { flexGrow: magnitude, flexShrink: 1, flexBasis: 0 }
 }
+
+watch(
+  () => props.value.sizes,
+  (newSizes) => {
+    if (!newSizes) {
+      return
+    }
+    const currentSizes = splitter.sizes.value
+    if (JSON.stringify(newSizes) !== JSON.stringify(currentSizes)) {
+      splitter.setSizes(newSizes)
+    }
+  },
+  { immediate: true, deep: true }
+)
 
 const collapsed = computed(() => splitter.collapsed)
 const orientation = computed(() => props.value.orientation || 'horizontal')
