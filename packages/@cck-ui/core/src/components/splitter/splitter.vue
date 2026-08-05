@@ -1,7 +1,15 @@
 <template>
   <c-box ref="rootRef" v-bind="mergedAttrs">
     <template v-for="(vnode, index) in paneVNodes" :key="`pane-${index}`">
-      <c-box v-if="index > 0" v-bind="handleAttrs(index - 1)" @dblclick="splitter.reset(index - 1)">
+      <c-box
+        v-if="index > 0"
+        v-bind="handleAttrs(index - 1)"
+        :key="`handle-${index - 1}`"
+        @pointerdown="splitter.getHandleEventHandlers({ index: index - 1 }).onPointerDown"
+        @touchstart="splitter.getHandleEventHandlers({ index: index - 1 }).onTouchStart"
+        @keydown="splitter.getHandleEventHandlers({ index: index - 1 }).onKeyDown"
+        @dblclick="handleDblClick(index - 1)"
+      >
         <c-box
           v-if="withHandle"
           v-bind="getStyles('thumb')"
@@ -18,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, useAttrs, useSlots, watchEffect } from 'vue'
+import { computed, ref, useAttrs, useSlots, watch, watchEffect } from 'vue'
 import { CBox, useComponentProps, useStyles } from '../../core'
 import { SplitterFactory, type SplitterProps } from './splitter.types'
 import classes from './splitter.module.css'
@@ -130,6 +138,21 @@ const splitter = useSplitter({
   resetOnDoubleClick: props.value.resetOnDoubleClick,
 })
 
+watch(
+  rootRef,
+  (newVal) => {
+    if (newVal) {
+      const domEl = newVal.$el || newVal.root
+      if (domEl instanceof HTMLElement) {
+        splitter.containerRef(domEl)
+      }
+    } else {
+      splitter.containerRef(null)
+    }
+  },
+  { immediate: true }
+)
+
 const getHandleAttrs = (index: number) => {
   const handleProps = splitter.getHandleProps({ index })
   const { ref: _ref, onDoubleClick, ...attrs } = handleProps
@@ -142,16 +165,6 @@ const getHandleAttrs = (index: number) => {
     tabIndex: handleProps.tabIndex,
     'data-active': handleProps['data-active'],
     'data-orientation': handleProps['data-orientation'],
-    onKeydown: handleProps.onKeyDown,
-  }
-}
-
-const setHandleRef = (node: any, index: number) => {
-  const handleProps = splitter.getHandleProps({ index })
-  if (node && node.root) {
-    handleProps.ref(node.root instanceof HTMLElement ? node.root : null)
-  } else {
-    handleProps.ref(null)
   }
 }
 
@@ -166,7 +179,6 @@ const handleAttrs = (index: number) => {
     ...styles,
     ...attrs,
     key: `handle-${index}`,
-    ref: (node: any) => setHandleRef(node, index),
   }
 }
 
@@ -186,11 +198,14 @@ const getPaneStyle = (index: number) => {
   return { flexGrow: magnitude, flexShrink: 1, flexBasis: 0 }
 }
 
+const collapsed = computed(() => splitter.collapsed)
+const orientation = computed(() => props.value.orientation || 'horizontal')
+
 provideSplitterContext({
   getStyles,
-  sizes: splitter.sizes.value,
-  collapsed: splitter.collapsed,
-  orientation: props.value.orientation || 'horizontal',
+  sizes: splitter.sizes,
+  collapsed,
+  orientation,
   getPaneStyle,
 })
 
@@ -206,7 +221,12 @@ const thumbIcon = computed(() => {
 })
 
 const withHandle = computed(() => props.value.withHandle)
-const orientation = computed(() => props.value.orientation)
+
+const handleDblClick = (index: number) => {
+  if (props.value.resetOnDoubleClick !== false) {
+    splitter.reset(index)
+  }
+}
 
 const rootAttrs = computed(() => getStyles('root'))
 
@@ -225,10 +245,6 @@ const mergedAttrs = computed(() => {
   ]
   return { ...others, mod: mergedMod, ...rootAttrs.value }
 })
-
-const resetWrapper = (index: number) => {
-  splitter.reset(index)
-}
 
 defineExpose({
   root: computed(() => rootRef.value?.root || null),
