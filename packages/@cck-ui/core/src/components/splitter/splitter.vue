@@ -130,9 +130,6 @@ const splitter = useSplitter({
   resetOnDoubleClick: props.value.resetOnDoubleClick,
 })
 
-console.log('[Splitter] splitter.sizes:', JSON.stringify(splitter.sizes.value, null, 4))
-console.log('[Splitter] panels:', JSON.stringify(panels.value, null, 4))
-
 const getHandleAttrs = (index: number) => {
   const handleProps = splitter.getHandleProps({ index })
   const { ref: _ref, onDoubleClick, ...attrs } = handleProps
