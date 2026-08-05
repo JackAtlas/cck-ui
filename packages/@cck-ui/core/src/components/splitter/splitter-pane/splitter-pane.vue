@@ -48,12 +48,15 @@ const modList = computed(() => [
 
 const ctx = useSplitterContext()
 const index = props.value.__index ?? 0
-const isCollapsed = ctx.collapsed[index]
+const isCollapsed = computed(() => {
+  const collapsed = ctx.collapsed.value
+  return collapsed[index] ?? false
+})
 
-const sizeStyle = ctx.getPaneStyle(index)
+const sizeStyle = computed(() => ctx.getPaneStyle(index))
 
 const rootAttrs = computed(() => {
-  const style = [sizeStyle, props.value.style]
+  const style = [sizeStyle.value, props.value.style]
   const result = ctx.getStyles('pane', {
     className: props.value.className,
     classNames: props.value.classNames,
