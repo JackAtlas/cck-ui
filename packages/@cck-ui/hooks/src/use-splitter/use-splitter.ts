@@ -184,6 +184,12 @@ export interface UseSplitterReturnValue {
     'data-active': boolean | undefined
     'data-orientation': 'horizontal' | 'vertical'
   }
+  getHandleEventHandlers: (input: { index: number }) => {
+    onPointerDown: (event: PointerEvent) => void
+    onTouchStart: (event: TouchEvent) => void
+    onKeyDown: (event: KeyboardEvent) => void
+    onDoubleClick: () => void
+  }
   /**
    * @description Programmatically set sizes, each value keeps its declared unit
    */
@@ -865,146 +871,6 @@ export function useSplitter(options: UseSplitterOptions): UseSplitterReturnValue
     cancelAnimationFrame(frameId.value)
   })
 
-  const getHandleRefCallback = (handleIndex: number): ((el: HTMLElement | null) => void) => {
-    let controller = handleElementControllers.get(handleIndex)
-
-    const callback = (node: HTMLElement | null) => {
-      if (controller) {
-        controller.abort()
-        handleElementControllers.delete(handleIndex)
-        controller = undefined
-      }
-
-      if (!node) {
-        return
-      }
-
-      controller = new AbortController()
-      handleElementControllers.set(handleIndex, controller)
-
-      const onPointerDown = (event: PointerEvent) => {
-        if (optionsRef.value.enabled === false) {
-          return
-        }
-        if (event.button !== 0) {
-          return
-        }
-
-        const container = containerEl.value
-        if (!container) {
-          return
-        }
-
-        const opts = optionsRef.value
-        const isHorizontal = (opts.orientation ?? 'horizontal') === 'horizontal'
-        const rect = container.getBoundingClientRect()
-        const containerSizePx = isHorizontal ? rect.width : rect.height
-        const pointerPos = isHorizontal ? event.clientX : event.clientY
-        const isPixelMode = detectPixelMode(opts)
-        const rootFontSize = getRootFontSize()
-
-        const raw = currentSizes.value
-        const startSizes = resolveWorkingSizes(raw, isPixelMode, containerSizePx, rootFontSize)
-        preCollapseSizes.value = [...raw]
-
-        isDragging.value = true
-        activeHandle.value = handleIndex
-        startData.value = {
-          handleIndex,
-          startPointer: pointerPos,
-          containerSize: containerSizePx,
-          rootFontSize,
-          pixelMode: isPixelMode,
-          startSizes,
-          startRaw: [...raw],
-        }
-
-        document.body.style.userSelect = 'none'
-        document.body.style.webkitUserSelect = 'none'
-        document.body.style.cursor = isHorizontal ? 'col-resize' : 'row-resize'
-
-        opts.onResizeStart?.(handleIndex)
-
-        documentController.value?.abort()
-        documentController.value = new AbortController()
-        const sig = documentController.value.signal
-
-        document.addEventListener('pointermove', onPointerMove, { signal: sig })
-        document.addEventListener('pointerup', onPointerUp, { signal: sig })
-        document.addEventListener('pointercancel', onPointerUp, { signal: sig })
-      }
-
-      const flushResize = (pointerEvent: PointerEvent) => {
-        const data = startData.value
-        if (!data) {
-          return
-        }
-        const opts = optionsRef.value
-        const isHorizontal = (opts.orientation ?? 'horizontal') === 'horizontal'
-        const isRtl = isHorizontal && opts.dir === 'rtl'
-        const pointerPos = isHorizontal ? pointerEvent.clientX : pointerEvent.clientY
-        const pixelDelta = (isRtl ? -1 : 1) * (pointerPos - data.startPointer)
-        const delta = data.pixelMode ? pixelDelta : (pixelDelta / data.containerSize) * 100
-
-        const resolvedPanels = panels.map((p) =>
-          resolvePanel(p, data.pixelMode, data.containerSize, data.rootFontSize)
-        )
-
-        const newSizes = applyConstraints(
-          data.startSizes,
-          resolvedPanels,
-          data.handleIndex,
-          delta,
-          opts.redistribute
-        )
-
-        const encoded = encodeWorkingSizes(
-          newSizes,
-          data.startSizes,
-          data.startRaw,
-          data.pixelMode,
-          data.containerSize,
-          data.rootFontSize
-        )
-        updateSizes(encoded)
-      }
-
-      const onPointerMove = (event: PointerEvent) => {
-        if (!isDragging.value) {
-          return
-        }
-        cancelAnimationFrame(frameId.value)
-        frameId.value = requestAnimationFrame(() => flushResize(event))
-      }
-
-      const onPointerUp = (event: PointerEvent) => {
-        if (!isDragging.value) {
-          return
-        }
-        cancelAnimationFrame(frameId.value)
-        flushResize(event)
-
-        isDragging.value = false
-        const finishHandle = activeHandle.value
-        activeHandle.value = -1
-
-        document.body.style.userSelect = ''
-        document.body.style.webkitUserSelect = ''
-        document.body.style.cursor = ''
-
-        documentController.value?.abort()
-        documentController.value = null
-
-        optionsRef.value.onResizeEnd?.(finishHandle, [...currentSizes.value])
-        startData.value = null
-      }
-
-      node.addEventListener('pointerdown', onPointerDown, { signal: controller.signal })
-    }
-
-    return callback
-  }
-
   const getHandleProps = (input: { index: number }) => {
     const { index } = input
     const orient = orientation
@@ -1141,6 +1007,397 @@ export function useSplitter(options: UseSplitterOptions): UseSplitterReturnValue
     }
   }
 
+  const createPointerDownHandler = (handleIndex: number) => (event: PointerEvent) => {
+    if (optionsRef.value.enabled === false) {
+      return
+    }
+    if (event.button !== 0) {
+      return
+    }
+
+    const container = containerEl.value
+    if (!container) {
+      return
+    }
+
+    const opts = optionsRef.value
+    const isHorizontal = (opts.orientation ?? 'horizontal') === 'horizontal'
+    const rect = container.getBoundingClientRect()
+    const containerSizePx = isHorizontal ? rect.width : rect.height
+    const pointerPos = isHorizontal ? event.clientX : event.clientY
+    const isPixelMode = detectPixelMode(opts)
+    const rootFontSize = getRootFontSize()
+
+    const raw = currentSizes.value
+    const startSizes = resolveWorkingSizes(raw, isPixelMode, containerSizePx, rootFontSize)
+    preCollapseSizes.value = [...raw]
+
+    isDragging.value = true
+    activeHandle.value = handleIndex
+    startData.value = {
+      handleIndex,
+      startPointer: pointerPos,
+      containerSize: containerSizePx,
+      rootFontSize,
+      pixelMode: isPixelMode,
+      startSizes,
+      startRaw: [...raw],
+    }
+
+    document.body.style.userSelect = 'none'
+    document.body.style.webkitUserSelect = 'none'
+    document.body.style.cursor = isHorizontal ? 'col-resize' : 'row-resize'
+
+    opts.onResizeStart?.(handleIndex)
+
+    documentController.value?.abort()
+    documentController.value = new AbortController()
+    const sig = documentController.value.signal
+
+    const flushResize = (pointerEvent: PointerEvent) => {
+      const data = startData.value
+      if (!data) {
+        return
+      }
+      const opts = optionsRef.value
+      const isHorizontal = (opts.orientation ?? 'horizontal') === 'horizontal'
+      const isRtl = isHorizontal && opts.dir === 'rtl'
+      const pointerPos = isHorizontal ? pointerEvent.clientX : pointerEvent.clientY
+      const pixelDelta = (isRtl ? -1 : 1) * (pointerPos - data.startPointer)
+      const delta = data.pixelMode ? pixelDelta : (pixelDelta / data.containerSize) * 100
+
+      const resolvedPanels = panels.map((p) =>
+        resolvePanel(p, data.pixelMode, data.containerSize, data.rootFontSize)
+      )
+
+      const newSizes = applyConstraints(
+        data.startSizes,
+        resolvedPanels,
+        data.handleIndex,
+        delta,
+        opts.redistribute
+      )
+
+      const encoded = encodeWorkingSizes(
+        newSizes,
+        data.startSizes,
+        data.startRaw,
+        data.pixelMode,
+        data.containerSize,
+        data.rootFontSize
+      )
+
+      updateSizes(encoded)
+    }
+
+    const onPointerMove = (event: PointerEvent) => {
+      if (!isDragging.value) {
+        return
+      }
+      cancelAnimationFrame(frameId.value)
+      frameId.value = requestAnimationFrame(() => flushResize(event))
+    }
+
+    const onPointerUp = (event: PointerEvent) => {
+      if (!isDragging.value) {
+        return
+      }
+      cancelAnimationFrame(frameId.value)
+      flushResize(event)
+
+      isDragging.value = false
+      const finishHandle = activeHandle.value
+      activeHandle.value = -1
+
+      document.body.style.userSelect = ''
+      document.body.style.webkitUserSelect = ''
+      document.body.style.cursor = ''
+
+      documentController.value?.abort()
+      documentController.value = null
+
+      optionsRef.value.onResizeEnd?.(finishHandle, [...currentSizes.value])
+      startData.value = null
+    }
+
+    document.addEventListener('pointermove', onPointerMove, { signal: sig })
+    document.addEventListener('pointerup', onPointerUp, { signal: sig })
+    document.addEventListener('pointercancel', onPointerUp, { signal: sig })
+  }
+
+  const createTouchStartHandler = (handleIndex: number) => (event: TouchEvent) => {
+    if (optionsRef.value.enabled === false) {
+      return
+    }
+    if (event.touches.length !== 1) {
+      return
+    }
+    event.preventDefault()
+
+    const container = containerEl.value
+    if (!container) {
+      return
+    }
+
+    const opts = optionsRef.value
+    const isHorizontal = (opts.orientation ?? 'horizontal') === 'horizontal'
+    const rect = container.getBoundingClientRect()
+    const containerSizePx = isHorizontal ? rect.width : rect.height
+    const touch = event.touches[0]
+    const pointerPos = isHorizontal ? touch.clientX : touch.clientY
+    const isPixelMode = detectPixelMode(opts)
+    const rootFontSize = getRootFontSize()
+
+    const raw = currentSizes.value
+    const startSizes = resolveWorkingSizes(raw, isPixelMode, containerSizePx, rootFontSize)
+    preCollapseSizes.value = [...raw]
+
+    isDragging.value = true
+    activeHandle.value = handleIndex
+    startData.value = {
+      handleIndex,
+      startPointer: pointerPos,
+      containerSize: containerSizePx,
+      rootFontSize,
+      pixelMode: isPixelMode,
+      startSizes,
+      startRaw: [...raw],
+    }
+
+    document.body.style.userSelect = 'none'
+    document.body.style.webkitUserSelect = 'none'
+    document.body.style.cursor = isHorizontal ? 'col-resize' : 'row-resize'
+
+    opts.onResizeStart?.(handleIndex)
+
+    documentController.value?.abort()
+    documentController.value = new AbortController()
+    const sig = documentController.value.signal
+
+    const flushResize = (touchEvent: TouchEvent) => {
+      if (touchEvent.touches.length !== 1) {
+        return
+      }
+      const data = startData.value
+      if (!data) {
+        return
+      }
+      const opts = optionsRef.value
+      const isHorizontal = (opts.orientation ?? 'horizontal') === 'horizontal'
+      const isRtl = isHorizontal && opts.dir === 'rtl'
+      const touch = touchEvent.touches[0]
+      const pointerPos = isHorizontal ? touch.clientX : touch.clientY
+      const pixelDelta = (isRtl ? -1 : 1) * (pointerPos - data.startPointer)
+      const delta = data.pixelMode ? pixelDelta : (pixelDelta / data.containerSize) * 100
+
+      const resolvedPanels = panels.map((p) =>
+        resolvePanel(p, data.pixelMode, data.containerSize, data.rootFontSize)
+      )
+
+      const newSizes = applyConstraints(
+        data.startSizes,
+        resolvedPanels,
+        data.handleIndex,
+        delta,
+        opts.redistribute
+      )
+
+      const encoded = encodeWorkingSizes(
+        newSizes,
+        data.startSizes,
+        data.startRaw,
+        data.pixelMode,
+        data.containerSize,
+        data.rootFontSize
+      )
+      updateSizes(encoded)
+    }
+
+    const onTouchMove = (event: TouchEvent) => {
+      if (event.touches.length !== 1) {
+        return
+      }
+      if (!isDragging.value) {
+        return
+      }
+      event.preventDefault()
+      cancelAnimationFrame(frameId.value)
+      frameId.value = requestAnimationFrame(() => flushResize(event))
+    }
+
+    const onTouchEnd = (event: TouchEvent) => {
+      if (!isDragging.value) {
+        return
+      }
+      cancelAnimationFrame(frameId.value)
+      flushResize(event)
+
+      isDragging.value = false
+      const finishHandle = activeHandle.value
+      activeHandle.value = -1
+
+      document.body.style.userSelect = ''
+      document.body.style.webkitUserSelect = ''
+      document.body.style.cursor = ''
+
+      documentController.value?.abort()
+      documentController.value = null
+
+      optionsRef.value.onResizeEnd?.(finishHandle, [...currentSizes.value])
+      startData.value = null
+    }
+
+    document.addEventListener('touchmove', onTouchMove, { signal: sig })
+    document.addEventListener('touchend', onTouchEnd, { signal: sig })
+    document.addEventListener('touchcancel', onTouchEnd, { signal: sig })
+  }
+
+  const createKeyDownHandler = (handleIndex: number) => (event: KeyboardEvent) => {
+    if (!enabled) {
+      return
+    }
+
+    const isHorizontal = orientation === 'horizontal'
+    const isRtl = dir === 'rtl'
+    const container = pixelMode ? containerSize.value || measureContainer() : 0
+    const liveRootFontSize = rootFontSizeRef.value
+    const liveWorking = resolveWorkingSizes(
+      currentSizes.value,
+      pixelMode,
+      container,
+      liveRootFontSize
+    )
+    const livePanels = panels.map((p) => resolvePanel(p, pixelMode, container, liveRootFontSize))
+    const liveBeforePanel = livePanels[handleIndex]
+    const liveAfterPanel = livePanels[handleIndex + 1]
+
+    let delta = 0
+    const currentStep = resolveStep(
+      event.shiftKey ? shiftStep : step,
+      pixelMode,
+      container,
+      liveRootFontSize
+    )
+
+    switch (event.key) {
+      case 'ArrowLeft':
+        if (!isHorizontal) {
+          return
+        }
+        delta = isRtl ? currentStep : -currentStep
+        break
+      case 'ArrowRight':
+        if (!isHorizontal) {
+          return
+        }
+        delta = isRtl ? -currentStep : currentStep
+        break
+      case 'ArrowUp':
+        if (isHorizontal) {
+          return
+        }
+        delta = -currentStep
+        break
+      case 'ArrowDown':
+        if (isHorizontal) {
+          return
+        }
+        delta = currentStep
+        break
+      case 'Home':
+        delta = -(liveWorking[handleIndex] - getMin(liveBeforePanel))
+        break
+      case 'End':
+        delta = getMax(liveBeforePanel) - liveWorking[handleIndex]
+        break
+      case 'Enter': {
+        const beforeCollapsible = liveBeforePanel?.collapsible
+        const afterCollapsible = liveAfterPanel?.collapsible
+
+        if (beforeCollapsible && liveWorking[handleIndex] <= liveWorking[handleIndex + 1]) {
+          toggleCollapsePanel(handleIndex)
+          event.preventDefault()
+          return
+        }
+        if (afterCollapsible) {
+          toggleCollapsePanel(handleIndex + 1)
+          event.preventDefault()
+          return
+        }
+        if (beforeCollapsible) {
+          toggleCollapsePanel(handleIndex)
+          event.preventDefault()
+          return
+        }
+        return
+      }
+      default:
+        return
+    }
+
+    event.preventDefault()
+    if (delta !== 0) {
+      const newSizes = applyConstraints(liveWorking, livePanels, handleIndex, delta, redistribute)
+      updateSizes(
+        encodeWorkingSizes(
+          newSizes,
+          liveWorking,
+          currentSizes.value,
+          pixelMode,
+          container,
+          liveRootFontSize
+        )
+      )
+    }
+  }
+
+  const createDoubleClickHandler = (handleIndex: number) => () => {
+    const opts = optionsRef.value
+    if (opts.enabled === false || opts.resetOnDoubleClick === false) {
+      return
+    }
+    reset(handleIndex)
+  }
+
+  const getHandleRefCallback = (handleIndex: number): ((el: HTMLElement | null) => void) => {
+    let controller = handleElementControllers.get(handleIndex)
+
+    const callback = (node: HTMLElement | null) => {
+      if (controller) {
+        controller.abort()
+        handleElementControllers.delete(handleIndex)
+        controller = undefined
+      }
+
+      if (!node) {
+        return
+      }
+
+      controller = new AbortController()
+      handleElementControllers.set(handleIndex, controller)
+
+      const onPointerDown = createPointerDownHandler(handleIndex)
+      const onTouchStart = createTouchStartHandler(handleIndex)
+      // const onKeyDown = createKeyDownHandler(handleIndex)
+      // const onDoubleClick = createDoubleClickHandler(handleIndex)
+
+      node.addEventListener('pointerdown', onPointerDown, { signal: controller.signal })
+      node.addEventListener('touchstart', onTouchStart, { signal: controller.signal })
+    }
+
+    return callback
+  }
+
+  const getHandleEventHandlers = (input: { index: number }) => {
+    const { index } = input
+    return {
+      onPointerDown: createPointerDownHandler(index),
+      onTouchStart: createTouchStartHandler(index),
+      onKeyDown: createKeyDownHandler(index),
+      onDoubleClick: createDoubleClickHandler(index),
+    }
+  }
+
   const sizes = computed(() => currentSizes.value)
 
   return {
@@ -1150,6 +1407,7 @@ export function useSplitter(options: UseSplitterOptions): UseSplitterReturnValue
     activeHandle: activeHandle.value,
     containerRef,
     getHandleProps,
+    getHandleEventHandlers,
     setSizes: updateSizes,
     collapse: collapsePanel,
     expand: expandPanel,
