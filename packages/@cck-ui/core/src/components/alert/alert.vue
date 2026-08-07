@@ -30,7 +30,6 @@
           :data-variant="props.variant"
           :id="bodyId"
         >
-          {{ props.withCloseButton }}
           <slot />
         </c-box>
       </c-box>
