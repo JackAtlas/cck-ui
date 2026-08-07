@@ -1,6 +1,7 @@
 export * from './aspect-ratio'
 export * from './button'
 export * from './center'
+export * from './close-button'
 export * from './container'
 export * from './grid'
 export * from './group'
