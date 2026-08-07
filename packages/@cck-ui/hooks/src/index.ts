@@ -1,3 +1,4 @@
+export { useId } from './use-id/use-id'
 export { useIsomorphicEffect } from './use-isomorphic-effect/use-isomorphic-effect'
 export { useSplitter } from './use-splitter/use-splitter'
 
