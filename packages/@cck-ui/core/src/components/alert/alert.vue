@@ -112,7 +112,7 @@ const getStyles = useStyles<AlertFactory>({
   varsResolver,
 })
 
-const rootId = useId(props.value.id)
+const rootId = useId(props.value.id).value
 const titleId = (slots.title && `${rootId}-title`) || undefined
 const bodyId = `${rootId}-body`
 
