@@ -3,7 +3,7 @@ import { randomId } from '../utils'
 
 export function useId(staticId?: string) {
   if (staticId) {
-    return staticId
+    return ref(staticId)
   }
 
   const vueId = vueUseId()
