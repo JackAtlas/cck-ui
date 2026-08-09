@@ -57,18 +57,6 @@ const hasResponsive = computed(() => parsedStyleProps.value.hasResponsiveStyles)
 const responsiveClassName = ref<string | null>(null)
 let currentStyleKey: string | null = null
 
-function buildMediaQueriesFromObject(
-  mediaObj: Record<string, any> | undefined
-): StylesMediaQuery[] {
-  if (!mediaObj) {
-    return []
-  }
-  return Object.entries(mediaObj).map(([query, styles]) => ({
-    query,
-    styles,
-  }))
-}
-
 function updateResponsiveStyles() {
   if (currentStyleKey) {
     responsiveStyleManager.unregister(currentStyleKey)
@@ -80,7 +68,7 @@ function updateResponsiveStyles() {
     return
   }
 
-  const mediaArray = buildMediaQueriesFromObject(parsedStyleProps.value.media)
+  const mediaArray = parsedStyleProps.value.media || []
   const hash = hashStyleProps(parsedStyleProps.value.styles, mediaArray)
   const className = hash
 
