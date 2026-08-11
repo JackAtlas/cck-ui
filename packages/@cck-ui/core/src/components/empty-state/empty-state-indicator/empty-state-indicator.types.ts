@@ -6,7 +6,7 @@ export interface EmptyStateIndicatorProps
   extends
     BoxProps,
     CompoundStylesApiProps<EmptyStateIndicatorFactory>,
-    /* @vue-ignroe */ ElementProps<'div'> {}
+    /* @vue-ignore */ ElementProps<'div'> {}
 
 export type EmptyStateIndicatorFactory = Factory<{
   props: EmptyStateIndicatorProps
