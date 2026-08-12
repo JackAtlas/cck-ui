@@ -12,12 +12,7 @@ import type { BoxComponentProps } from './box.types'
 import { useCckTheme } from '../config-provider'
 import { extractStyleProps, parseStyleProps, STYLE_PROPS_DATA } from './style-props'
 import { getBoxStyle } from './get-box-style/get-box-style'
-import {
-  hashStyleProps,
-  responsiveStyleManager,
-  StylesMediaQuery,
-  stylesToString,
-} from '../responsive-style-manager'
+import { hashStyleProps, responsiveStyleManager, stylesToString } from '../responsive-style-manager'
 import { getBoxMod } from './get-box-mod/get-box-mod'
 
 defineOptions({
