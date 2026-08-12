@@ -69,7 +69,7 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  color: var(--emtpy-state-indicator-color, var(--c-color-dimmed));
+  color: var(--empty-state-indicator-color, var(--c-color-dimmed));
   font-size: var(--empty-state-indicator-size, var(--empty-state-indicator-size-md));
   line-height: 1;
 
