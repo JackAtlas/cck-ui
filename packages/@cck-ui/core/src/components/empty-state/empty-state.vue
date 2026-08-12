@@ -4,7 +4,7 @@
       <slot name="icon" />
     </empty-state-indicator>
     <c-box v-if="hasBodyContent" v-bind="bodyAttrs">
-      <empty-state-title v-if="$slots.title">
+      <empty-state-title v-if="$slots.title" :order="props.order">
         <slot name="title" />
       </empty-state-title>
       <empty-state-description v-if="$slots.description">
@@ -70,6 +70,7 @@ const knownProps = [
   'align',
   'variant',
   'color',
+  'order',
   'withIndicatorBackground',
   'mod',
   'attributes',
