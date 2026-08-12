@@ -111,6 +111,7 @@
   max-width: 32rem;
   text-wrap: pretty;
 }
+
 .actions {
   display: flex;
   align-items: center;
