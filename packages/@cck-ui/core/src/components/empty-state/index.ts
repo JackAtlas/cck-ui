@@ -45,15 +45,15 @@ export const CEmptyStateIndicator: SFCWithInstallAndClasses<
 export const CEmptyStateTitle: SFCWithInstallAndClasses<typeof EmptyStateTitle, typeof classes> =
   withInstall(EmptyStateTitleWithStatic)
 export const CEmptyState: SFCWithInstallAndClasses<typeof EmptyState, typeof classes> & {
-  CEmptyStateActions: typeof CEmptyStateActions
-  CEmptyStateDescription: typeof CEmptyStateDescription
-  CEmptyStateIndicator: typeof CEmptyStateIndicator
-  CEmptyStateTitle: typeof CEmptyStateTitle
+  Actions: typeof CEmptyStateActions
+  Description: typeof CEmptyStateDescription
+  Indicator: typeof CEmptyStateIndicator
+  Title: typeof CEmptyStateTitle
 } = withInstall(EmptyStateWithStatic, {
-  CEmptyStateActions,
-  CEmptyStateDescription,
-  CEmptyStateIndicator,
-  CEmptyStateTitle,
+  Actions: CEmptyStateActions,
+  Description: CEmptyStateDescription,
+  Indicator: CEmptyStateIndicator,
+  Title: CEmptyStateTitle,
 })
 
 export default CEmptyState
