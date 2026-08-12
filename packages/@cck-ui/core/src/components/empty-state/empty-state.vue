@@ -3,7 +3,7 @@
     <empty-state-indicator v-if="$slots.icon">
       <slot name="icon" />
     </empty-state-indicator>
-    <c-box v-bind="bodyAttrs">
+    <c-box v-if="hasBodyContent" v-bind="bodyAttrs">
       <empty-state-title v-if="$slots.title">
         <slot name="title" />
       </empty-state-title>
@@ -45,6 +45,7 @@ defineSlots<{
 const _root = ref<InstanceType<typeof CBox> | null>(null)
 
 const attrs = useAttrs()
+const slots = useSlots()
 
 const rawProps = defineProps<EmptyStateProps>()
 
@@ -100,7 +101,11 @@ const withIndicatorBackground = computed(
 
 provideEmptyStateContext({
   getStyles,
-  withIndicatorBackground: props.value.withIndicatorBackground || !!props.value.variant,
+  withIndicatorBackground,
+})
+
+const hasBodyContent = computed(() => {
+  return !!(slots.actions || slots.default || slots.description || slots.title)
 })
 
 const rootAttrs = computed(() => getStyles('root', { variant: props.value.variant }))
