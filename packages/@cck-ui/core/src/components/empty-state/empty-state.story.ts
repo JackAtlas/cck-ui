@@ -187,6 +187,34 @@ export const Sizes: Story = {
   }),
 }
 
+export const TitleHeadingLevel: Story = {
+  render: () => ({
+    components: { CEmptyState },
+    setup() {
+      const levels = [1, 2, 3, 4, 5, 6] as const
+      return { levels }
+    },
+    template: `
+      <div style="padding: 40px; display: flex; flex-direction: column; gap: 40px;">
+        <c-empty-state
+          v-for="level in levels"
+          :key="level"
+          :order="level"
+        >
+          <template #icon>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.3-4.3" />
+            </svg>
+          </template>
+          <template #title>Title level {{ level }}</template>
+          <template #description>Try adjusting your search or filters.</template>
+        </c-empty-state>
+      </div>
+    `,
+  }),
+}
+
 export const Unstyled: Story = {
   render: () => ({
     components: { CEmptyState },
