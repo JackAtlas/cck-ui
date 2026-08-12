@@ -30,7 +30,7 @@ const ctx = useEmptyStateContext()
 
 const modList = computed(() => [
   {
-    withBackground: ctx.withIndicatorBackground,
+    withBackground: ctx.withIndicatorBackground.value,
   },
 ])
 

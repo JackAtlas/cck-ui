@@ -94,6 +94,10 @@ const getStyles = useStyles<EmptyStateFactory>({
   varsResolver,
 })
 
+const withIndicatorBackground = computed(
+  () => props.value.withIndicatorBackground || !!props.value.variant
+)
+
 provideEmptyStateContext({
   getStyles,
   withIndicatorBackground: props.value.withIndicatorBackground || !!props.value.variant,

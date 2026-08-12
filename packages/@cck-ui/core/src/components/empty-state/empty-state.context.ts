@@ -1,10 +1,10 @@
-import { inject, InjectionKey, provide } from 'vue'
+import { ComputedRef, inject, InjectionKey, provide } from 'vue'
 import { GetStylesApi } from '../../core'
 import { EmptyStateFactory } from './empty-state.types'
 
 interface EmptyStateContextValue {
   getStyles: GetStylesApi<EmptyStateFactory>
-  withIndicatorBackground: boolean | undefined
+  withIndicatorBackground: ComputedRef<boolean>
 }
 
 const EMPTYSTATE_CONTEXT_KEY: InjectionKey<EmptyStateContextValue> = Symbol('EmptyStateContext')
