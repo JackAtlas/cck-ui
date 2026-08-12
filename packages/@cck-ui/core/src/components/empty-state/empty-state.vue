@@ -1,5 +1,5 @@
 <template>
-  <c-box v-bind="mergedRootAttrs" :variant="props.variant">
+  <c-box ref="_root" v-bind="mergedRootAttrs" :variant="props.variant">
     <empty-state-indicator v-if="$slots.icon">
       <slot name="icon" />
     </empty-state-indicator>
