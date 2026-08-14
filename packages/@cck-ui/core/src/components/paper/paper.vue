@@ -49,7 +49,7 @@ const modList = computed(() => [
 ])
 
 const getStyles = useStyles<PaperFactory>({
-  name: 'CPaper',
+  name: 'Paper',
   props: { ...props.value, ...attrs } as PaperProps,
   classes,
   className: props.value.className,
