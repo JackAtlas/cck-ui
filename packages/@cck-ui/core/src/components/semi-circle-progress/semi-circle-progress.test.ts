@@ -52,7 +52,6 @@ describe('@cck-ui/core/semi-circle-progress', () => {
     })
 
     let filledSegment = wrapper.find('.c-SemiCircleProgress-filledSegment')
-    console.log(filledSegment.html())
     const styleAttr = filledSegment.attributes('style')
     expect(styleAttr).toBeDefined()
     expect(styleAttr).toContain('stroke-dashoffset: 0')
