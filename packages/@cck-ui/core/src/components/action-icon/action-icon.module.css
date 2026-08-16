@@ -28,8 +28,8 @@
   min-height: var(--ai-size);
   border-radius: var(--ai-radius, var(--c-radius-default));
   background: var(--ai-bg, var(--c-color-default));
-  color: var(--ai-color, var(--c-color-default-border));
-  border: var(--ai-bd, rem(1px) solid var(--c-color-default-color));
+  color: var(--ai-color, var(--c-color-default-color));
+  border: var(--ai-bd, rem(1px) solid var(--c-color-default-border));
   cursor: pointer;
 
   @mixin hover {
