@@ -67,7 +67,6 @@ const knownProps = [
   'style',
   'styles',
   'unstyled',
-  'variant',
   'loading',
   'loaderProps',
   'size',
