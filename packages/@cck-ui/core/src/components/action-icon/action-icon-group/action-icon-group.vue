@@ -40,7 +40,6 @@ const knownProps = [
   'orientation',
   'vars',
   'borderWidth',
-  'variant',
   'mod',
   'attributes',
 ]
