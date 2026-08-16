@@ -31,7 +31,9 @@
       </template>
     </c-transition>
 
-    <c-box tag="span" v-bind="getStyles('icon')" :mod="{ loading: props.loading }"></c-box>
+    <c-box tag="span" v-bind="getStyles('icon')" :mod="{ loading: props.loading }">
+      <slot />
+    </c-box>
   </unstyled-button>
 </template>
 
