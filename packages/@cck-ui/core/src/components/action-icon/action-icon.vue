@@ -24,9 +24,7 @@
             color="var(--ai-color)"
             size="calc(var(--ai-size) * 0.55)"
             v-bind="props.loaderProps"
-          >
-            <slot />
-          </c-loader>
+          ></c-loader>
         </c-box>
       </template>
     </c-transition>
