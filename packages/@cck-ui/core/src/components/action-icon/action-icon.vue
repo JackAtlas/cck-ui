@@ -37,6 +37,7 @@
 
 <script setup lang="ts">
 import UnstyledButton from '../unstyled-button'
+import { CLoader } from '../loader'
 import { CTransition } from '../transition'
 import { computed, ref, useAttrs } from 'vue'
 import { ActionIconFactory, ActionIconProps } from './action-icon.types'
