@@ -27,14 +27,14 @@
   min-width: var(--ai-size);
   min-height: var(--ai-size);
   border-radius: var(--ai-radius, var(--c-radius-default));
-  background: var(--ai-bg, var(--c-primary-color-filled));
-  color: var(--ai-color, var(--c-color-white));
-  border: var(--ai-bd, rem(1px) solid transparent);
+  background: var(--ai-bg, var(--c-color-default));
+  color: var(--ai-color, var(--c-color-default-color));
+  border: var(--ai-bd, rem(1px) solid var(--c-color-default-color));
   cursor: pointer;
 
   @mixin hover {
     &:where(:not([data-loading], :disabled, [data-disabled])) {
-      background-color: var(--ai-hover, var(--c-primary-color-filled-hover));
+      background-color: var(--ai-hover, var(--c-color-default-hover));
       color: var(--ai-hover-color, var(--ai-color));
     }
   }
