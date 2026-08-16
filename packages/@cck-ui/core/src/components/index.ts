@@ -1,3 +1,4 @@
+export * from './action-icon'
 export * from './alert'
 export * from './aspect-ratio'
 export * from './button'
