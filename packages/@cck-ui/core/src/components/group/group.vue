@@ -1,6 +1,8 @@
 <template>
   <c-box ref="_root" v-bind="mergedAttrs" :size="__size" :variant="variant">
-    <component v-for="(node, index) in filteredChildren" :key="node.key || index" :is="node" />
+    <!-- TODO: filter falsy children -->
+    <!-- <component v-for="(node, index) in filteredChildren" :key="node.key || index" :is="node" /> -->
+    <slot />
   </c-box>
 </template>
 
