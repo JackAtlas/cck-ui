@@ -3,7 +3,7 @@
     ref="_root"
     v-bind="mergedRootAttrs"
     :aria-busy="props.loading || undefined"
-    :disabled="props.disabled || loading"
+    :disabled="props.disabled || props.loading"
     :size="props.size"
     :unstyled="props.unstyled"
   >
