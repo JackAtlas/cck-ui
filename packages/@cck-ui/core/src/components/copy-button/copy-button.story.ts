@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/vue3-vite'
+import CButton from '../button'
 import CCopyButton from '.'
 
 const meta = {
@@ -20,14 +21,32 @@ export const Usage: Story = {
     value: 'cck-ui',
   },
   render: (args) => ({
-    components: { CCopyButton },
+    components: { CButton, CCopyButton },
     setup() {
+      const head = document.head
+      const viteStyles = Array.from(head.querySelectorAll('style')).filter(
+        (style) => style.dataset.viteDevId
+      )
+      let buttonStyle: HTMLStyleElement | null = null
+      let unstyledButtonStyle: HTMLStyleElement | null = null
+      viteStyles.forEach((style) => {
+        if (style.dataset.viteDevId?.endsWith('/button.module.css')) {
+          buttonStyle = style
+        } else if (style.dataset.viteDevId?.endsWith('/unstyled-button.module.css')) {
+          unstyledButtonStyle = style
+        }
+      })
+
+      if (buttonStyle && unstyledButtonStyle) {
+        head.insertBefore(unstyledButtonStyle, buttonStyle)
+      }
+
       return { args }
     },
     template: `
       <c-copy-button :timeout="1000" :value="args.value">
         <template #default="{ copied, copy }">
-          <button type="button" :style="{ color: copied ? 'teal' : 'blue' }" @click="copy">{{ copied ? 'Copied to clipboard' : 'Copy to clipboard' }}</button>
+          <c-button variant="filled" :color="copied ? 'teal' : 'blue'" @click="copy">{{ copied ? 'Copied to clipboard' : 'Copy to clipboard' }}</c-button>
         </template>
       </c-copy-button>
     `,
