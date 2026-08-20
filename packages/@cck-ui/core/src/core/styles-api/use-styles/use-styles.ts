@@ -29,8 +29,8 @@ export interface UseStylesInput<Payload extends FactoryPayload> {
   classes: Payload['stylesNames'] extends string ? Record<string, string> : never
   props: MaybeRefOrGetter<Payload['props']>
   stylesCtx?: MaybeRefOrGetter<Payload['ctx'] | undefined>
-  className?: string | undefined
-  style?: CStyleProp
+  className?: MaybeRefOrGetter<string | undefined>
+  style?: MaybeRefOrGetter<CStyleProp | undefined>
   rootSelector?: Payload['stylesNames']
   unstyled?: boolean
   classNames?: ClassNames<Payload> | ClassNamesArray<Payload>
@@ -82,6 +82,8 @@ export function useStyles<Payload extends FactoryPayload>({
   return (selector, options) => {
     const currentProps = toValue(props) as Payload['props']
     const currentCtx = toValue(stylesCtx) as Payload['ctx'] | undefined
+    const currentStyle = toValue(style) as CStyleProp | undefined
+    const currentClassName = toValue(className)
 
     const resolvedClassNames = resolveClassNames({
       theme,
@@ -127,7 +129,7 @@ export function useStyles<Payload extends FactoryPayload>({
       vars?.(theme, currentProps, currentCtx),
     ])
 
-    const resolvedRootStyle = resolveStyle({ style, theme })
+    const resolvedRootStyle = resolveStyle({ style: currentStyle, theme })
 
     return {
       ...attributes?.[selector],
@@ -142,7 +144,7 @@ export function useStyles<Payload extends FactoryPayload>({
         resolvedThemeClassNames,
         classes,
         unstyled,
-        className,
+        className: currentClassName,
         rootSelector,
         props: currentProps,
         stylesCtx: currentCtx,
