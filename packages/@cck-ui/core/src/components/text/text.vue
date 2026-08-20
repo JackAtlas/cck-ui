@@ -14,7 +14,7 @@
 import { computed, ref, useAttrs } from 'vue'
 import type { TextFactory, TextProps, TextTruncate } from './text.types.ts'
 import classes from './text.module.css'
-import { useStyles, CBox, useComponentProps } from '../../core'
+import { useStyles, CBox, useComponentProps, CStyleProp } from '../../core'
 import { varsResolver } from './text.utils.js'
 
 defineOptions({
@@ -75,9 +75,15 @@ const modList = computed(() => [
   },
 ])
 
+const styleProps = computed(() => ({
+  ...props.value,
+  ...attrs,
+  style: (attrs.style ?? props.value.style) as CStyleProp,
+}))
+
 const getStyles = useStyles<TextFactory>({
   name: ['Text', props.value.__staticSelector],
-  props: { ...props.value, ...attrs } as TextProps,
+  props: styleProps,
   classes,
   className: props.value.className,
   style: props.value.style,

@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import { computed, ref, useAttrs, useSlots } from 'vue'
-import { CBox, useComponentProps, useStyles } from '../../../core'
+import { CBox, CStyleProp, useComponentProps, useStyles } from '../../../core'
 import classes from '../button.module.css'
 import { ButtonGroupFactory, type ButtonGroupProps } from './button-group.types'
 import { useButtonGroup } from './use-button-group'
@@ -46,9 +46,15 @@ const knownProps = [
   'attributes',
 ]
 
+const styleProps = computed(() => ({
+  ...props.value,
+  ...attrs,
+  style: (attrs.style ?? props.value.style) as CStyleProp,
+}))
+
 const getStyles = useStyles<ButtonGroupFactory>({
   name: 'ButtonGroup',
-  props: { ...props.value, ...attrs } as ButtonGroupProps,
+  props: styleProps,
   classes,
   className: props.value.className,
   style: props.value.style,

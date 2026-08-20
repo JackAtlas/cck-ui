@@ -19,7 +19,7 @@ import { CloseButtonFactory, CloseButtonProps } from './close-button.types'
 import UnstyledButton from '../unstyled-button'
 import CloseIcon from './close-icon.vue'
 import classes from './close-button.module.css'
-import { useComponentProps, useStyles } from '../../core'
+import { CStyleProp, useComponentProps, useStyles } from '../../core'
 import { varsResolver } from './close-button.utils'
 
 defineOptions({
@@ -64,9 +64,15 @@ const knownProps = [
   '__staticSelector',
 ]
 
+const styleProps = computed(() => ({
+  ...props.value,
+  ...attrs,
+  style: (attrs.style ?? props.value.style) as CStyleProp,
+}))
+
 const getStyles = useStyles<CloseButtonFactory>({
   name: props.value.__staticSelector || 'CloseButton',
-  props: { ...props.value, ...attrs } as CloseButtonProps,
+  props: styleProps,
   classes,
   className: props.value.className,
   classNames: props.value.classNames,

@@ -20,7 +20,7 @@
 
 <script setup lang="ts">
 import { computed, ref, useAttrs, useSlots } from 'vue'
-import { CBox, useComponentProps, useStyles } from '../../core'
+import { CBox, CStyleProp, useComponentProps, useStyles } from '../../core'
 import { EmptyStateFactory, EmptyStateProps } from './empty-state.types'
 import classes from './empty-state.module.css'
 import { varsResolver } from './empty-state.utils'
@@ -82,10 +82,16 @@ const modList = computed(() => [
   },
 ])
 
+const styleProps = computed(() => ({
+  ...props.value,
+  ...attrs,
+  style: (attrs.style ?? props.value.style) as CStyleProp,
+}))
+
 const getStyles = useStyles<EmptyStateFactory>({
   name: 'EmptyState',
   classes,
-  props: { ...props.value, ...attrs } as EmptyStateProps,
+  props: styleProps,
   className: props.value.className,
   style: props.value.style,
   classNames: props.value.classNames,

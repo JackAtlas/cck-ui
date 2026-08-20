@@ -41,7 +41,7 @@ import { CLoader } from '../loader'
 import { CTransition } from '../transition'
 import { computed, ref, useAttrs } from 'vue'
 import { ActionIconFactory, ActionIconProps } from './action-icon.types'
-import { CBox, useComponentProps, useStyles } from '../../core'
+import { CBox, CStyleProp, useComponentProps, useStyles } from '../../core'
 import classes from './action-icon.module.css'
 import { varsResolver } from './action-icon.utils'
 
@@ -83,9 +83,15 @@ const knownProps = [
   'attributes',
 ]
 
+const styleProps = computed(() => ({
+  ...props.value,
+  ...attrs,
+  style: (attrs.style ?? props.value.style) as CStyleProp,
+}))
+
 const getStyles = useStyles<ActionIconFactory>({
   name: ['ActionIcon', props.value.__staticSelector],
-  props: { ...props.value, ...attrs } as ActionIconProps,
+  props: styleProps,
   classes,
   className: props.value.className,
   style: props.value.style,

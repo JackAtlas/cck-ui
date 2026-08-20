@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import { computed, ref, useAttrs, watch } from 'vue'
-import { CBox, useComponentProps, useStyles } from '../../core'
+import { CBox, CStyleProp, useComponentProps, useStyles } from '../../core'
 import { ImageFactory, ImageProps } from './image.types'
 import { varsResolver } from './image.utils'
 import classes from './image.module.css'
@@ -44,10 +44,16 @@ const knownProps = [
   'attributes',
 ]
 
+const styleProps = computed(() => ({
+  ...props.value,
+  ...attrs,
+  style: (attrs.style ?? props.value.style) as CStyleProp,
+}))
+
 const getStyles = useStyles<ImageFactory>({
   name: 'Image',
   classes,
-  props: { ...props.value, ...attrs } as ImageProps,
+  props: styleProps,
   className: props.value.className,
   classNames: props.value.classNames,
   style: props.value.style,

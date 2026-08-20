@@ -48,7 +48,7 @@
 
 <script setup lang="ts">
 import { computed, ref, useAttrs } from 'vue'
-import { CBox, useComponentProps, useStyles } from '../../core'
+import { CBox, CStyleProp, useComponentProps, useStyles } from '../../core'
 import { SemiCircleProgressFactory, SemiCircleProgressProps } from './semi-circle-progress.types'
 import classes from './semi-circle-progress.module.css'
 import { varsResolver } from './semi-circle-progress.utils'
@@ -98,9 +98,15 @@ const knownProps = [
   'attributes',
 ]
 
+const styleProps = computed(() => ({
+  ...props.value,
+  ...attrs,
+  style: (attrs.style ?? props.value.style) as CStyleProp,
+}))
+
 const getStyles = useStyles<SemiCircleProgressFactory>({
   name: 'SemiCircleProgress',
-  props: { ...props.value, ...attrs } as SemiCircleProgressProps,
+  props: styleProps,
   classes,
   className: props.value.className,
   style: props.value.style,

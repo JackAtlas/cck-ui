@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { CBox, useComponentProps, useStyles } from '../../core'
+import { CBox, CStyleProp, useComponentProps, useStyles } from '../../core'
 import { SkeletonFactory, SkeletonProps } from './skeleton.types'
 import classes from './skeleton.module.css'
 import { varsResolver } from './skeleton.utils'
@@ -26,6 +26,7 @@ const rawProps = withDefaults(defineProps<SkeletonProps>(), {
 
 const props = useComponentProps({
   component: 'CSkeleton',
+  defaultProps: {},
   props: rawProps,
 })
 
@@ -46,10 +47,16 @@ const knownProps = [
   'attributes',
 ]
 
+const styleProps = computed(() => ({
+  ...props.value,
+  ...attrs,
+  style: (attrs.style ?? props.value.style) as CStyleProp,
+}))
+
 const getStyles = useStyles<SkeletonFactory>({
   name: 'Skeleton',
   classes,
-  props: { ...props.value, ...attrs } as SkeletonProps,
+  props: styleProps,
   className: props.value.className,
   style: props.value.style,
   classNames: props.value.classNames,

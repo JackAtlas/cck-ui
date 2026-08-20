@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { computed, ref, useAttrs } from 'vue'
 import classes from './paper.module.css'
-import { CBox, useComponentProps, useStyles } from '../../core'
+import { CBox, CStyleProp, useComponentProps, useStyles } from '../../core'
 import { PaperFactory, PaperProps } from './paper.types'
 import { varsResolver } from './paper.utils'
 
@@ -48,9 +48,15 @@ const modList = computed(() => [
   },
 ])
 
+const styleProps = computed(() => ({
+  ...props.value,
+  ...attrs,
+  style: (attrs.style ?? props.value.style) as CStyleProp,
+}))
+
 const getStyles = useStyles<PaperFactory>({
   name: 'Paper',
-  props: { ...props.value, ...attrs } as PaperProps,
+  props: styleProps,
   classes,
   className: props.value.className,
   style: props.value.style,

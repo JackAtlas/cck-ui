@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { computed, ref, useAttrs } from 'vue'
 import { AspectRatioFactory, AspectRatioProps } from './aspect-ratio.types'
-import { CBox, useComponentProps, useStyles } from '../../core'
+import { CBox, CStyleProp, useComponentProps, useStyles } from '../../core'
 import classes from './aspect-ratio.module.css'
 import { varsResolver } from './aspect-ratio.utils'
 
@@ -38,9 +38,15 @@ const knownProps = [
   'attributes',
 ]
 
+const styleProps = computed(() => ({
+  ...props.value,
+  ...attrs,
+  style: (attrs.style ?? props.value.style) as CStyleProp,
+}))
+
 const getStyles = useStyles<AspectRatioFactory>({
   name: 'AspectRatio',
-  props: { ...props.value, ...attrs } as AspectRatioProps,
+  props: styleProps,
   classes,
   className: props.value.className,
   classNames: props.value.classNames,

@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { computed, ref, useAttrs } from 'vue'
-import { CBox, useComponentProps, useStyles } from '../../core'
+import { CBox, CStyleProp, useComponentProps, useStyles } from '../../core'
 import { ContainerFactory, ContainerProps } from './container.types'
 import { varsResolver } from './container.utils'
 import classes from './container.module.css'
@@ -44,11 +44,17 @@ const knownProps = [
   'strategy',
 ]
 
+const styleProps = computed(() => ({
+  ...props.value,
+  ...attrs,
+  style: (attrs.style ?? props.value.style) as CStyleProp,
+}))
+
 const modList = computed(() => [{ fluid: props.value.fluid, strategy: props.value.strategy }])
 
 const getStyles = useStyles<ContainerFactory>({
   name: 'Container',
-  props: { ...props.value, ...attrs } as ContainerProps,
+  props: styleProps,
   classes,
   className: props.value.className,
   style: props.value.style,

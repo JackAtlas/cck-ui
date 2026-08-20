@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import { computed, ref, useAttrs } from 'vue'
-import { CBox, useComponentProps, useStyles } from '../../core'
+import { CBox, CStyleProp, useComponentProps, useStyles } from '../../core'
 import type { UnstyledButtonFactory, UnstyledButtonProps } from './unstyled-button.types'
 import classes from './unstyled-button.module.css'
 
@@ -46,9 +46,15 @@ const knownProps = [
   'attributes',
 ]
 
+const styleProps = computed(() => ({
+  ...props.value,
+  ...attrs,
+  style: (attrs.style ?? props.value.style) as CStyleProp,
+}))
+
 const getStyles = useStyles<UnstyledButtonFactory>({
   name: props.value.__staticSelector!,
-  props: { ...props.value, ...attrs } as UnstyledButtonProps,
+  props: styleProps,
   classes,
   className: props.value.className,
   style: props.value.style,

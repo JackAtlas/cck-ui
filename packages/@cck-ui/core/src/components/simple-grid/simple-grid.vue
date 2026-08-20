@@ -15,6 +15,7 @@
 import { computed, onUnmounted, ref, useAttrs, watchEffect } from 'vue'
 import {
   CBox,
+  CStyleProp,
   responsiveStyleManager,
   useComponentProps,
   useRandomClassName,
@@ -58,10 +59,16 @@ const knownProps = [
   'attributes',
 ]
 
+const styleProps = computed(() => ({
+  ...props.value,
+  ...attrs,
+  style: (attrs.style ?? props.value.style) as CStyleProp,
+}))
+
 const getStyles = useStyles<SimpleGridFactory>({
   name: 'SimpleGrid',
   classes,
-  props: { ...props.value, ...attrs } as SimpleGridProps,
+  props: styleProps,
   className: props.value.className,
   style: props.value.style,
   classNames: props.value.classNames,

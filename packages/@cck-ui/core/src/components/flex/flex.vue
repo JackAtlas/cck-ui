@@ -8,6 +8,7 @@
 import { computed, onUnmounted, ref, useAttrs, watchEffect } from 'vue'
 import {
   CBox,
+  CStyleProp,
   filterProps,
   hashStyleProps,
   parseStyleProps,
@@ -55,10 +56,16 @@ const knownProps = [
   'attributes',
 ]
 
+const styleProps = computed(() => ({
+  ...props.value,
+  ...attrs,
+  style: (attrs.style ?? props.value.style) as CStyleProp,
+}))
+
 const getStyles = useStyles<FlexFactory>({
   name: 'Flex',
   classes,
-  props: { ...props.value, ...attrs } as FlexProps,
+  props: styleProps,
   className: props.value.className,
   style: props.value.style,
   classNames: props.value.classNames,

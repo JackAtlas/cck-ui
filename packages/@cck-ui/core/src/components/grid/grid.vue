@@ -19,6 +19,7 @@
 import { computed, onUnmounted, provide, ref, useAttrs, watchEffect } from 'vue'
 import {
   CBox,
+  CStyleProp,
   isNumberLike,
   responsiveStyleManager,
   useComponentProps,
@@ -72,10 +73,16 @@ const knownProps = [
   'attributes',
 ]
 
+const styleProps = computed(() => ({
+  ...props.value,
+  ...attrs,
+  style: (attrs.style ?? props.value.style) as CStyleProp,
+}))
+
 const getStyles = useStyles<GridFactory>({
   name: 'Grid',
   classes,
-  props: { ...props.value, ...attrs } as GridProps,
+  props: styleProps,
   className: props.value.className,
   style: props.value.style,
   classNames: props.value.classNames,

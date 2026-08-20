@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { computed, ref, useAttrs } from 'vue'
-import { CBox, useComponentProps, useStyles } from '../../../core'
+import { CBox, CStyleProp, useComponentProps, useStyles } from '../../../core'
 import type {
   ButtonGroupSectionFactory,
   ButtonGroupSectionProps,
@@ -45,9 +45,15 @@ const knownProps = [
   'attributes',
 ]
 
+const styleProps = computed(() => ({
+  ...props.value,
+  ...attrs,
+  style: (attrs.style ?? props.value.style) as CStyleProp,
+}))
+
 const getStyles = useStyles<ButtonGroupSectionFactory>({
   name: 'ButtonGroupSection',
-  props: { ...props.value, ...attrs } as ButtonGroupSectionProps,
+  props: styleProps,
   classes,
   className: props.value.className,
   style: props.value.style,

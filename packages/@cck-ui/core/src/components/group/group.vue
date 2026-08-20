@@ -10,7 +10,7 @@
 import { computed, ref, useAttrs, useSlots } from 'vue'
 import type { GroupFactory, GroupProps, GroupStylesCtx } from './group.types'
 import { filterFalsyChildren } from './filter-falsy-children/filter-falsy-children'
-import { getSpacing, useStyles, CBox, useComponentProps } from '../../core'
+import { getSpacing, useStyles, CBox, useComponentProps, CStyleProp } from '../../core'
 import classes from './group.module.css'
 import { varsResolver } from './group.utils'
 
@@ -63,9 +63,15 @@ const childWidth = `calc(${100 / childrenCount}% - (${resolvedGap} - ${resolvedG
 
 const stylesCtx: GroupStylesCtx = { childWidth }
 
+const styleProps = computed(() => ({
+  ...props.value,
+  ...attrs,
+  style: (attrs.style ?? props.value.style) as CStyleProp,
+}))
+
 const getStyles = useStyles<GroupFactory>({
   name: 'Group',
-  props: { ...props.value, ...attrs } as GroupProps,
+  props: styleProps,
   stylesCtx,
   className: props.value.className,
   style: props.value.style,

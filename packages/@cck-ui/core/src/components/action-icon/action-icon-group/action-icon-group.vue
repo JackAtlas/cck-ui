@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { computed, ref, useAttrs } from 'vue'
-import { CBox, useComponentProps, useStyles } from '../../../core'
+import { CBox, CStyleProp, useComponentProps, useStyles } from '../../../core'
 import { ActionIconGroupFactory, ActionIconGroupProps } from './action-icon-group.types'
 import classes from '../action-icon.module.css'
 import { varsResolver } from './action-icon-group.utils'
@@ -44,9 +44,15 @@ const knownProps = [
   'attributes',
 ]
 
+const styleProps = computed(() => ({
+  ...props.value,
+  ...attrs,
+  style: (attrs.style ?? props.value.style) as CStyleProp,
+}))
+
 const getStyles = useStyles<ActionIconGroupFactory>({
   name: 'ActionIconGroup',
-  props: { ...props.value, ...attrs } as ActionIconGroupProps,
+  props: styleProps,
   classes,
   className: props.value.className,
   style: props.value.style,

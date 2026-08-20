@@ -27,7 +27,7 @@
 
 <script setup lang="ts">
 import { computed, ref, useAttrs, useSlots, watch, watchEffect } from 'vue'
-import { CBox, useComponentProps, useStyles } from '../../core'
+import { CBox, CStyleProp, useComponentProps, useStyles } from '../../core'
 import { SplitterFactory, type SplitterProps } from './splitter.types'
 import classes from './splitter.module.css'
 import { varsResolver } from './splitter.utils'
@@ -91,10 +91,16 @@ const modList = computed(() => [
   },
 ])
 
+const styleProps = computed(() => ({
+  ...props.value,
+  ...attrs,
+  style: (attrs.style ?? props.value.style) as CStyleProp,
+}))
+
 const getStyles = useStyles<SplitterFactory>({
   name: 'Splitter',
   classes,
-  props: { ...props.value, ...attrs } as SplitterProps,
+  props: styleProps,
   className: props.value.className,
   style: props.value.style,
   classNames: props.value.classNames,

@@ -61,7 +61,7 @@
 
 <script setup lang="ts">
 import { computed, ref, useAttrs, useSlots } from 'vue'
-import { CBox, rem, useComponentProps, useStyles } from '../../core'
+import { CBox, CStyleProp, rem, useComponentProps, useStyles } from '../../core'
 import { UnstyledButton } from '../unstyled-button'
 import { ButtonFactory, type ButtonProps } from './button.types'
 import { varsResolver } from './button.utils'
@@ -126,9 +126,15 @@ const knownProps = [
   'attributes',
 ]
 
+const styleProps = computed(() => ({
+  ...props.value,
+  ...attrs,
+  style: (attrs.style ?? props.value.style) as CStyleProp,
+}))
+
 const getStyles = useStyles<ButtonFactory>({
   name: 'Button',
-  props: { ...props.value, ...attrs } as ButtonProps,
+  props: styleProps,
   classes,
   className: props.value.className,
   style: props.value.style,

@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import { computed, ref, useAttrs } from 'vue'
-import { CBox, useComponentProps, useStyles } from '../../core'
+import { CBox, CStyleProp, useComponentProps, useStyles } from '../../core'
 import type { LoaderProps } from './loader.types'
 import { CDefaultLoaders, LoaderFactory } from '.'
 import classes from './loader.module.css'
@@ -51,9 +51,15 @@ const knownProps = [
   'attributes',
 ]
 
+const styleProps = computed(() => ({
+  ...props.value,
+  ...attrs,
+  style: (attrs.style ?? props.value.style) as CStyleProp,
+}))
+
 const getStyles = useStyles<LoaderFactory>({
   name: 'Loader',
-  props: { ...props.value, ...attrs } as LoaderProps,
+  props: styleProps,
   classes,
   className: props.value.className,
   style: props.value.style,
