@@ -37,7 +37,6 @@ const knownProps = [
   'styles',
   'unstyled',
   'vars',
-  'variant',
   'gradient',
   'radius',
   'autoContrast',
@@ -64,7 +63,9 @@ const mergedAttrs = computed(() => {
   const others: Record<string, any> = {}
   const propsValue = props.value
   for (const key in propsValue) {
-    others[key] = propsValue[key as keyof typeof propsValue]
+    if (!knownProps.includes(key)) {
+      others[key] = propsValue[key as keyof typeof propsValue]
+    }
   }
   const userMod = props.value.mod
   const mergedMod = [...(Array.isArray(userMod) ? userMod : [userMod].filter(Boolean))]
