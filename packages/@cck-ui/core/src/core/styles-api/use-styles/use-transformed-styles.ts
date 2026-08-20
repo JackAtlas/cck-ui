@@ -1,3 +1,4 @@
+import { toValue } from 'vue'
 import { CTheme, useCckStylesTransform } from '../../config-provider'
 
 interface UseTransformedStylesInput {
@@ -20,17 +21,20 @@ export function useStylesTransform({
       return []
     }
 
+    const currentProps = toValue(props)
+    const currentCtx = toValue(stylesCtx)
+
     const transformedStyles = styles.map((style) =>
-      stylesTransform(style, { props, theme, ctx: stylesCtx })
+      stylesTransform(style, { props: currentProps, theme, ctx: currentCtx })
     )
 
     return [
       ...transformedStyles,
       ...themeName.map((n) =>
         stylesTransform(theme.components[n]?.styles, {
-          props,
+          props: currentProps,
           theme,
-          ctx: stylesCtx,
+          ctx: currentCtx,
         })
       ),
     ].filter(Boolean) as Record<string, string>[]

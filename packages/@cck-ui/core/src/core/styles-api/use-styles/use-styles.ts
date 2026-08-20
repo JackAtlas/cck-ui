@@ -22,12 +22,13 @@ import {
   useCckTheme,
   useCckWithStaticClasses,
 } from '../../config-provider'
+import { MaybeRefOrGetter, toValue } from 'vue'
 
 export interface UseStylesInput<Payload extends FactoryPayload> {
   name: string | (string | undefined)[]
   classes: Payload['stylesNames'] extends string ? Record<string, string> : never
-  props: Payload['props']
-  stylesCtx?: Payload['ctx']
+  props: MaybeRefOrGetter<Payload['props']>
+  stylesCtx?: MaybeRefOrGetter<Payload['ctx'] | undefined>
   className?: string | undefined
   style?: CStyleProp
   rootSelector?: Payload['stylesNames']
@@ -70,6 +71,7 @@ export function useStyles<Payload extends FactoryPayload>({
 
   const themeNames = Array.isArray(name) ? name : [name]
   const themeName = themeNames.filter((n) => n) as string[]
+
   const { withStylesTransform, getTransformedStyles } = useStylesTransform({
     props,
     stylesCtx,
@@ -77,86 +79,91 @@ export function useStyles<Payload extends FactoryPayload>({
     theme,
   })
 
-  const resolvedClassNames = resolveClassNames({
-    theme,
-    classNames,
-    props,
-    stylesCtx,
-  })
-  const resolvedThemeClassNames = themeName.map((n) =>
-    resolveClassNames({
+  return (selector, options) => {
+    const currentProps = toValue(props) as Payload['props']
+    const currentCtx = toValue(stylesCtx) as Payload['ctx'] | undefined
+
+    const resolvedClassNames = resolveClassNames({
       theme,
-      classNames: theme.components?.[n]?.classNames,
-      props,
-      stylesCtx,
+      classNames,
+      props: currentProps,
+      stylesCtx: currentCtx,
     })
-  )
 
-  const resolvedComponentStyles = withStylesTransform
-    ? {}
-    : resolveStyles({ theme, styles, props, stylesCtx })
-
-  const resolvedThemeStyles: Record<string, any> = {}
-
-  if (!withStylesTransform) {
-    for (const n of themeName) {
-      const resolved = resolveStyles({
+    const resolvedThemeClassNames = themeName.map((n) =>
+      resolveClassNames({
         theme,
-        styles: theme.components?.[n]?.styles,
-        props,
-        stylesCtx,
+        classNames: theme.components?.[n]?.classNames,
+        props: currentProps,
+        stylesCtx: currentCtx,
       })
-      for (const key of Object.keys(resolved)) {
-        resolvedThemeStyles[key] = {
-          ...resolvedThemeStyles[key],
-          ...resolved[key],
+    )
+
+    const resolvedComponentStyles = withStylesTransform
+      ? {}
+      : resolveStyles({ theme, styles, props: currentProps, stylesCtx: currentCtx })
+
+    const resolvedThemeStyles: Record<string, any> = {}
+    if (!withStylesTransform) {
+      for (const n of themeName) {
+        const resolved = resolveStyles({
+          theme,
+          styles: theme.components?.[n]?.styles,
+          props: currentProps,
+          stylesCtx: currentCtx,
+        })
+        for (const key of Object.keys(resolved)) {
+          resolvedThemeStyles[key] = {
+            ...resolvedThemeStyles[key],
+            ...resolved[key],
+          }
         }
       }
     }
+
+    const resolvedVars = mergeVars([
+      headless ? {} : varsResolver?.(theme, currentProps, currentCtx),
+      ...themeName.map((n) => theme.components?.[n]?.vars?.(theme, currentProps, currentCtx)),
+      vars?.(theme, currentProps, currentCtx),
+    ])
+
+    const resolvedRootStyle = resolveStyle({ style, theme })
+
+    return {
+      ...attributes?.[selector],
+
+      className: getClassName({
+        theme,
+        options,
+        themeName,
+        selector,
+        classNamesPrefix,
+        resolvedClassNames,
+        resolvedThemeClassNames,
+        classes,
+        unstyled,
+        className,
+        rootSelector,
+        props: currentProps,
+        stylesCtx: currentCtx,
+        withStaticClasses,
+        headless,
+        transformedStyles: getTransformedStyles([options?.styles, styles]),
+      }),
+
+      style: getStyle({
+        theme,
+        selector,
+        options,
+        props: currentProps,
+        stylesCtx: currentCtx,
+        rootSelector,
+        withStylesTransform,
+        resolvedStyles: resolvedComponentStyles,
+        resolvedThemeStyles,
+        resolvedVars,
+        resolvedRootStyle,
+      }),
+    }
   }
-
-  const resolvedVars = mergeVars([
-    headless ? {} : varsResolver?.(theme, props, stylesCtx),
-    ...themeName.map((n) => theme.components?.[n]?.vars?.(theme, props, stylesCtx)),
-    vars?.(theme, props, stylesCtx),
-  ])
-
-  const resolvedRootStyle = resolveStyle({ style, theme })
-
-  return (selector, options) => ({
-    ...attributes?.[selector],
-
-    className: getClassName({
-      theme,
-      options,
-      themeName,
-      selector,
-      classNamesPrefix,
-      resolvedClassNames,
-      resolvedThemeClassNames,
-      classes,
-      unstyled,
-      className,
-      rootSelector,
-      props,
-      stylesCtx,
-      withStaticClasses,
-      headless,
-      transformedStyles: getTransformedStyles([options?.styles, styles]),
-    }),
-
-    style: getStyle({
-      theme,
-      selector,
-      options,
-      props,
-      stylesCtx,
-      rootSelector,
-      withStylesTransform,
-      resolvedStyles: resolvedComponentStyles,
-      resolvedThemeStyles,
-      resolvedVars,
-      resolvedRootStyle,
-    }),
-  })
 }
