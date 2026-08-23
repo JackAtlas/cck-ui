@@ -28,7 +28,7 @@ export function render<
   } = options
 
   const elRef = props.ref
-  const _props = { ...props, refProp: props.refProp || 'ref' }
+  const _props = { ...props }
   delete _props.ref
 
   const Wrapper = defineComponent({
