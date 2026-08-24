@@ -1,0 +1,245 @@
+.root {
+  & :first-child {
+    margin-top: 0;
+  }
+
+  & :last-child {
+    margin-bottom: 0;
+  }
+
+  & :where(h1, h2, h3, h4, h5, h6) {
+    margin-bottom: var(--c-spacing-xs);
+    text-wrap: var(--c-heading-text-wrap);
+    font-family: var(--c-font-family-headings);
+  }
+
+  & :where(h1) {
+    margin-top: calc(1.5 * var(--c-spacing-xl));
+    font-size: var(--c-h1-font-size);
+    line-height: var(--c-h1-line-height);
+    font-weight: var(--c-h1-font-weight);
+  }
+
+  & :where(h2) {
+    margin-top: calc(--c-spacing-xl);
+    font-size: var(--c-h2-font-size);
+    line-height: var(--c-h2-line-height);
+    font-weight: var(--c-h2-font-weight);
+  }
+
+  & :where(h3) {
+    margin-top: calc(0.8 * var(--c-spacing-xl));
+    font-size: var(--c-h3-font-size);
+    line-height: var(--c-h3-line-height);
+    font-weight: var(--c-h3-font-weight);
+  }
+
+  & :where(h4) {
+    margin-top: calc(0.8 * var(--c-spacing-xl));
+    font-size: var(--c-h4-font-size);
+    line-height: var(--c-h4-line-height);
+    font-weight: var(--c-h4-font-weight);
+  }
+
+  & :where(h5) {
+    margin-top: calc(0.5 * var(--c-spacing-xl));
+    font-size: var(--c-h5-font-size);
+    line-height: var(--c-h5-line-height);
+    font-weight: var(--c-h5-font-weight);
+  }
+
+  & :where(h6) {
+    margin-top: calc(0.5 * var(--c-spacing-xl));
+    font-size: var(--c-h6-font-size);
+    line-height: var(--c-h6-line-height);
+    font-weight: var(--c-h6-font-weight);
+  }
+
+  & :where(img) {
+    max-width: 100%;
+    margin-bottom: var(--c-spacing-xs);
+  }
+
+  & :where(p) {
+    margin-top: 0;
+    margin-bottom: var(--c-spacing-lg);
+  }
+
+  & :where(mark) {
+    @mixin where-light {
+      background-color: var(--c-color-yellow-2);
+      color: inherit;
+    }
+
+    @mixin where-dark {
+      background-color: var(--c-color-yellow-5);
+      color: var(--c-color-black);
+    }
+  }
+
+  & :where(a) {
+    color: var(--c-color-anchor);
+    text-decoration: none;
+
+    @mixin hover {
+      text-decoration: underline;
+    }
+  }
+
+  & :where(hr) {
+    margin-top: var(--c-spacing-md);
+    margin-bottom: var(--c-spacing-md);
+    border: 0;
+    border-top: 1px solid;
+
+    @mixin where-light {
+      border-color: var(--c-color-gray-3);
+    }
+
+    @mixin where-dark {
+      border-color: var(--c-color-dark-3);
+    }
+  }
+
+  & :where(pre) {
+    padding: var(--c-spacing-xs);
+    line-height: var(--c-line-height);
+    margin: 0;
+    margin-top: var(--c-spacing-md);
+    margin-bottom: var(--c-spacing-md);
+    overflow-x: auto;
+    font-family: var(--c-font-family-monospace);
+    font-size: var(--c-font-size-xs);
+    border-radius: var(--c-radius-sm);
+
+    @mixin where-light {
+      background-color: var(--c-color-gray-0);
+    }
+
+    @mixin where-dark {
+      background-color: var(--c-color-dark-8);
+    }
+
+    & :where(code) {
+      background-color: transparent;
+      padding: 0;
+      border-radius: 0;
+      color: inherit;
+      border: 0;
+    }
+  }
+
+  & :where(kbd) {
+    --kbd-fz: 12px;
+    --kbd-padding: 3px 5px;
+
+    font-family: var(--c-font-family-monospace);
+    line-height: var(--c-line-height);
+    padding: var(--kbd-padding);
+    font-size: var(--kbd-fz);
+    border-radius: var(--c-radius-sm);
+    border: 1px solid;
+    border-bottom-width: 3px;
+
+    @mixin where-light {
+      border-color: var(--c-color-gray-3);
+      color: var(--c-color-gray-7);
+      background-color: var(--c-color-gray-0);
+    }
+
+    @mixin where-dark {
+      border-color: var(--c-color-dark-3);
+      color: var(--c-color-dark-0);
+      background-color: var(--c-color-dark-5);
+    }
+  }
+
+  & :where(code) {
+    line-height: var(--c-line-height);
+    padding: 1px 5px;
+    border-radius: var(--c-radius-sm);
+    font-family: var(--c-font-family-monospace);
+    font-size: var(--c-font-size-xs);
+
+    @mixin where-light {
+      background-color: var(--c-color-gray-0);
+      color: var(--c-color-black);
+    }
+
+    @mixin where-dark {
+      background-color: var(--c-color-dark-5);
+      color: var(--c-color-white);
+    }
+  }
+
+  & :where(ul, ol):not([data-type='taskList']) {
+    margin-bottom: var(--c-spacing-md);
+    padding-inline-start: var(--c-spacing-xl);
+    list-style-position: outside;
+  }
+
+  & :where(table) {
+    width: 100%;
+    border-collapse: collapse;
+    caption-side: bottom;
+    margin-bottom: var(--c-spacing-md);
+
+    @mixin where-light {
+      --table-border-color: var(--c-color-gray-3);
+    }
+
+    @mixin where-dark {
+      --table-border-color: var(--c-color-dark-4);
+    }
+
+    & :where(caption) {
+      margin-top: var(--c-spacing-xs);
+      font-size: var(--c-font-size-sm);
+      color: var(--c-color-dimmed);
+    }
+
+    & :where(th) {
+      text-align: start;
+      font-weight: bold;
+      font-size: var(--c-font-size-sm);
+      padding: var(--c-spacing-xs) var(--c-spacing-sm);
+    }
+
+    & :where(thead th) {
+      border-bottom: 1px solid;
+      border-color: var(--table-border-color);
+    }
+
+    & :where(tfoot th) {
+      border-top: 1px solid;
+      border-color: var(--table-border-color);
+    }
+
+    & :where(td) {
+      padding: var(--c-spacing-xs) var(--c-spacing-sm);
+      border-bottom: 1px solid;
+      border-color: var(--table-border-color);
+      font-size: var(--c-font-size-sm);
+    }
+
+    & :where(tr:last-of-type td) {
+      border-bottom: 0;
+    }
+  }
+
+  & :where(blockquote) {
+    font-size: var(--c-font-size-lg);
+    line-height: var(--c-line-height);
+    margin: var(--c-spacing-md) 0;
+    border-radius: var(--c-radius-sm);
+    padding: var(--c-spacing-md) var(--c-spacing-lg);
+
+    @mixin where-light {
+      background-color: var(--c-color-gray-0);
+    }
+
+    @mixin where-dark {
+      background-color: var(--c-color-dark-8);
+    }
+  }
+}

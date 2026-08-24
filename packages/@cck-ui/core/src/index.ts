@@ -34,6 +34,7 @@ import {
   CStack,
   CText,
   CTransition,
+  CTypography,
   UnstyledButton,
 } from './components'
 import { CckConfigProvider, CBox } from './core'
@@ -77,6 +78,7 @@ const components = [
   CStack,
   CText,
   CTransition,
+  CTypography,
   UnstyledButton,
 ]
 
