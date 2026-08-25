@@ -1,3 +1,5 @@
+export { useFocusTrap } from './use-focus-trap/use-focus-trap'
+
 export { useClipboard } from './use-clipboard/use-clipboard'
 export { useId } from './use-id/use-id'
 export { useIsomorphicEffect } from './use-isomorphic-effect/use-isomorphic-effect'
