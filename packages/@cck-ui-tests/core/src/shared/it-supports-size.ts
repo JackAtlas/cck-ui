@@ -20,7 +20,7 @@ export function itSupportsSize<Props extends Record<string, any> = any>(
     const target = getTarget(wrapper, options.selector)
     expect(target.attributes('data-size')).toBe('__test-size')
 
-    await rerender({ size: '5rem' } as any)
+    await rerender({ props: { size: '5rem' } as any })
     const targetAfterRerender = getTarget(wrapper, options.selector)
     expect(targetAfterRerender.attributes('data-size')).toBeUndefined()
   })

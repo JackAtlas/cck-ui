@@ -70,9 +70,19 @@ export function render<
 
   const container = wrapper.element
 
-  const rerender = async (newProps: Partial<Props>) => {
+  const rerender = async (update: {
+    props?: Partial<Props>
+    slots?: Partial<Slots>
+    attrs?: Partial<Record<string, unknown>>
+  }) => {
     const currentProps = wrapper.props('componentProps') || {}
-    await wrapper.setProps({ componentProps: { ...currentProps, ...newProps } })
+    const currentSlots = wrapper.props('componentSlots') || {}
+    const currentAttrs = wrapper.props('componentAttrs') || {}
+    await wrapper.setProps({
+      componentProps: { ...currentProps, ...update.props },
+      componentSlots: { ...currentSlots, ...update.slots },
+      componentAttrs: { ...currentAttrs, ...update.attrs },
+    })
   }
 
   return {
