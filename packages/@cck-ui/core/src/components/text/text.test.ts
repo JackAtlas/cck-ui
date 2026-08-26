@@ -26,15 +26,15 @@ describe('@cck-ui/core/text', () => {
     let root = wrapper.find('.c-Text-root')
     expect(root.attributes('data-truncate')).toBe('start')
 
-    await rerender({ truncate: 'end' })
+    await rerender({ props: { truncate: 'end' } })
     root = wrapper.find('.c-Text-root')
     expect(root.attributes('data-truncate')).toBe('end')
 
-    await rerender({ truncate: true as any })
+    await rerender({ props: { truncate: true as any } })
     root = wrapper.find('.c-Text-root')
     expect(root.attributes('data-truncate')).toBe('end')
 
-    await rerender({ truncate: false as any })
+    await rerender({ props: { truncate: false as any } })
     root = wrapper.find('.c-Text-root')
     expect(root.attributes('data-truncate')).toBeUndefined()
   })
@@ -48,7 +48,7 @@ describe('@cck-ui/core/text', () => {
     let root = wrapper.find('.c-Text-root')
     expect(root.attributes('data-variant')).toBe('text')
 
-    await rerender({ variant: 'gradient' })
+    await rerender({ props: { variant: 'gradient' } })
     root = wrapper.find('.c-Text-root')
     expect(root.attributes('data-variant')).toBe('gradient')
   })
@@ -62,7 +62,7 @@ describe('@cck-ui/core/text', () => {
     let root = wrapper.find('.c-Text-root')
     expect(root.attributes('data-inline')).toBeDefined()
 
-    await rerender({ inline: false })
+    await rerender({ props: { inline: false } })
     root = wrapper.find('.c-Text-root')
     expect(root.attributes('data-inline')).toBeUndefined()
   })
@@ -76,7 +76,7 @@ describe('@cck-ui/core/text', () => {
     let root = wrapper.find('.c-Text-root')
     expect(root.attributes('data-inherit')).toBeDefined()
 
-    await rerender({ inherit: false })
+    await rerender({ props: { inherit: false } })
     root = wrapper.find('.c-Text-root')
     expect(root.attributes('data-inherit')).toBeUndefined()
   })
@@ -90,7 +90,7 @@ describe('@cck-ui/core/text', () => {
     let root = wrapper.find('.c-Text-root')
     expect(root.attributes('data-line-clamp')).toBeDefined()
 
-    await rerender({ lineClamp: undefined })
+    await rerender({ props: { lineClamp: undefined } })
     root = wrapper.find('.c-Text-root')
     expect(root.attributes('data-line-clamp')).toBeUndefined()
   })

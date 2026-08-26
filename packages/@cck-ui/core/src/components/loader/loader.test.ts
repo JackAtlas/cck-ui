@@ -62,7 +62,7 @@ describe('@cck-ui/core/loader', () => {
 
     expect(wrapper.find('[data-size="xl"]').exists()).toBe(true)
 
-    await rerender({ size: '100' })
+    await rerender({ props: { size: '100' } })
     expect(wrapper.find('[data-size]').exists()).toBe(false)
   })
 

@@ -38,12 +38,12 @@ describe('@cck-ui/core/Box', () => {
     let el = wrapper.find('[data-size="xs"]')
     expect(el.exists()).toBe(true)
 
-    await rerender({ size: '5rem' })
+    await rerender({ props: { size: '5rem' } })
     el = wrapper.find('[data-size="5rem"]')
     expect(el.exists()).toBe(false)
     expect(wrapper.find('[data-size]').exists()).toBe(false)
 
-    await rerender({ size: '5' })
+    await rerender({ props: { size: '5' } })
     el = wrapper.find('[data-size="5"]')
     expect(el.exists()).toBe(false)
     expect(wrapper.find('[data-size]').exists()).toBe(false)
@@ -59,11 +59,13 @@ describe('@cck-ui/core/Box', () => {
     expect(el.exists()).toBe(true)
 
     await rerender({
-      mod: [
-        'test',
-        { 'data-test-2': 'test-2' },
-        [[[[[[{ 'data-test-2': false, 'data-test-3': null }]]]]]],
-      ] as any,
+      props: {
+        mod: [
+          'test',
+          { 'data-test-2': 'test-2' },
+          [[[[[[{ 'data-test-2': false, 'data-test-3': null }]]]]]],
+        ] as any,
+      },
     })
 
     el = wrapper.find('[data-test]')

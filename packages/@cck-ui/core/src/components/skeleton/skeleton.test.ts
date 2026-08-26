@@ -25,7 +25,7 @@ describe('@cck-ui/core/skeleton', () => {
     let root = wrapper.find('.c-Skeleton-root')
     expect(root.attributes('data-visible')).toBeUndefined()
 
-    await rerender({ visible: true })
+    await rerender({ props: { visible: true } })
     root = wrapper.find('.c-Skeleton-root')
     expect(root.attributes('data-visible')).toBeDefined()
   })
@@ -38,7 +38,7 @@ describe('@cck-ui/core/skeleton', () => {
     let root = wrapper.find('.c-Skeleton-root')
     expect(root.attributes('data-animate')).toBeUndefined()
 
-    await rerender({ animate: true })
+    await rerender({ props: { animate: true } })
     root = wrapper.find('.c-Skeleton-root')
     expect(root.attributes('data-animate')).toBeDefined()
   })

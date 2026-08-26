@@ -26,7 +26,7 @@ describe('@cck-ui/core/group', () => {
     let root = wrapper.find('.c-Group-root')
     expect(root.attributes('data-grow')).toBeDefined()
 
-    await rerender({ grow: false })
+    await rerender({ props: { grow: false } })
     root = wrapper.find('.c-Group-root')
     expect(root.attributes('data-grow')).toBeUndefined()
   })

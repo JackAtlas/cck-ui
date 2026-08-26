@@ -56,7 +56,7 @@ describe('@cck-ui/core/semi-circle-progress', () => {
     expect(styleAttr).toBeDefined()
     expect(styleAttr).toContain('stroke-dashoffset: 0')
 
-    await rerender({ value: 150 })
+    await rerender({ props: { value: 150 } })
     filledSegment = wrapper.find('.c-SemiCircleProgress-filledSegment')
     const circumference = Math.PI * ((200 - 2 * 12) / 2)
     expect(filledSegment.attributes('style')).toContain(String(circumference))
@@ -71,7 +71,7 @@ describe('@cck-ui/core/semi-circle-progress', () => {
     let filledSegment = wrapper.find('.c-SemiCircleProgress-filledSegment')
     expect(filledSegment.attributes('style')).toContain('stroke-opacity: 0')
 
-    await rerender({ value: 40 })
+    await rerender({ props: { value: 40 } })
     filledSegment = wrapper.find('.c-SemiCircleProgress-filledSegment')
     expect(filledSegment.attributes('style')).not.toContain('stroke-opacity: 0')
   })

@@ -26,7 +26,7 @@ describe('@cck-ui/core/paper', () => {
     let root = wrapper.find('.c-Paper-root')
     expect(root.attributes('data-with-border')).toBeDefined()
 
-    await rerender({ withBorder: false })
+    await rerender({ props: { withBorder: false } })
     root = wrapper.find('.c-Paper-root')
     expect(root.attributes('data-with-border')).toBeUndefined()
   })

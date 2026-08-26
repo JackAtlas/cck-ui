@@ -24,7 +24,7 @@ describe('@cck-ui/core/image', () => {
     expect(img.attributes('data-fallback')).toBe('true')
     expect(img.attributes('src')).toBe('test-fallback.jpg')
 
-    await rerender({ src: 'test.jpg' as any, fallbackSrc: 'test-fallback.jpg' })
+    await rerender({ props: { src: 'test.jpg' as any, fallbackSrc: 'test-fallback.jpg' } })
     img = wrapper.find('img')
     expect(img.attributes('data-fallback')).toBeUndefined()
     expect(img.attributes('src')).toBe('test.jpg')

@@ -24,7 +24,7 @@ describe('@cck-ui/core/Container', () => {
     let root = wrapper.find('.c-Container-root')
     expect(root.attributes('data-strategy')).toBe('block')
 
-    await rerender({ strategy: 'grid' })
+    await rerender({ props: { strategy: 'grid' } })
     root = wrapper.find('.c-Container-root')
     expect(root.attributes('data-strategy')).toBe('grid')
   })
@@ -37,7 +37,7 @@ describe('@cck-ui/core/Container', () => {
     let root = wrapper.find('.c-Container-root')
     expect(root.attributes('data-fluid')).toBe('true')
 
-    await rerender({ fluid: false })
+    await rerender({ props: { fluid: false } })
     root = wrapper.find('.c-Container-root')
     expect(root.attributes('data-fluid')).toBeUndefined()
   })

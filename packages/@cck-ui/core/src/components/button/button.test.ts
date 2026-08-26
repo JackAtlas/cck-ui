@@ -49,7 +49,7 @@ describe('@cck-ui/core/button', () => {
     expect(wrapper.find('.c-Button-loader').exists()).toBe(true)
     expect(wrapper.find('.c-Loader-root').exists()).toBe(true)
 
-    await rerender({ loading: false })
+    await rerender({ props: { loading: false } })
     expect(root.attributes('disabled')).toBeUndefined()
     expect(root.attributes('data-loading')).toBeUndefined()
   })
@@ -63,7 +63,7 @@ describe('@cck-ui/core/button', () => {
     expect(root.attributes('disabled')).toBeDefined()
     expect(root.attributes('data-disabled')).toBe('true')
 
-    await rerender({ disabled: false })
+    await rerender({ props: { disabled: false } })
     expect(root.attributes('disabled')).toBeUndefined()
     expect(root.attributes('data-disabled')).toBeUndefined()
   })
@@ -76,7 +76,7 @@ describe('@cck-ui/core/button', () => {
 
     expect(root.attributes('data-disabled')).toBe('true')
 
-    await rerender({ dataDisabled: false })
+    await rerender({ props: { dataDisabled: false } })
     expect(root.attributes('data-disabled')).toBeUndefined()
   })
 

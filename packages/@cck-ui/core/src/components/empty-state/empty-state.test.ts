@@ -74,7 +74,7 @@ describe('@cck-ui/core/empty-state', () => {
     const indicator = wrapper.find('.c-EmptyState-indicator')
     expect(indicator.attributes('data-with-background')).toBeDefined()
 
-    await rerender({ withIndicatorBackground: false })
+    await rerender({ props: { withIndicatorBackground: false } })
     expect(indicator.attributes('data-with-background')).toBeUndefined()
   })
 
@@ -86,11 +86,11 @@ describe('@cck-ui/core/empty-state', () => {
     let root = wrapper.find('.c-EmptyState-root')
     expect(root.attributes('data-align')).toBe('center')
 
-    await rerender({ align: 'left' })
+    await rerender({ props: { align: 'left' } })
     root = wrapper.find('.c-EmptyState-root')
     expect(root.attributes('data-align')).toBe('left')
 
-    await rerender({ align: 'right' })
+    await rerender({ props: { align: 'right' } })
     root = wrapper.find('.c-EmptyState-root')
     expect(root.attributes('data-align')).toBe('right')
   })
