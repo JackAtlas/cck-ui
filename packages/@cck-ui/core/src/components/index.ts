@@ -1,5 +1,6 @@
 export * from './action-icon'
 export * from './alert'
+export * from './anchor'
 export * from './aspect-ratio'
 export * from './button'
 export * from './center'
