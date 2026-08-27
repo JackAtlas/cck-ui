@@ -12,10 +12,10 @@
 
 <script setup lang="ts">
 import { computed, ref, useAttrs } from 'vue'
-import type { TextFactory, TextProps, TextTruncate } from './text.types.ts'
+import type { TextFactory, TextProps, TextTruncate } from './text.types'
 import classes from './text.module.css'
 import { useStyles, CBox, useComponentProps, CStyleProp } from '../../core'
-import { varsResolver } from './text.utils.js'
+import { varsResolver } from './text.utils'
 
 defineOptions({
   name: 'CText',
