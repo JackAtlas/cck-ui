@@ -20,7 +20,7 @@ describe('@cck-ui/core/breadcrumbs', () => {
     varsResolver: true,
     children: true,
     name: 'CBreadcrumbs',
-    staticName: 'Breadcrumb',
+    staticName: 'Breadcrumbs',
     stylesApiSelectors: ['breadcrumb', 'root', 'separator'],
   })
 
