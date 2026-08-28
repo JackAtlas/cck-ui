@@ -36,8 +36,6 @@ const props = useComponentProps({
   props: rawProps,
 })
 
-console.log(props.value)
-
 const knownProps = [
   'classNames',
   'className',
