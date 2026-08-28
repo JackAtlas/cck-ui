@@ -1,5 +1,5 @@
 <template>
-  <c-box v-bind="mergedRootAttrs">
+  <c-box ref="_root" v-bind="mergedRootAttrs">
     <template v-for="(item, idx) in items" :key="item.key ?? idx">
       <component :is="item" />
     </template>
