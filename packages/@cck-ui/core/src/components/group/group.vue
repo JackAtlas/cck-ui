@@ -1,8 +1,6 @@
 <template>
   <c-box ref="_root" v-bind="mergedAttrs" :size="__size" :variant="variant">
-    <!-- TODO: filter falsy children -->
-    <!-- <component v-for="(node, index) in filteredChildren" :key="node.key || index" :is="node" /> -->
-    <slot />
+    <component v-for="(node, index) in filteredChildren" :key="node.key || index" :is="node" />
   </c-box>
 </template>
 
@@ -56,12 +54,22 @@ const knownProps = [
   'attributes',
 ]
 
-const filteredChildren = filterFalsyChildren(slots.default?.())
-const childrenCount = filteredChildren.length
-const resolvedGap = getSpacing(props.value.gap)
-const childWidth = `calc(${100 / childrenCount}% - (${resolvedGap} - ${resolvedGap} / ${childrenCount}))`
+const filteredChildren = computed(() => filterFalsyChildren(slots.default?.()))
+const childrenCount = computed(() => filteredChildren.value.length)
+const resolvedGap = computed(() => getSpacing(props.value.gap))
 
-const stylesCtx: GroupStylesCtx = { childWidth }
+const childWidth = computed(() => {
+  const count = childrenCount.value
+  const gap = resolvedGap.value
+  if (count === 0) {
+    return 'auto'
+  }
+  return `calc(${100 / count}% - (${gap} - ${gap} / ${count}))`
+})
+
+const stylesCtx = computed<GroupStylesCtx>(() => ({
+  childWidth: childWidth.value,
+}))
 
 const styleProps = computed(() => ({
   ...props.value,
