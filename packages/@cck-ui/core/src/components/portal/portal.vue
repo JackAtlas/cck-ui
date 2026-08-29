@@ -1,7 +1,10 @@
 <template>
-  <Teleport v-if="container" :to="container">
+  <Teleport v-if="container && !props.disabled" :to="container">
     <slot />
   </Teleport>
+  <template v-else>
+    <slot />
+  </template>
 </template>
 
 <script setup lang="ts">
@@ -19,6 +22,7 @@ const rawProps = defineProps<PortalProps>()
 
 const defaultProps = {
   reuseTargetNode: true,
+  disabled: false,
 } satisfies Partial<PortalProps>
 
 const props = useComponentProps({

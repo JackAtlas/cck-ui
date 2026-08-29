@@ -10,6 +10,16 @@ export interface PortalProps {
   target?: HTMLElement | string
 
   /**
+   * Determines whether children should be rendered inside Portal.
+   * When false, children are rendered as regular Vue children.
+   *
+   * Note: In test environment, Portal is always disabled regardless of this value.
+   *
+   * @default true
+   */
+  disabled?: boolean
+
+  /**
    * When true and target is not specified, all Portal instances share a single
    * container node appended to document.body. When false, each Portal creates
    * its own container node.
