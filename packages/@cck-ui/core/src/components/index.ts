@@ -1,4 +1,5 @@
 export * from './action-icon'
+export * from './affix'
 export * from './alert'
 export * from './anchor'
 export * from './aspect-ratio'
