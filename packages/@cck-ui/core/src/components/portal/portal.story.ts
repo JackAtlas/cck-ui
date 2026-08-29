@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from '@storybook/vue3-vite'
 import CPortal from '.'
+import { ref } from 'vue'
 
 const meta = {
   title: 'Portal',
@@ -64,6 +65,38 @@ export const ElementTarget: Story = {
         <c-portal :target="target">
           <p>Second</p>
         </c-portal>
+      </div>
+    `,
+  }),
+}
+
+export const DisabledToggle: Story = {
+  render: () => ({
+    components: { CPortal },
+    setup() {
+      const disabled = ref(true)
+      const toggle = () => {
+        disabled.value = !disabled.value
+      }
+      return { disabled, toggle }
+    },
+    template: `
+      <div style="padding: 20px;">
+        <button @click="toggle" style="margin-bottom: 16px; padding: 8px 16px; cursor: pointer;">
+          Toggle Disabled (Current: {{ disabled ? 'true' : 'false' }})
+        </button>
+        <div style="border: 1px dashed #ccc; padding: 16px; margin-bottom: 16px;">
+          <p><strong>Target Container:</strong> (portal content will appear here when enabled)</p>
+          <div id="portal-target" style="border: 1px solid blue; min-height: 50px; padding: 8px;">
+            <!-- Portal content will be teleported here when disabled=false -->
+          </div>
+        </div>
+        <div style="border: 1px solid #ccc; padding: 16px;">
+          <p><strong>Inline Content:</strong> (always visible, moves to portal when enabled)</p>
+          <CPortal :disabled="disabled" target="#portal-target" style="background: lightgreen;">
+            <p style="margin: 0;">This content is {{ disabled ? 'inline' : 'portaled' }}</p>
+          </CPortal>
+        </div>
       </div>
     `,
   }),
