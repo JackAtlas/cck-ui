@@ -4,7 +4,7 @@ import CPortal from '.'
 
 describe('@cck-ui/core/portal', () => {
   afterEach(() => {
-    document.querySelectorAll('[data-portal]').forEach((el) => el.remove())
+    document.body.innerHTML = ''
   })
 
   tests.itHasExtend({ component: CPortal })
