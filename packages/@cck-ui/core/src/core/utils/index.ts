@@ -3,6 +3,7 @@ export { camelToKebabCase } from './camel-to-kebab-case/camel-to-kebab-case'
 export { filterProps } from './filter-props/filter-props'
 export { getBaseValue } from './get-base-value/get-base-value'
 export { getBreakpointValue } from './get-breakpoint-value/get-breakpoint-value'
+export { getDefaultZIndex } from './get-default-z-index/get-default-z-index'
 export {
   getSize,
   getSpacing,
