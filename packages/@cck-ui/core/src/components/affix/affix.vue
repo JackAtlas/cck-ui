@@ -31,8 +31,6 @@ const attrs = useAttrs()
 
 const rawProps = defineProps<AffixProps>()
 
-console.log('rawProps.size:', rawProps.size)
-
 const defaultProps = {
   position: { bottom: 0, right: 0 },
   zIndex: getDefaultZIndex('modal'),
@@ -44,9 +42,6 @@ const props = useComponentProps({
   defaultProps,
   props: rawProps,
 })
-
-console.log('attrs.size:', attrs.size)
-console.log('props.value.size:', props.value.size)
 
 const affixSpecificProps = [
   'portalProps',
