@@ -7,13 +7,13 @@ export interface UseWindowScrollPosition {
 
 export type UseWindowScrollTo = (position: Partial<UseWindowScrollPosition>) => void
 
-export type UseWindowScrollReturnType = {
+export type UseWindowScrollReturnValue = {
   x: Ref<number>
   y: Ref<number>
   scrollTo: UseWindowScrollTo
 }
 
-export function useWindowScroll() {
+export function useWindowScroll(): UseWindowScrollReturnValue {
   const x = ref(0)
   const y = ref(0)
 
