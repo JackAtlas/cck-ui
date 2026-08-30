@@ -25,6 +25,6 @@ export type {
 } from './use-splitter/use-splitter'
 export type {
   UseWindowScrollPosition,
-  UseWindowScrollReturnType,
+  UseWindowScrollReturnValue,
   UseWindowScrollTo,
 } from './use-window-scroll/use-window-scroll'
