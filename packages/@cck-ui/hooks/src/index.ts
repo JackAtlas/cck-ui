@@ -6,6 +6,7 @@ export { useId } from './use-id/use-id'
 export { useIsomorphicEffect } from './use-isomorphic-effect/use-isomorphic-effect'
 export { useSplitter } from './use-splitter/use-splitter'
 export { useTimeoutFn } from './use-timeout-fn/use-timeout-fn'
+export { useWindowScroll } from './use-window-scroll/use-window-scroll'
 
 export type {
   UseDisclosureHandlers,
@@ -22,3 +23,8 @@ export type {
   SplitterPaneSize,
   SplitterStep,
 } from './use-splitter/use-splitter'
+export type {
+  UseWindowScrollPosition,
+  UseWindowScrollReturnType,
+  UseWindowScrollTo,
+} from './use-window-scroll/use-window-scroll'
