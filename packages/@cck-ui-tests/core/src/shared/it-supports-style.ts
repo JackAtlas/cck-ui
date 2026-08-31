@@ -39,13 +39,13 @@ export function itSupportsStyle<Props extends Record<string, any> = any>(
     const { wrapper } = render(options.component, {
       props: {
         ...options.props,
-        style: [{ color: testColor }, { background: 'olive' }],
+        style: [{ color: testColor }, { fontFamily: 'serif' }],
       },
     })
     const target = getTarget(wrapper, options.selector)
     const el = target.element as HTMLElement
     expect(el.style.color).toBe(testColor)
-    expect(el.style.background).toBe('olive')
+    expect(el.style.fontFamily).toBe('serif')
   })
 
   // Vue will convert array of function prop to an empty object
