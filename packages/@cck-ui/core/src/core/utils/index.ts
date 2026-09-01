@@ -1,5 +1,6 @@
 export { deepMerge } from './deep-merge/deep-merge'
 export { camelToKebabCase } from './camel-to-kebab-case/camel-to-kebab-case'
+export { filterFalsyChildren } from './filter-falsy-children/filter-falsy-children'
 export { filterProps } from './filter-props/filter-props'
 export { getBaseValue } from './get-base-value/get-base-value'
 export { getBreakpointValue } from './get-breakpoint-value/get-breakpoint-value'
