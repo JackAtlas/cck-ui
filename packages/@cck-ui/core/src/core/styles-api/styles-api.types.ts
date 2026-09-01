@@ -3,6 +3,7 @@ import { CStyleProp } from '../box'
 import type { FactoryPayload } from '../factory'
 import type { CTheme } from '../config-provider'
 import { PartialVarsResolver } from './create-vars-resolver/create-vars-resolver'
+import { MaybeRefOrGetter } from 'vue'
 
 export type Styles<Payload extends FactoryPayload> = StylesApiRecord<Payload, Properties>
 export type ClassNames<Payload extends FactoryPayload> = StylesApiRecord<Payload, string>
@@ -22,7 +23,7 @@ export type StylesRecord<StylesNames extends string, Payload> = Partial<
 >
 
 export interface GetStylesApiOptions {
-  className?: string
+  className?: MaybeRefOrGetter<string | undefined>
   style?: CStyleProp
   focusable?: boolean
   active?: boolean
