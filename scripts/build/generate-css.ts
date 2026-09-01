@@ -88,8 +88,10 @@ export async function generateCombinedCSS() {
         'default-css-variables.css': 3,
         'text.css': 4,
         'anchor.css': 5,
-        'unstyled-button.css': 6,
-        'button.css': 7,
+        'paper.css': 6,
+        'card.css': 7,
+        'unstyled-button.css': 8,
+        'button.css': 9,
       }
 
       cssFiles.sort((a, b) => {
