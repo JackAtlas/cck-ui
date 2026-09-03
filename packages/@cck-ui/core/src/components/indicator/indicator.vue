@@ -113,7 +113,7 @@ const formattedLabel = computed(() =>
 const indicatorAttrs = computed(() => getStyles('indicator'))
 const mergedIndicatorAttrs = computed(() => ({
   mod: [
-    { 'with-label': !!props.value.label },
+    { 'with-label': !!props.value.label || !!slots.label },
     { 'with-border': props.value.withBorder },
     { processing: props.value.processing },
   ],
