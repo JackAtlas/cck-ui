@@ -16,5 +16,6 @@ describe('@cck-ui/core/blockquote', () => {
     children: true,
     name: 'CBlockquote',
     staticName: 'Blockquote',
+    stylesApiSelectors: ['root', 'icon', 'cite'],
   })
 })
