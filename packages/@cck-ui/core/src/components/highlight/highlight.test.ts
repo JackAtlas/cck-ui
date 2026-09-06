@@ -5,14 +5,18 @@ import { TextStylesNames } from '../text'
 import CHighlight from '.'
 
 const defaultProps: HighlightProps = {
-  children: 'test',
   highlight: 't',
+}
+
+const defaultSlots = {
+  default: () => 'test',
 }
 
 describe('@cck-ui/core/highlight', () => {
   tests.itSupportsSystemProps<HighlightProps, TextStylesNames>({
     component: CHighlight,
     props: defaultProps,
+    slots: defaultSlots,
     polymorphic: true,
     name: 'CHighlight',
     staticName: 'Highlight',
@@ -21,7 +25,8 @@ describe('@cck-ui/core/highlight', () => {
 
   it('highlights correct value', () => {
     const { wrapper } = render(CHighlight, {
-      props: { caseInsensitive: true, children: 'Hello', highlight: 'he' },
+      props: { caseInsensitive: true, highlight: 'he' },
+      slots: { default: () => 'Hello' },
     })
 
     const mark = wrapper.find('mark')
