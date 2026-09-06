@@ -39,7 +39,7 @@ export interface HighlightProps extends Omit<TextProps, 'color'> {
    * Only match whole words (adds word boundaries to regex).
    * When enabled, 'the' will not match 'there'
    */
-  wholeWorld?: boolean
+  wholeWord?: boolean
 
   /**
    * Perform case-insensitive matching.

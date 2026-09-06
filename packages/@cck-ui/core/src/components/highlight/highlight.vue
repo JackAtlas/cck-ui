@@ -43,7 +43,7 @@ const slots = useSlots()
 
 const defaultProps = {
   color: 'yellow',
-  wholeWorld: false,
+  wholeWord: false,
   caseInsensitive: true,
   accentInsensitive: true,
 } satisfies Partial<HighlightProps>
@@ -106,7 +106,7 @@ const highlightChunks = computed(() => {
       if (typeof content.children === 'string') {
         result = result.concat(
           highlighter(content.children, highlightStrings.value, {
-            wholeWord: props.value.wholeWorld,
+            wholeWord: props.value.wholeWord,
             caseInsensitive: props.value.caseInsensitive,
             accentInsensitive: props.value.accentInsensitive,
           })
