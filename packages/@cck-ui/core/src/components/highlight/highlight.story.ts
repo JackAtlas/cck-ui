@@ -54,6 +54,24 @@ export const CustomColorsPerTerm: Story = {
   }),
 }
 
+export const WholeWordMatching: Story = {
+  render: () => ({
+    components: { CHighlight },
+    template: `
+      <c-stack gap="md">
+        <div>
+          <c-text size="sm" :fw="500" :mb="5">With whole-word matching (:whole-word="true")</c-text>
+          <c-highlight highlight="the" :case-insensitive="true" :whole-word="true">The theme is there</c-highlight>
+        </div>
+        <div>
+          <c-text size="sm" :fw="500" :mb="5">Without whole word matching (default)</c-text>
+          <c-highlight highlight="the" :case-insensitive="true">The theme is there</c-highlight>
+        </div>
+      </c-stack>
+    `,
+  }),
+}
+
 export const Unstyled: Story = {
   render: (args) => ({
     components: { CHighlight },
