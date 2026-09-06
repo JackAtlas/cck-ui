@@ -35,9 +35,6 @@ export interface HighlightProps extends Omit<TextProps, 'color'> {
   /** Styles applied to `mark` elements */
   highlightStyles?: Properties | ((theme: CTheme) => Properties)
 
-  /** String in which to highlight substrings */
-  children: string
-
   /**
    * Only match whole words (adds word boundaries to regex).
    * When enabled, 'the' will not match 'there'

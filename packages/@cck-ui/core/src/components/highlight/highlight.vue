@@ -22,12 +22,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, useSlots } from 'vue'
 import { useCckTheme, useComponentProps } from '../../core'
 import CMark from '../mark'
 import CText from '../text'
 import { HighlightProps, HighlightTerm } from './highlight.types'
-import { foldAccents, highlighter } from './highlighter/highlighter'
+import { foldAccents, HighlightChunk, highlighter } from './highlighter/highlighter'
 
 defineOptions({
   name: 'CHighlight',
@@ -38,6 +38,8 @@ const rawProps = defineProps<HighlightProps>()
 const _root = ref<InstanceType<typeof CText> | null>(null)
 
 const theme = useCckTheme()
+
+const slots = useSlots()
 
 const defaultProps = {
   color: 'yellow',
@@ -54,7 +56,6 @@ const props = useComponentProps({
 
 const knownProps = [
   'unstyled',
-  'children',
   'highlight',
   'highlightStyles',
   'color',
@@ -97,13 +98,24 @@ const highlightStrings = computed(() => {
   return result
 })
 
-const highlightChunks = computed(() =>
-  highlighter(props.value.children, highlightStrings.value, {
-    wholeWord: props.value.wholeWorld,
-    caseInsensitive: props.value.caseInsensitive,
-    accentInsensitive: props.value.accentInsensitive,
-  })
-)
+const highlightChunks = computed(() => {
+  let result: HighlightChunk[] = []
+  if (slots.default) {
+    const defaultSlotContent = slots.default()
+    for (const content of defaultSlotContent) {
+      if (typeof content.children === 'string') {
+        result = result.concat(
+          highlighter(content.children, highlightStrings.value, {
+            wholeWord: props.value.wholeWorld,
+            caseInsensitive: props.value.caseInsensitive,
+            accentInsensitive: props.value.accentInsensitive,
+          })
+        )
+      }
+    }
+  }
+  return result
+})
 
 const resolvedStyle = computed(() => {
   const style = props.value.style
