@@ -1,12 +1,24 @@
 <template>
   <c-box ref="_root" v-bind="mergedAttrs">
-    <template v-for="(item, index) in data" :key="getKey(item, index)">
+    <div
+      class="c-OverflowList-indicator"
+      ref="_overflow"
+      v-if="overflowItems.length > 0 && props.collapseFrom === 'start'"
+    >
+      <slot name="overflow" :items="overflowItems" />
+    </div>
+
+    <template v-for="(item, index) in visibleItems" :key="getKey(item, index)">
       <div class="c-OverflowList-item" v-if="index < visibleCount">
         <slot name="item" :item="item" :index="index" />
       </div>
     </template>
 
-    <div class="c-OverflowList-indicator" ref="_overflow" v-if="overflowItems.length > 0">
+    <div
+      class="c-OverflowList-indicator"
+      ref="_overflow"
+      v-if="overflowItems.length > 0 && props.collapseFrom === 'end'"
+    >
       <slot name="overflow" :items="overflowItems" />
     </div>
   </c-box>
@@ -107,6 +119,26 @@ const mergedAttrs = computed(() => {
   return { ...others, mod: mergedMod, ...rootAttrs.value }
 })
 
+const visibleItems = computed(() => {
+  const data = props.value.data
+  const count = visibleCount.value
+  const collapseFrom = props.value.collapseFrom || 'end'
+  if (collapseFrom === 'end') {
+    return data.slice(0, count)
+  }
+  return data.slice(data.length - count)
+})
+
+const overflowItems = computed(() => {
+  const data = props.value.data
+  const count = visibleCount.value
+  const collapseFrom = props.value.collapseFrom || 'end'
+  if (collapseFrom === 'end') {
+    return data.slice(count)
+  }
+  return data.slice(0, data.length - count)
+})
+
 function adjustForOverflow() {
   const container = _root.value?.root
   const indicator = _overflow.value
@@ -137,8 +169,10 @@ function updateVisibleCount() {
   if (!container) {
     return
   }
+  visibleCount.value = props.value.data.length
+
   const children = Array.from(container.children).filter(
-    (el) => !el.classList.contains('c-Overflow-indicator')
+    (el) => !el.classList.contains('c-OverflowList-indicator')
   ) as HTMLElement[]
   if (children.length === 0) {
     return
@@ -146,6 +180,7 @@ function updateVisibleCount() {
 
   const maxRows = props.value.maxRows || 1
   const maxVisible = props.value.maxVisibleItems || Infinity
+  const collapseFrom = props.value.collapseFrom || 'end'
 
   const rows: { top: number; items: HTMLElement[] }[] = []
   const sorted = [...children].sort((a, b) => {
@@ -167,8 +202,15 @@ function updateVisibleCount() {
   }
 
   let total = 0
-  for (let i = 0; i < Math.min(rows.length, maxRows); i++) {
-    total += rows[i].items.length
+  const rowCount = Math.min(rows.length, maxRows)
+  if (collapseFrom === 'end') {
+    for (let i = 0; i < rowCount; i++) {
+      total += rows[i].items.length
+    }
+  } else {
+    for (let i = rows.length - rowCount; i < rows.length; i++) {
+      total += rows[i].items.length
+    }
   }
   visibleCount.value = Math.min(total, maxVisible)
 
@@ -177,16 +219,17 @@ function updateVisibleCount() {
   })
 }
 
-const overflowItems = computed(() => props.value.data.slice(visibleCount.value))
+function resetAndMeasure() {
+  visibleCount.value = props.value.data.length
+  nextTick(() => {
+    updateVisibleCount()
+  })
+}
 
-watch(
-  () => [props.value.data, props.value.maxRows],
-  () => {
-    visibleCount.value = props.value.data.length
-    nextTick(updateVisibleCount)
-  },
-  { deep: true }
-)
+watch(() => [props.value.data, props.value.maxRows, props.value.collapseFrom], resetAndMeasure, {
+  deep: true,
+  flush: 'post',
+})
 
 let resizeObserver: ResizeObserver | null = null
 
@@ -194,10 +237,10 @@ onMounted(() => {
   const container = _root.value?.root
   if (container) {
     resizeObserver = new ResizeObserver(() => {
-      nextTick(updateVisibleCount)
+      resetAndMeasure()
     })
     resizeObserver.observe(container)
-    nextTick(updateVisibleCount)
+    resetAndMeasure()
   }
 })
 
