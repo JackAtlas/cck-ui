@@ -3,21 +3,21 @@
     <div
       class="c-OverflowList-indicator"
       ref="_overflow"
-      v-if="overflowItems.length > 0 && props.collapseFrom === 'start'"
+      v-if="(overflowItems.length > 0 || isMeasuring) && isCollapseStart"
     >
       <slot name="overflow" :items="overflowItems" />
     </div>
 
-    <template v-for="(item, index) in visibleItems" :key="getKey(item, index)">
-      <div class="c-OverflowList-item" v-if="index < visibleCount">
-        <slot name="item" :item="item" :index="index" />
+    <template v-for="(item, index) in finalItems" :key="indexOffset + index">
+      <div class="c-OverflowList-item" v-if="index < finalVisibleCount">
+        <slot name="item" :item="item" :index="indexOffset + index" />
       </div>
     </template>
 
     <div
       class="c-OverflowList-indicator"
       ref="_overflow"
-      v-if="overflowItems.length > 0 && props.collapseFrom === 'end'"
+      v-if="(overflowItems.length > 0 || isMeasuring) && !isCollapseStart"
     >
       <slot name="overflow" :items="overflowItems" />
     </div>
@@ -25,11 +25,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, useAttrs, watch } from 'vue'
+import { computed, ref, useAttrs } from 'vue'
 import { CBox, CStyleProp, useComponentProps, useStyles } from '../../core'
 import { OverflowListFactory, OverflowListProps } from './overflow-list.types'
-import { varsResolver } from './overflow-list.utils'
 import classes from './overflow-list.module.css'
+import { varsResolver } from './overflow-list.utils'
+import { useOverflowList } from './use-overflow-list'
 
 defineOptions({
   name: 'COverflowList',
@@ -55,6 +56,11 @@ const props = useComponentProps({
   props: rawProps,
 })
 
+const containerEl = computed(() => _root.value?.root ?? null)
+
+const { finalVisibleCount, isCollapseStart, overflowItems, finalItems, indexOffset, isMeasuring } =
+  useOverflowList(props, containerEl, _overflow)
+
 const knownProps = [
   'classNames',
   'className',
@@ -70,19 +76,6 @@ const knownProps = [
   'getItemkey',
   'ref',
 ]
-
-const visibleCount = ref(props.value.data.length)
-
-function getKey(item: any, index: number) {
-  const keyFn = props.value.getItemKey
-  if (keyFn) {
-    return keyFn(item, index)
-  }
-  if (item === null || typeof item !== 'object') {
-    return String(item)
-  }
-  return index
-}
 
 const styleProps = computed(() => ({
   ...props.value,
@@ -117,138 +110,6 @@ const mergedAttrs = computed(() => {
   const userMod = props.value.mod
   const mergedMod = [...(Array.isArray(userMod) ? userMod : [userMod].filter(Boolean))]
   return { ...others, mod: mergedMod, ...rootAttrs.value }
-})
-
-const visibleItems = computed(() => {
-  const data = props.value.data
-  const count = visibleCount.value
-  const collapseFrom = props.value.collapseFrom || 'end'
-  if (collapseFrom === 'end') {
-    return data.slice(0, count)
-  }
-  return data.slice(data.length - count)
-})
-
-const overflowItems = computed(() => {
-  const data = props.value.data
-  const count = visibleCount.value
-  const collapseFrom = props.value.collapseFrom || 'end'
-  if (collapseFrom === 'end') {
-    return data.slice(count)
-  }
-  return data.slice(0, data.length - count)
-})
-
-function adjustForOverflow() {
-  const container = _root.value?.root
-  const indicator = _overflow.value
-  if (!container || !indicator || overflowItems.value.length === 0) {
-    return
-  }
-
-  const items = container.querySelectorAll('.c-OverflowList-item')
-  if (items.length === 0) {
-    return
-  }
-
-  const lastItem = items[items.length - 1]
-  const lastRect = lastItem.getBoundingClientRect()
-  const indicatorRect = indicator.getBoundingClientRect()
-  const rowTop = Math.round(lastRect.top)
-
-  if (Math.round(indicatorRect.top) > rowTop + 2) {
-    visibleCount.value = Math.max(0, visibleCount.value - 1)
-    if (visibleCount.value > 0) {
-      nextTick(() => adjustForOverflow())
-    }
-  }
-}
-
-function updateVisibleCount() {
-  const container = _root.value?.root
-  if (!container) {
-    return
-  }
-  visibleCount.value = props.value.data.length
-
-  const children = Array.from(container.children).filter(
-    (el) => !el.classList.contains('c-OverflowList-indicator')
-  ) as HTMLElement[]
-  if (children.length === 0) {
-    return
-  }
-
-  const maxRows = props.value.maxRows || 1
-  const maxVisible = props.value.maxVisibleItems || Infinity
-  const collapseFrom = props.value.collapseFrom || 'end'
-
-  const rows: { top: number; items: HTMLElement[] }[] = []
-  const sorted = [...children].sort((a, b) => {
-    const ra = a.getBoundingClientRect()
-    const rb = b.getBoundingClientRect()
-    return ra.top - rb.top || ra.left - rb.left
-  })
-
-  let currentRow: { top: number; items: HTMLElement[] } | null = null
-  for (const el of sorted) {
-    const rect = el.getBoundingClientRect()
-    const top = Math.round(rect.top)
-    if (!currentRow || Math.abs(top - currentRow.top) > 2) {
-      currentRow = { top, items: [el] }
-      rows.push(currentRow)
-    } else {
-      currentRow.items.push(el)
-    }
-  }
-
-  let total = 0
-  const rowCount = Math.min(rows.length, maxRows)
-  if (collapseFrom === 'end') {
-    for (let i = 0; i < rowCount; i++) {
-      total += rows[i].items.length
-    }
-  } else {
-    for (let i = rows.length - rowCount; i < rows.length; i++) {
-      total += rows[i].items.length
-    }
-  }
-  visibleCount.value = Math.min(total, maxVisible)
-
-  nextTick(() => {
-    adjustForOverflow()
-  })
-}
-
-function resetAndMeasure() {
-  visibleCount.value = props.value.data.length
-  nextTick(() => {
-    updateVisibleCount()
-  })
-}
-
-watch(() => [props.value.data, props.value.maxRows, props.value.collapseFrom], resetAndMeasure, {
-  deep: true,
-  flush: 'post',
-})
-
-let resizeObserver: ResizeObserver | null = null
-
-onMounted(() => {
-  const container = _root.value?.root
-  if (container) {
-    resizeObserver = new ResizeObserver(() => {
-      resetAndMeasure()
-    })
-    resizeObserver.observe(container)
-    resetAndMeasure()
-  }
-})
-
-onBeforeUnmount(() => {
-  if (resizeObserver) {
-    resizeObserver.disconnect()
-    resizeObserver = null
-  }
 })
 
 defineExpose({
