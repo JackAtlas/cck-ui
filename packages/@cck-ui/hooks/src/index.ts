@@ -28,7 +28,10 @@ export type {
   SplitterPaneSize,
   SplitterStep,
 } from './use-splitter/use-splitter'
-export type { UseUncontrolledOptions } from './use-uncontrolled/use-uncontrolled'
+export type {
+  UseUncontrolledOptions,
+  UseUncontrolledReturnValue,
+} from './use-uncontrolled/use-uncontrolled'
 export type {
   UseWindowScrollPosition,
   UseWindowScrollReturnValue,

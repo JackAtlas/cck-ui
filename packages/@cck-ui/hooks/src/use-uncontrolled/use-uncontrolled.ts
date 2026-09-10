@@ -1,4 +1,4 @@
-import { computed, MaybeRefOrGetter, ref, toValue } from 'vue'
+import { computed, ComputedRef, MaybeRefOrGetter, ref, toValue } from 'vue'
 
 export interface UseUncontrolledOptions<T> {
   /** Value for controlled state */
@@ -14,12 +14,23 @@ export interface UseUncontrolledOptions<T> {
   onChange?: (value: T, ...payload: any[]) => void
 }
 
+export type UseUncontrolledReturnValue<T> = [
+  /** Current value */
+  ComputedRef<T>,
+
+  /** Handler to update the state, passes `value` and `payload` to `onChange` */
+  (value: T, ...payload: any[]) => void,
+
+  /** True if the state is controlled, false if uncontrolled */
+  ComputedRef<boolean>,
+]
+
 export function useUncontrolled<T>({
   value,
   defaultValue,
   finalValue,
   onChange,
-}: UseUncontrolledOptions<T>) {
+}: UseUncontrolledOptions<T>): UseUncontrolledReturnValue<T> {
   const uncontrolledValue = ref(defaultValue !== undefined ? defaultValue : (finalValue as T))
 
   const isControlled = computed(() => toValue(value) !== undefined)
