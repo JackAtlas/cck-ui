@@ -44,7 +44,7 @@ export type UseTimeoutFnReturnValue<CallbackFn extends (...args: any[]) => any> 
 export function useTimeoutFn<CallbackFn extends (...args: any[]) => any>(
   callback: CallbackFn,
   delay: MaybeRefOrGetter<number>,
-  options: UseTimeoutFnOptions
+  options: UseTimeoutFnOptions = {}
 ): UseTimeoutFnReturnValue<CallbackFn> {
   const { immediate = false, immediateCallback = false } = options
   const isPending = shallowRef(false)
