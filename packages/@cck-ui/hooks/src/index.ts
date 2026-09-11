@@ -1,3 +1,5 @@
+export * from './utils'
+
 export { useFocusTrap } from './use-focus-trap/use-focus-trap'
 
 export { useClipboard } from './use-clipboard/use-clipboard'
