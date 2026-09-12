@@ -2,6 +2,7 @@ import { ComputedRef, InjectionKey } from 'vue'
 import { CColorSchemeManager } from './color-scheme-managers/types'
 import { CContextValue, CStylesTransform } from './config-provider.context'
 import { CColorScheme, CTheme, CThemeOverride } from './theme.types'
+import { CSSVariablesResolver } from './cck-css-variables'
 
 export const CONFIG_KEY: InjectionKey<CContextValue> = Symbol('CCK_CONFIG_KEY')
 
@@ -39,6 +40,12 @@ export interface ConfigProviderProps {
   withCssVariables?: boolean
 
   /**
+   * Determines whether theme CSS variables should be added to given `cssVariablesSelector`
+   * @default true
+   */
+  deduplicateCssVariables?: boolean
+
+  /**
    * @description Function to resolve root element to set `data-c-color-scheme` attribute
    * @returns root element, must return undefined on server
    */
@@ -48,6 +55,12 @@ export interface ConfigProviderProps {
    * @description A prefix for components static classes (for example `${prefix}-text__root`)
    */
   classNamesPrefix?: string
+
+  /** Function to generate nonce attribute added to all generated `style` tags */
+  getStyleNonce?: () => string
+
+  /** Function to generate CSS variables based on theme object */
+  cssVariablesResolver?: CSSVariablesResolver
 
   /**
    * @description Determines whether components should have static classes, for example `c-button__root`

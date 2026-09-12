@@ -1,5 +1,10 @@
 <template>
   <cck-classes-style v-if="props.withGlobalClasses" />
+  <cck-css-variables
+    v-if="props.withCssVariables"
+    :css-variables-selector="props.cssVariablesSelector"
+    :deduplicate-css-variables="props.deduplicateCssVariables"
+  />
   <slot />
 </template>
 
@@ -13,6 +18,7 @@ import { CckClassesStyle } from './cck-classes-style'
 import { DEFAULT_THEME } from './default-theme'
 import { mergeCckTheme } from './merge-cck-theme'
 import { CContextValue } from './config-provider.context'
+import { CckCssVariables } from './cck-css-variables'
 import { useComponentProps } from './use-component-props/use-component-props'
 import './baseline.css'
 import './global.css'
@@ -30,6 +36,7 @@ const props = useComponentProps({
     withStaticClasses: true,
     withGlobalClasses: true,
     withCssVariables: true,
+    deduplicateCssVariables: true,
     classNamesPrefix: 'c',
     defaultColorScheme: 'light',
     cssVariablesSelector: ':root',
@@ -37,7 +44,12 @@ const props = useComponentProps({
     getRootElement: () => document.documentElement,
   },
   props: rawProps,
-  booleanProps: ['withCssVariables', 'withGlobalClasses', 'withStaticClasses'],
+  booleanProps: [
+    'deduplicateCssVariables',
+    'withCssVariables',
+    'withGlobalClasses',
+    'withStaticClasses',
+  ],
 })
 
 const {
@@ -74,6 +86,8 @@ provide<CContextValue>(CONFIG_KEY, {
   getRootElement: getRootElement!,
   classNamesPrefix: props.value.classNamesPrefix!,
   colorScheme: colorScheme!,
+  getStyleNonce: props.value.getStyleNonce,
+  cssVariablesResolver: props.value.cssVariablesResolver,
   cssVariablesSelector: props.value.cssVariablesSelector!,
   setColorScheme,
   clearColorScheme,
