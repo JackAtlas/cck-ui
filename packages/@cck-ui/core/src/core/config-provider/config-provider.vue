@@ -37,6 +37,7 @@ const props = useComponentProps({
     getRootElement: () => document.documentElement,
   },
   props: rawProps,
+  booleanProps: ['withCssVariables', 'withGlobalClasses', 'withStaticClasses'],
 })
 
 const {
