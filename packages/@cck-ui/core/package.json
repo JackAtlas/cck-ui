@@ -40,13 +40,14 @@
   },
   "dependencies": {
     "@ctrl/tinycolor": "^4.2.0",
+    "@lucide/vue": "^1.24.0",
     "@vueuse/core": "^14.3.0",
     "clsx": "^2.1.1",
     "type-fest": "^5.7.0"
   },
   "devDependencies": {
-    "@cck-ui/hooks": "workspace:*",
     "@cck-ui-tests/core": "workspace:*",
+    "@cck-ui/hooks": "workspace:*",
     "@vue/shared": "^3.5.39",
     "csstype": "^3.2.3",
     "es-toolkit": "^1.49.0",
