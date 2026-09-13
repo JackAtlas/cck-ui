@@ -3,10 +3,17 @@ export * from './utils'
 export { useFocusTrap } from './use-focus-trap/use-focus-trap'
 
 export { useClipboard } from './use-clipboard/use-clipboard'
+export {
+  useCollapse,
+  useDimensionCollapse,
+  useHorizontalCollapse,
+} from './use-collapse/use-collapse'
 export { useDisclosure } from './use-disclosure/use-disclosure'
 export { useElementSize } from './use-element-size/use-element-size'
 export { useId } from './use-id/use-id'
 export { useIsomorphicEffect } from './use-isomorphic-effect/use-isomorphic-effect'
+export { useMediaQuery } from './use-media-query/use-media-query'
+export { useReducedMotion } from './use-reduced-motion/use-reduced-motion'
 export { useResizeObserver } from './use-resize-observer/use-resize-observer'
 export { useSplitter } from './use-splitter/use-splitter'
 export { useTimeoutFn } from './use-timeout-fn/use-timeout-fn'
@@ -14,11 +21,17 @@ export { useUncontrolled } from './use-uncontrolled/use-uncontrolled'
 export { useWindowScroll } from './use-window-scroll/use-window-scroll'
 
 export type {
+  CollapseInput as UseCollapseInput,
+  CollapseReturnValue as UseCollapseReturnValue,
+  CollapseState as UseCollapseState,
+} from './use-collapse/use-collapse'
+export type {
   UseDisclosureHandlers,
   UseDisclosureOptions,
   UseDisclosureReturnValue,
 } from './use-disclosure/use-disclosure'
 export type { UseElementSizeReturnValue } from './use-element-size/use-element-size'
+export type { UseMediaQueryOptions } from './use-media-query/use-media-query'
 export type { UseResizeObserverReturnValue } from './use-resize-observer/use-resize-observer'
 export type {
   UseSplitterPanel,
