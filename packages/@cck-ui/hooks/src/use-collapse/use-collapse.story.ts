@@ -69,9 +69,7 @@ export const HorizontalUsage: Story = {
   render: () => ({
     setup() {
       const expanded = ref(false)
-      const { state, elementRef, getCollapseProps } = useHorizontalCollapse({
-        expanded,
-      })
+      const { state, elementRef, getCollapseProps } = useHorizontalCollapse({ expanded })
 
       const toggle = () => {
         expanded.value = !expanded.value
@@ -99,9 +97,7 @@ export const HorizontalInitiallyExpanded: Story = {
   render: () => ({
     setup() {
       const expanded = ref(true)
-      const { state, elementRef, getCollapseProps } = useHorizontalCollapse({
-        expanded,
-      })
+      const { state, elementRef, getCollapseProps } = useHorizontalCollapse({ expanded })
 
       const toggle = () => {
         expanded.value = !expanded.value
