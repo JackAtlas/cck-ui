@@ -3,6 +3,8 @@ import CCollapse from '.'
 import CButton from '../button'
 import { ref } from 'vue'
 import CText from '../text'
+import CStack from '../stack'
+import CTypography from '../typography'
 
 const meta = {
   title: 'Collapse',
@@ -58,6 +60,48 @@ export const Usage: Story = {
           </p>
         </c-collapse>
       </div>
+    `,
+  }),
+}
+
+export const Horizontal: Story = {
+  render: () => ({
+    components: { CButton, CCollapse, CStack, CText, CTypography },
+    setup() {
+      const head = document.head
+      const viteStyles = Array.from(head.querySelectorAll('style')).filter(
+        (style) => style.dataset.viteDevId
+      )
+      let buttonStyle: HTMLStyleElement | null = null
+      let unstyledButtonStyle: HTMLStyleElement | null = null
+      viteStyles.forEach((style) => {
+        if (style.dataset.viteDevId?.endsWith('/button.module.css')) {
+          buttonStyle = style
+        } else if (style.dataset.viteDevId?.endsWith('/unstyled-button.module.css')) {
+          unstyledButtonStyle = style
+        }
+      })
+
+      if (buttonStyle && unstyledButtonStyle) {
+        head.insertBefore(unstyledButtonStyle, buttonStyle)
+      }
+
+      const opened = ref(false)
+      const toggle = () => {
+        opened.value = !opened.value
+      }
+      return { opened, toggle }
+    },
+    template: `
+      <c-stack align="flex-start">
+        <c-button w="fit-content" @click="toggle">{{ opened ? 'Collapse' : 'Expand' }}</c-button>
+
+        <c-collapse orientation="horizontal" :expanded="opened">
+          <c-typography bg="var(--c-color-blue-light)" bdrs="md" p="xs" :w="200">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </c-typography>
+        </c-collapse>
+      </c-stack>
     `,
   }),
 }
