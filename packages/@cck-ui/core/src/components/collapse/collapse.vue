@@ -73,7 +73,9 @@ const attrs = useAttrs()
 
 const theme = useCckTheme()
 const shouldReduceMotion = useReducedMotion()
-const reduceMotion = computed(() => (theme.value.respectReducedMotion ? shouldReduceMotion : false))
+const reduceMotion = computed(() =>
+  theme.value.respectReducedMotion ? shouldReduceMotion.value : false
+)
 
 const duration = computed(() => (reduceMotion.value ? 0 : props.value.transitionDuration))
 const isInstant = computed(() => duration.value === 0)
@@ -82,8 +84,8 @@ const dimension = computed(() => (props.value.orientation === 'horizontal' ? 'wi
 
 const collapse = useDimensionCollapse(dimension.value, {
   expanded: () => props.value.expanded,
-  transitionDuration: duration.value,
-  transitionTimingFunction: props.value.transitionTimingFunction,
+  transitionDuration: () => duration.value,
+  transitionTimingFunction: () => props.value.transitionTimingFunction,
   onTransitionEnd: () => emit('transitionEnd'),
   onTransitionStart: () => emit('transitionStart'),
   keepMounted: false,
