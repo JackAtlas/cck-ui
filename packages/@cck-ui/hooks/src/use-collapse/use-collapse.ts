@@ -1,7 +1,7 @@
-import { CSSProperties, MaybeRefOrGetter, nextTick, ref, Ref, toValue, watch } from 'vue'
+import { CSSProperties, MaybeRefOrGetter, ref, Ref, toValue, watch } from 'vue'
 
-function getAutoDuration(size: number | string): number {
-  if (!size || typeof size === 'string') {
+function getAutoDuration(size: number): number {
+  if (!size) {
     return 0
   }
   const constant = size / 36
@@ -9,13 +9,6 @@ function getAutoDuration(size: number | string): number {
 }
 
 type Dimension = 'height' | 'width'
-
-function getElementSize(el: HTMLElement | null, dimension: Dimension): number | string {
-  if (!el) {
-    return 'auto'
-  }
-  return dimension === 'height' ? el.scrollHeight : el.scrollWidth
-}
 
 export type CollapseState = 'entering' | 'entered' | 'exiting' | 'exited'
 
@@ -68,14 +61,14 @@ export function useDimensionCollapse(
     onTransitionEnd,
     onTransitionStart,
     transitionDuration,
-    transitionTimingFunction,
+    transitionTimingFunction = 'ease',
   } = input
 
   const isExpanded = () => toValue(expanded)
   const duration = () => toValue(transitionDuration)
 
   const buildCollapsedStyles = (): CSSProperties => ({
-    [dimension]: 0,
+    [dimension]: '0px',
     overflow: 'hidden',
     ...(keepMounted ? {} : { display: 'none' }),
   })
@@ -92,14 +85,36 @@ export function useDimensionCollapse(
     styles.value = { ...styles.value, ...patch }
   }
 
-  const getTransitionStyles = (size: number | string): CSSProperties => {
+  const getTransitionStyles = (size: number): CSSProperties => {
     const d = duration() ?? getAutoDuration(size)
     return {
       transition: `${dimension} ${d}ms ${transitionTimingFunction}, opacity ${d}ms ${transitionTimingFunction}`,
     }
   }
 
-  const measure = () => getElementSize(elementRef.value, dimension)
+  const measure = (): number => {
+    const el = elementRef.value
+    if (!el) {
+      return 0
+    }
+    const ghost = el.cloneNode(true) as HTMLElement
+    ghost.style.position = 'absolute'
+    ghost.style.top = '0'
+    ghost.style.left = '-99999px'
+    ghost.style.visibility = 'hidden'
+    ghost.style.pointerEvents = 'none'
+    ghost.style.transition = 'none'
+    ghost.style.display = 'block'
+    ghost.style.overflow = 'visible'
+    ghost.style.width = 'auto'
+    ghost.style.height = 'auto'
+
+    document.body.appendChild(ghost)
+    const size = dimension === 'height' ? ghost.scrollHeight : ghost.scrollWidth
+    document.body.removeChild(ghost)
+
+    return size
+  }
 
   const handleTransitionEnd = (event: TransitionEvent) => {
     if (event.target !== elementRef.value || event.propertyName !== dimension) {
@@ -107,14 +122,7 @@ export function useDimensionCollapse(
     }
 
     if (isExpanded()) {
-      const size = measure()
-
-      if (size === styles.value[dimension]) {
-        setStyles({})
-      } else {
-        mergeStyles({ [dimension]: size })
-      }
-
+      setStyles({})
       state.value = 'entered'
       onTransitionEnd?.()
     } else if (styles.value[dimension] === 0) {
@@ -130,7 +138,7 @@ export function useDimensionCollapse(
     }
 
     if (exp) {
-      requestAnimationFrame(async () => {
+      requestAnimationFrame(() => {
         state.value = 'entering'
         mergeStyles({
           willChange: dimension,
@@ -138,14 +146,13 @@ export function useDimensionCollapse(
           overflow: 'hidden',
         })
 
-        await nextTick()
-
-        const size = measure()
-
-        mergeStyles({ ...getTransitionStyles(size) })
-
         requestAnimationFrame(() => {
-          mergeStyles({ ...getTransitionStyles(size), [dimension]: `${size}px` })
+          const size = measure()
+          mergeStyles({
+            ...getTransitionStyles(size),
+            willChange: dimension,
+            [dimension]: `${size}px`,
+          })
         })
       })
     } else {
@@ -156,11 +163,11 @@ export function useDimensionCollapse(
         mergeStyles({
           ...getTransitionStyles(size),
           willChange: dimension,
-          [dimension]: size,
+          [dimension]: `${size}px`,
         })
 
         requestAnimationFrame(() => {
-          mergeStyles({ [dimension]: 0, overflow: 'hidden' })
+          mergeStyles({ [dimension]: '0px', overflow: 'hidden' })
         })
       })
     }
