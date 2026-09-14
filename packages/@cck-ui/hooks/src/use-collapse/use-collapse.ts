@@ -17,13 +17,13 @@ export interface CollapseInput {
   expanded: MaybeRefOrGetter<boolean>
 
   /** Transition duration in milliseconds, by default calculated based on content height */
-  transitionDuration?: MaybeRefOrGetter<number>
+  transitionDuration?: MaybeRefOrGetter<number | undefined>
 
   /**
    * Transition timing function
    * @default 'ease'
    */
-  transitionTimingFunction?: string
+  transitionTimingFunction?: MaybeRefOrGetter<string | undefined>
 
   /** Called when transition ends */
   onTransitionEnd?: () => void
@@ -60,12 +60,13 @@ export function useDimensionCollapse(
     keepMounted,
     onTransitionEnd,
     onTransitionStart,
-    transitionDuration,
+    transitionDuration = 200,
     transitionTimingFunction = 'ease',
   } = input
 
   const isExpanded = () => toValue(expanded)
   const duration = () => toValue(transitionDuration)
+  const timingFunction = () => toValue(transitionTimingFunction)
 
   const buildCollapsedStyles = (): CSSProperties => ({
     [dimension]: '0px',
@@ -88,7 +89,7 @@ export function useDimensionCollapse(
   const getTransitionStyles = (size: number): CSSProperties => {
     const d = duration() ?? getAutoDuration(size)
     return {
-      transition: `${dimension} ${d}ms ${transitionTimingFunction}, opacity ${d}ms ${transitionTimingFunction}`,
+      transition: `${dimension} ${d}ms ${timingFunction()}, opacity ${d}ms ${timingFunction()}`,
     }
   }
 
@@ -97,23 +98,14 @@ export function useDimensionCollapse(
     if (!el) {
       return 0
     }
-    const ghost = el.cloneNode(true) as HTMLElement
-    ghost.style.position = 'absolute'
-    ghost.style.top = '0'
-    ghost.style.left = '-99999px'
-    ghost.style.visibility = 'hidden'
-    ghost.style.pointerEvents = 'none'
-    ghost.style.transition = 'none'
-    ghost.style.display = 'block'
-    ghost.style.overflow = 'visible'
-    ghost.style.width = 'auto'
-    ghost.style.height = 'auto'
-
-    document.body.appendChild(ghost)
-    const size = dimension === 'height' ? ghost.scrollHeight : ghost.scrollWidth
-    document.body.removeChild(ghost)
-
-    return size
+    if (dimension === 'height') {
+      return el.scrollHeight
+    }
+    const prevMinWidth = el.style.minWidth
+    el.style.minWidth = 'max-content'
+    const width = el.offsetWidth
+    el.style.minWidth = prevMinWidth
+    return width
   }
 
   const handleTransitionEnd = (event: TransitionEvent) => {
@@ -122,10 +114,16 @@ export function useDimensionCollapse(
     }
 
     if (isExpanded()) {
-      setStyles({})
+      const size = measure()
+      const current = parseFloat(String(styles.value[dimension] ?? ''))
+      if (size === current) {
+        setStyles({})
+      } else {
+        mergeStyles({ [dimension]: `${size}px` })
+      }
       state.value = 'entered'
       onTransitionEnd?.()
-    } else if (styles.value[dimension] === 0) {
+    } else {
       setStyles(buildCollapsedStyles())
       state.value = 'exited'
       onTransitionEnd?.()
