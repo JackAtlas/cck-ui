@@ -1,18 +1,19 @@
 export * from './utils'
 
-export { useFocusTrap } from './use-focus-trap/use-focus-trap'
-
 export { useClipboard } from './use-clipboard/use-clipboard'
 export {
   useCollapse,
   useDimensionCollapse,
   useHorizontalCollapse,
 } from './use-collapse/use-collapse'
+export { useDebouncedCallback } from './use-debounced-callback/use-debounced-callback'
 export { useDisclosure } from './use-disclosure/use-disclosure'
 export { useElementSize } from './use-element-size/use-element-size'
+export { useFocusTrap } from './use-focus-trap/use-focus-trap'
 export { useId } from './use-id/use-id'
 export { useIsomorphicEffect } from './use-isomorphic-effect/use-isomorphic-effect'
 export { useMediaQuery } from './use-media-query/use-media-query'
+export { useMergedRef, assignRef } from './use-merged-ref/use-merged-ref'
 export { useReducedMotion } from './use-reduced-motion/use-reduced-motion'
 export { useResizeObserver } from './use-resize-observer/use-resize-observer'
 export { useSplitter } from './use-splitter/use-splitter'
@@ -25,6 +26,10 @@ export type {
   CollapseReturnValue as UseCollapseReturnValue,
   CollapseState as UseCollapseState,
 } from './use-collapse/use-collapse'
+export type {
+  UseDebouncedCallbackOptions,
+  UseDebouncedCallbackReturnValue,
+} from './use-debounced-callback/use-debounced-callback'
 export type {
   UseDisclosureHandlers,
   UseDisclosureOptions,
