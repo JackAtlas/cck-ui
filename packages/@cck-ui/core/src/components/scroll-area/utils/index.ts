@@ -1,0 +1,5 @@
+export { addUnlinkedScrollListener } from './add-unlinked-scroll-listener'
+export { getScrollPositionFromPointer } from './get-scroll-position-from-pointer'
+export { getThumbOffsetFromScroll } from './get-thumb-offset-from-scroll'
+export { getThumbRatio } from './get-thumb-ratio'
+export { getThumbSize } from './get-thumb-size'
