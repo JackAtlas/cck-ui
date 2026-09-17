@@ -1,4 +1,12 @@
-import { getCurrentScope, onScopeDispose, toValue, type MaybeRefOrGetter } from 'vue'
+import {
+  getCurrentScope,
+  isRef,
+  onScopeDispose,
+  toValue,
+  unref,
+  watch,
+  type MaybeRefOrGetter,
+} from 'vue'
 
 export interface UseDebouncedCallbackOptions {
   delay: number
@@ -41,7 +49,10 @@ export function useDebouncedCallback<T extends (...args: any[]) => any>(
     hasPendingCallback = false
   }
 
-  const getCallback = () => toValue(callback)
+  const getCallback = (): T => {
+    const raw = callback
+    return isRef(raw) ? (unref(raw) as T) : (raw as T)
+  }
 
   const flush = () => {
     if (debounceTimer !== 0) {
@@ -86,6 +97,13 @@ export function useDebouncedCallback<T extends (...args: any[]) => any>(
       return
     }
 
+    if (leading && !wasFirst) {
+      hasPendingCallback = true
+      debounceTimer = window.setTimeout(clearTimers, delay)
+      startMaxWaitTimer()
+      return
+    }
+
     hasPendingCallback = true
     debounceTimer = window.setTimeout(flush, delay)
     startMaxWaitTimer()
@@ -94,6 +112,27 @@ export function useDebouncedCallback<T extends (...args: any[]) => any>(
   debounced.flush = flush
   debounced.cancel = cancel
   debounced.isPending = () => hasPendingCallback
+
+  let prevFlushOnUnmount: boolean | null = null
+
+  watch(
+    () => {
+      const o = getOptions()
+      return `${o.delay}|${o.leading ?? false}|${o.maxWait ?? 'none'}|${o.flushOnUnmount ?? false}`
+    },
+    () => {
+      const newFlushOnUnmount = getOptions().flushOnUnmount ?? false
+      if (prevFlushOnUnmount !== null) {
+        if (prevFlushOnUnmount) {
+          flush()
+        } else {
+          cancel()
+        }
+      }
+      prevFlushOnUnmount = newFlushOnUnmount
+    },
+    { immediate: true }
+  )
 
   if (getCurrentScope()) {
     onScopeDispose(() => {
