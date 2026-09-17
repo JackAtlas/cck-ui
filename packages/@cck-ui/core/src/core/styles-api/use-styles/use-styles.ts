@@ -12,7 +12,6 @@ import { resolveStyles } from './get-style/resolve-styles/resolve-styles'
 import { mergeVars } from './get-style/resolve-vars/merge-vars'
 import { resolveStyle } from './get-style/resolve-style/resolve-style'
 import { getClassName } from './get-class-name/get-class-name'
-import { Properties } from 'csstype'
 import { getStyle } from './get-style/get-style'
 import { FactoryPayload } from '../../factory'
 import { CStyleProp } from '../../box'
@@ -45,7 +44,7 @@ export type GetStylesApi<Payload extends FactoryPayload> = (
   options?: GetStylesApiOptions
 ) => {
   className: string
-  style: Properties
+  style: CStyleProp
 }
 
 export function useStyles<Payload extends FactoryPayload>({
