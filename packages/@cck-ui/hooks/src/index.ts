@@ -16,6 +16,7 @@ export { useMediaQuery } from './use-media-query/use-media-query'
 export { useMergedRef, assignRef } from './use-merged-ref/use-merged-ref'
 export { useReducedMotion } from './use-reduced-motion/use-reduced-motion'
 export { useResizeObserver } from './use-resize-observer/use-resize-observer'
+export { useScroller } from './use-scroller/use-scroller'
 export { useSplitter } from './use-splitter/use-splitter'
 export { useTimeoutFn } from './use-timeout-fn/use-timeout-fn'
 export { useUncontrolled } from './use-uncontrolled/use-uncontrolled'
@@ -38,6 +39,11 @@ export type {
 export type { UseElementSizeReturnValue } from './use-element-size/use-element-size'
 export type { UseMediaQueryOptions } from './use-media-query/use-media-query'
 export type { UseResizeObserverReturnValue } from './use-resize-observer/use-resize-observer'
+export type {
+  UseScrollerOptions,
+  UseScrollerReturnValue,
+  UseScrollerScrollState,
+} from './use-scroller/use-scroller'
 export type {
   UseSplitterPanel,
   UseSplitterOptions,
