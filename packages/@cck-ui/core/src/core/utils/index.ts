@@ -5,6 +5,7 @@ export { filterProps } from './filter-props/filter-props'
 export { getBaseValue } from './get-base-value/get-base-value'
 export { getBreakpointValue } from './get-breakpoint-value/get-breakpoint-value'
 export { getDefaultZIndex } from './get-default-z-index/get-default-z-index'
+export { getSafeId } from './get-safe-id/get-safe-id'
 export {
   getSize,
   getSpacing,
