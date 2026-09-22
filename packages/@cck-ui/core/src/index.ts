@@ -1,5 +1,9 @@
 import type { App, Plugin } from 'vue'
 import {
+  CAccordion,
+  CAccordionControl,
+  CAccordionItem,
+  CAccordionPanel,
   CActionIcon,
   CActionIconGroup,
   CActionIconGroupSection,
@@ -83,6 +87,10 @@ const INSTALLED_KEY = Symbol('INSTALLED_KEY')
 const components = [
   CckConfigProvider,
   CBox,
+  CAccordion,
+  CAccordionControl,
+  CAccordionItem,
+  CAccordionPanel,
   CActionIcon,
   CActionIconGroup,
   CActionIconGroupSection,
