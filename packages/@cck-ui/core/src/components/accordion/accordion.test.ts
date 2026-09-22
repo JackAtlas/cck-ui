@@ -5,6 +5,10 @@ import { describe, expect, it } from 'vitest'
 import { render, tests } from '@cck-ui-tests/core'
 import { DOMWrapper, VueWrapper } from '@vue/test-utils'
 
+function getAccordion(wrapper: VueWrapper<any>) {
+  return wrapper.findComponent({ name: 'CAccordion' })
+}
+
 function getControls(wrapper: VueWrapper<any>) {
   return wrapper.findAll('button')
 }
@@ -129,8 +133,8 @@ describe('@cck-ui/core/accordion', () => {
       ...defaultProps,
       multiple: true,
       defaultValue: ['item-2'],
-    } satisfies AccordionProps<true>
-    const { wrapper } = render<AccordionProps<true>>(CAccordion, {
+    } satisfies AccordionProps
+    const { wrapper } = render<AccordionProps>(CAccordion, {
       props,
       slots: defaultSlots,
     })
@@ -158,8 +162,8 @@ describe('@cck-ui/core/accordion', () => {
       ...defaultProps,
       multiple: true,
       defaultValue: ['item-3', 'item-1'],
-    } satisfies AccordionProps<true>
-    const { wrapper } = render<AccordionProps<true>>(CAccordion, {
+    } satisfies AccordionProps
+    const { wrapper } = render<AccordionProps>(CAccordion, {
       props,
       slots: defaultSlots,
     })
@@ -174,8 +178,10 @@ describe('@cck-ui/core/accordion', () => {
     expectPanelsOpen(wrapper, [1])
 
     await getControls(wrapper)[0].trigger('click')
-    expect(wrapper.emitted('change')?.[0]).toEqual(['item-1'])
-    expect(wrapper.emitted('update:value')?.[0]).toEqual(['item-1'])
+
+    const acc = getAccordion(wrapper)
+    expect(acc.emitted('change')?.[0]).toEqual(['item-1'])
+    expect(acc.emitted('update:value')?.[0]).toEqual(['item-1'])
 
     expectPanelsOpen(wrapper, [1])
   })
@@ -198,11 +204,13 @@ describe('@cck-ui/core/accordion', () => {
       slots,
     })
 
+    const acc = getAccordion(wrapper)
+
     await getControls(wrapper)[1].trigger('click')
-    expect(wrapper.emitted('change')?.[0]).toEqual([['item-1', 'item-2']])
+    expect(acc.emitted('change')?.[0]).toEqual([['item-1', 'item-2']])
 
     await getControls(wrapper)[0].trigger('click')
-    expect(wrapper.emitted('change')?.[1]).toEqual([[]])
+    expect(acc.emitted('change')?.[1]).toEqual([[]])
   })
 
   it('supports navigating between items with up and down arrows (loop: true, default)', async () => {
@@ -301,7 +309,8 @@ describe('@cck-ui/core/accordion', () => {
     expect(control.attributes('data-disabled')).toBeDefined()
 
     await control.trigger('click')
-    expect(wrapper.emitted('change')).toBeUndefined()
+    const acc = getAccordion(wrapper)
+    expect(acc.emitted('change')).toBeUndefined()
   })
 
   it('sets data-rotate on the chevron of the opened item', () => {
@@ -365,8 +374,10 @@ describe('@cck-ui/core/accordion', () => {
     expectPanelsOpen(wrapper, [0])
 
     await getControls(wrapper)[0].trigger('click')
+
+    const acc = getAccordion(wrapper)
     expectPanelsOpen(wrapper, [0])
-    expect(wrapper.emitted('change')).toBeUndefined()
+    expect(acc.emitted('change')).toBeUndefined()
   })
 
   it('does not collapse the open item when disableCollapse is set (controlled, multiple: false)', async () => {
@@ -377,8 +388,10 @@ describe('@cck-ui/core/accordion', () => {
     expectPanelsOpen(wrapper, [0])
 
     await getControls(wrapper)[0].trigger('click')
+
+    const acc = getAccordion(wrapper)
     expectPanelsOpen(wrapper, [0])
-    expect(wrapper.emitted('change')).toBeUndefined()
+    expect(acc.emitted('change')).toBeUndefined()
   })
 
   it('switches to a different item when disableCollapse is set (multiple: false)', async () => {
@@ -387,8 +400,10 @@ describe('@cck-ui/core/accordion', () => {
       slots: defaultSlots,
     })
 
+    const acc = getAccordion(wrapper)
+
     await getControls(wrapper)[1].trigger('click')
-    expect(wrapper.emitted('change')?.[0]).toEqual('item-2')
+    expect(acc.emitted('change')?.[0]).toEqual(['item-2'])
     expectPanelsOpen(wrapper, [1])
   })
 
@@ -405,7 +420,9 @@ describe('@cck-ui/core/accordion', () => {
     expectPanelsOpen(wrapper, [0])
 
     await getControls(wrapper)[0].trigger('click')
-    expect(wrapper.emitted('change')?.[0]).toEqual([])
+
+    const acc = getAccordion(wrapper)
+    expect(acc.emitted('change')?.[0]).toEqual([[]])
     expectPanelsOpen(wrapper, [])
   })
 
