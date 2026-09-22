@@ -1,4 +1,3 @@
-import { VNode } from 'vue'
 import { BoxProps, CRadius, ElementProps, Factory, StylesApiProps } from '../../core'
 import AccordionChevron from './accordion-chevron/accordion-chevron.vue'
 import { AccordionItemStylesNames } from './accordion-item/accordion-item.types'
@@ -7,10 +6,6 @@ import { AccordionControlStylesNames } from './accordion-control/accordion-contr
 import AccordionItem from './accordion-item/accordion-item.vue'
 import AccordionPanel from './accordion-panel/accordion-panel.vue'
 import AccordionControl from './accordion-control/accordion-control.vue'
-
-export type AccordionValue<Multiple extends boolean> = Multiple extends true
-  ? string[]
-  : string | null
 
 export type AccordionHeadingOrder = 2 | 3 | 4 | 5 | 6
 export type AccordionChevronPosition = 'left' | 'right'
@@ -26,7 +21,7 @@ export type AccordionCssVariables = {
   root: '--accordion-transition-duration' | '--accordion-chevron-size' | '--accordion-radius'
 }
 
-export interface AccordionProps<Multiple extends boolean = false>
+export interface AccordionProps
   extends
     BoxProps,
     StylesApiProps<AccordionFactory>,
@@ -35,16 +30,13 @@ export interface AccordionProps<Multiple extends boolean = false>
    * If set, multiple items can be opened at the same time
    * @default false
    */
-  multiple?: Multiple
+  multiple?: boolean
 
   /** Controlled component value */
-  value?: AccordionValue<Multiple>
+  value?: string | string[] | null
 
   /** Uncontrolled component default value */
-  defaultValue?: AccordionValue<Multiple>
-
-  /** Called when value changes, payload type depends on `multiple` prop */
-  onChange?: (value: AccordionValue<Multiple>) => void
+  defaultValue?: string | string[] | null
 
   /**
    * If set, arrow keys loop through items (first to last and last to first)
@@ -119,7 +111,6 @@ export type AccordionFactory = Factory<{
   stylesNames: AccordionStylesNames
   vars: AccordionCssVariables
   variant: AccordionVariant
-  signature: <Multiple extends boolean = false>(props: AccordionProps<Multiple>) => VNode
   staticComponents: {
     Item: typeof AccordionItem
     Control: typeof AccordionControl

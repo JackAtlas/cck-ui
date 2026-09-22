@@ -85,8 +85,6 @@ const knownProps = [
   'chevron',
   'noChevron',
   'icon',
-  'onClick',
-  'onKeyDown',
   'disabled',
   'mod',
 ]
@@ -101,7 +99,6 @@ const heading = `h${toValue(ctx.order)}` as const
 const ctxChevron = Array.isArray(ctx.chevron) ? ctx.chevron : [ctx.chevron]
 
 const clickHandler = (event: PointerEvent) => {
-  props.value.onClick?.(event)
   ctx.onChange(toValue(value))
 }
 
@@ -111,7 +108,6 @@ const keydownHandler = createScopedKeydownHandler({
   activateOnFocus: false,
   loop: toValue(ctx.loop),
   orientation: 'vertical',
-  onKeydown: props.value.onKeydown,
 })
 
 const controlAttrs = computed(() =>

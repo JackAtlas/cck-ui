@@ -1,7 +1,7 @@
 import { h, nextTick } from 'vue'
 import { AccordionProps, AccordionStylesNames } from './accordion.types'
 import CAccordion, { CAccordionControl, CAccordionItem, CAccordionPanel } from '.'
-import { describe, expect, it, vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { render, tests } from '@cck-ui-tests/core'
 import { DOMWrapper, VueWrapper } from '@vue/test-utils'
 
@@ -167,22 +167,20 @@ describe('@cck-ui/core/accordion', () => {
   })
 
   it('supports controlled state (multiple: false, default)', async () => {
-    const spy = vi.fn()
     const { wrapper } = render(CAccordion, {
-      props: { ...defaultProps, value: 'item-2', onChange: spy },
+      props: { ...defaultProps, value: 'item-2' },
       slots: defaultSlots,
     })
     expectPanelsOpen(wrapper, [1])
 
     await getControls(wrapper)[0].trigger('click')
-    expect(spy).toHaveBeenCalledWith('item-1')
+    expect(wrapper.emitted('change')?.[0]).toEqual(['item-1'])
+    expect(wrapper.emitted('update:value')?.[0]).toEqual(['item-1'])
 
-    // 受控：外部未更新 value，仍只有 item-2 打开
     expectPanelsOpen(wrapper, [1])
   })
 
   it('supports controlled state (multiple: true)', async () => {
-    const spy = vi.fn()
     const slots = {
       default: () => [
         h(CAccordionItem, { value: 'item-1' }, () => [
@@ -196,16 +194,15 @@ describe('@cck-ui/core/accordion', () => {
       ],
     }
     const { wrapper } = render(CAccordion, {
-      props: { multiple: true, value: ['item-1'], onChange: spy, transitionDuration: 0 },
+      props: { multiple: true, value: ['item-1'], transitionDuration: 0 },
       slots,
     })
 
     await getControls(wrapper)[1].trigger('click')
-    expect(spy).toHaveBeenCalledWith(['item-1', 'item-2'])
+    expect(wrapper.emitted('change')?.[0]).toEqual([['item-1', 'item-2']])
 
-    spy.mockClear()
     await getControls(wrapper)[0].trigger('click')
-    expect(spy).toHaveBeenCalledWith([])
+    expect(wrapper.emitted('change')?.[1]).toEqual([[]])
   })
 
   it('supports navigating between items with up and down arrows (loop: true, default)', async () => {
@@ -286,7 +283,6 @@ describe('@cck-ui/core/accordion', () => {
   })
 
   it('does not toggle a disabled control and sets disabled attributes', async () => {
-    const spy = vi.fn()
     const slots = {
       default: () => [
         h(CAccordionItem, { value: 'item-1' }, () => [
@@ -296,7 +292,7 @@ describe('@cck-ui/core/accordion', () => {
       ],
     }
     const { wrapper } = render(CAccordion, {
-      props: { onChange: spy, transitionDuration: 0 },
+      props: { transitionDuration: 0 },
       slots,
     })
 
@@ -305,7 +301,7 @@ describe('@cck-ui/core/accordion', () => {
     expect(control.attributes('data-disabled')).toBeDefined()
 
     await control.trigger('click')
-    expect(spy).not.toHaveBeenCalled()
+    expect(wrapper.emitted('change')).toBeUndefined()
   })
 
   it('sets data-rotate on the chevron of the opened item', () => {
@@ -362,59 +358,54 @@ describe('@cck-ui/core/accordion', () => {
   })
 
   it('does not collapse the open item when disableCollapse is set (uncontrolled, multiple: false)', async () => {
-    const spy = vi.fn()
     const { wrapper } = render(CAccordion, {
-      props: { ...defaultProps, defaultValue: 'item-1', disableCollapse: true, onChange: spy },
+      props: { ...defaultProps, defaultValue: 'item-1', disableCollapse: true },
       slots: defaultSlots,
     })
     expectPanelsOpen(wrapper, [0])
 
     await getControls(wrapper)[0].trigger('click')
     expectPanelsOpen(wrapper, [0])
-    expect(spy).not.toHaveBeenCalled()
+    expect(wrapper.emitted('change')).toBeUndefined()
   })
 
   it('does not collapse the open item when disableCollapse is set (controlled, multiple: false)', async () => {
-    const spy = vi.fn()
     const { wrapper } = render(CAccordion, {
-      props: { ...defaultProps, value: 'item-1', disableCollapse: true, onChange: spy },
+      props: { ...defaultProps, value: 'item-1', disableCollapse: true },
       slots: defaultSlots,
     })
     expectPanelsOpen(wrapper, [0])
 
     await getControls(wrapper)[0].trigger('click')
     expectPanelsOpen(wrapper, [0])
-    expect(spy).not.toHaveBeenCalled()
+    expect(wrapper.emitted('change')).toBeUndefined()
   })
 
   it('switches to a different item when disableCollapse is set (multiple: false)', async () => {
-    const spy = vi.fn()
     const { wrapper } = render(CAccordion, {
-      props: { ...defaultProps, defaultValue: 'item-1', disableCollapse: true, onChange: spy },
+      props: { ...defaultProps, defaultValue: 'item-1', disableCollapse: true },
       slots: defaultSlots,
     })
 
     await getControls(wrapper)[1].trigger('click')
-    expect(spy).toHaveBeenCalledWith('item-2')
+    expect(wrapper.emitted('change')?.[0]).toEqual('item-2')
     expectPanelsOpen(wrapper, [1])
   })
 
   it('ignores disableCollapse in multiple mode', async () => {
-    const spy = vi.fn()
     const { wrapper } = render(CAccordion, {
       props: {
         ...defaultProps,
         multiple: true,
         defaultValue: ['item-1'],
         disableCollapse: true,
-        onChange: spy,
       },
       slots: defaultSlots,
     })
     expectPanelsOpen(wrapper, [0])
 
     await getControls(wrapper)[0].trigger('click')
-    expect(spy).toHaveBeenCalledWith([])
+    expect(wrapper.emitted('change')?.[0]).toEqual([])
     expectPanelsOpen(wrapper, [])
   })
 

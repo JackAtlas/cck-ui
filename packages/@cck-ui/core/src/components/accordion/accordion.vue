@@ -18,6 +18,11 @@ defineOptions({
   name: 'CAccordion',
 })
 
+const emit = defineEmits<{
+  (e: 'update:value', value: string | string[] | null): void
+  (e: 'change', value: string | string[] | null): void
+}>()
+
 const _root = ref<InstanceType<typeof CBox> | null>(null)
 
 const attrs = useAttrs()
@@ -63,7 +68,6 @@ const knownProps = [
   'multiple',
   'value',
   'defaultValue',
-  'onChange',
   'id',
   'loop',
   'transitionDuration',
@@ -95,10 +99,13 @@ const getStyles = useStyles<AccordionFactory>({
 })
 
 const [_value, handleChange] = useUncontrolled({
-  value: props.value.value,
+  value: () => props.value.value,
   defaultValue: props.value.defaultValue,
   finalValue: props.value.multiple ? ([] as any) : null,
-  onChange: props.value.onChange,
+  onChange: (val) => {
+    emit('update:value', val)
+    emit('change', val)
+  },
 })
 
 const isItemActive = (itemValue: string) =>

@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from '@storybook/vue3-vite'
 import CAccordion, { CAccordionControl, CAccordionItem, CAccordionPanel } from '.'
 import { PlusIcon } from '@lucide/vue'
+import { ref } from 'vue'
 
 const meta = {
   title: 'Accordion',
@@ -147,6 +148,68 @@ export const NestedAccordions: Story = {
             </c-accordion-panel>
           </c-accordion-item>
         </c-accordion>
+      </div>
+    `,
+  }),
+}
+
+export const Controlled: Story = {
+  render: () => ({
+    components: { CAccordion, CAccordionItem, CAccordionControl, CAccordionPanel },
+    setup() {
+      const activeItem = ref<string | null>('item-1')
+
+      return { activeItem }
+    },
+    template: `
+      <div>
+        <c-accordion maw="400" mx="auto" v-model:value="activeItem">
+          <c-accordion-item value="item-1">
+            <c-accordion-control>Item 1</c-accordion-control>
+            <c-accordion-panel>Content 1</c-accordion-panel>
+          </c-accordion-item>
+          <c-accordion-item value="item-2">
+            <c-accordion-control>Item 2</c-accordion-control>
+            <c-accordion-panel>Content 2</c-accordion-panel>
+          </c-accordion-item>
+          <c-accordion-item value="item-3">
+            <c-accordion-control>Item 3</c-accordion-control>
+            <c-accordion-panel>Content 3</c-accordion-panel>
+          </c-accordion-item>
+        </c-accordion>
+
+        <p> activeItem: {{ activeItem }}</p>
+      </div>
+    `,
+  }),
+}
+
+export const ControlledMultiple: Story = {
+  render: () => ({
+    components: { CAccordion, CAccordionItem, CAccordionControl, CAccordionPanel },
+    setup() {
+      const activeItem = ref<string[]>(['item-1', 'item-3'])
+
+      return { activeItem }
+    },
+    template: `
+      <div>
+        <c-accordion maw="400" multiple mx="auto" v-model:value="activeItem">
+          <c-accordion-item value="item-1">
+            <c-accordion-control>Item 1</c-accordion-control>
+            <c-accordion-panel>Content 1</c-accordion-panel>
+          </c-accordion-item>
+          <c-accordion-item value="item-2">
+            <c-accordion-control>Item 2</c-accordion-control>
+            <c-accordion-panel>Content 2</c-accordion-panel>
+          </c-accordion-item>
+          <c-accordion-item value="item-3">
+            <c-accordion-control>Item 3</c-accordion-control>
+            <c-accordion-panel>Content 3</c-accordion-panel>
+          </c-accordion-item>
+        </c-accordion>
+
+        <p> activeItem: {{ activeItem }}</p>
       </div>
     `,
   }),
