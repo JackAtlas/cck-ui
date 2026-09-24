@@ -12,6 +12,7 @@ export { useElementSize } from './use-element-size/use-element-size'
 export { useFocusTrap } from './use-focus-trap/use-focus-trap'
 export { useId } from './use-id/use-id'
 export { useIsomorphicEffect } from './use-isomorphic-effect/use-isomorphic-effect'
+export { useLongPress } from './use-long-press/use-long-press'
 export { useMediaQuery } from './use-media-query/use-media-query'
 export { useMergedRef, assignRef } from './use-merged-ref/use-merged-ref'
 export { useReducedMotion } from './use-reduced-motion/use-reduced-motion'
@@ -37,6 +38,11 @@ export type {
   UseDisclosureReturnValue,
 } from './use-disclosure/use-disclosure'
 export type { UseElementSizeReturnValue } from './use-element-size/use-element-size'
+export type {
+  UseLongPressEvent,
+  UseLongPressOptions,
+  UseLongPressReturnValue,
+} from './use-long-press/use-long-press'
 export type { UseMediaQueryOptions } from './use-media-query/use-media-query'
 export type { UseResizeObserverReturnValue } from './use-resize-observer/use-resize-observer'
 export type {
