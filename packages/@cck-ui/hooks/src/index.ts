@@ -9,6 +9,7 @@ export {
 export { useDebouncedCallback } from './use-debounced-callback/use-debounced-callback'
 export { useDisclosure } from './use-disclosure/use-disclosure'
 export { useElementSize } from './use-element-size/use-element-size'
+export { useFocusReturn } from './use-focus-return/use-focus-return'
 export { useFocusTrap } from './use-focus-trap/use-focus-trap'
 export { useId } from './use-id/use-id'
 export { useIsomorphicEffect } from './use-isomorphic-effect/use-isomorphic-effect'
@@ -38,6 +39,10 @@ export type {
   UseDisclosureReturnValue,
 } from './use-disclosure/use-disclosure'
 export type { UseElementSizeReturnValue } from './use-element-size/use-element-size'
+export type {
+  UseFocusReturnInput,
+  UseFocusReturnReturnValue,
+} from './use-focus-return/use-focus-return'
 export type {
   UseLongPressEvent,
   UseLongPressOptions,
