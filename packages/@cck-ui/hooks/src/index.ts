@@ -1,5 +1,6 @@
 export * from './utils'
 
+export { useClickOutside } from './use-click-outside/use-click-outside'
 export { useClipboard } from './use-clipboard/use-clipboard'
 export {
   useCollapse,
