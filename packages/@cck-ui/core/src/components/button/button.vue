@@ -102,6 +102,7 @@ const props = useComponentProps({
   component: 'CButton',
   defaultProps: {},
   props: rawProps,
+  booleanProps: ['autoContrast', 'disabled', 'fullWidth', 'loading'],
 })
 
 const knownProps = [
