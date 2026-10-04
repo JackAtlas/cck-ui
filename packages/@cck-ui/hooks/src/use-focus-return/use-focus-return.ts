@@ -2,7 +2,7 @@ import { MaybeRefOrGetter, toValue, watch } from 'vue'
 
 export interface UseFocusReturnInput {
   opened: MaybeRefOrGetter<boolean>
-  shouldReturnFocus?: MaybeRefOrGetter<boolean>
+  shouldReturnFocus?: MaybeRefOrGetter<boolean | undefined>
 }
 
 export type UseFocusReturnReturnValue = () => void
@@ -24,7 +24,7 @@ export function useFocusReturn({
   }
 
   watch(
-    [() => toValue(opened), () => toValue(shouldReturnFocus)],
+    [() => toValue(opened), () => toValue(shouldReturnFocus) ?? false],
     ([isOpened, shouldReturn], _prev, onCleanup) => {
       let timeout = -1
 
