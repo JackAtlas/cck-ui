@@ -1,0 +1,39 @@
+.dropdown {
+  position: absolute;
+  top: var(--popover-top, 0);
+  left: var(--popover-left, 0);
+  z-index: var(--popover-z-index, 300);
+  border: 1px solid var(--popover-border-color);
+  padding: var(--c-spacing-sm) var(--c-spacing-md);
+  box-shadow: var(--popover-shadow, none);
+  border-radius: var(--popover-radius, var(--c-radius-default));
+
+  &:where([data-fixed]) {
+    position: fixed;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  @mixin where-light {
+    --popover-border-color: var(--c-color-gray-2);
+    background-color: var(--c-color-white);
+  }
+
+  @mixin where-dark {
+    --popover-border-color: var(--c-color-dark-4);
+    background-color: var(--c-color-dark-6);
+  }
+}
+
+.arrow {
+  background-color: inherit;
+  border: 1px solid var(--popover-border-color);
+  z-index: 1;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+}
