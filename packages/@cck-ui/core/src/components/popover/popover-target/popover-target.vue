@@ -66,6 +66,8 @@ export default defineComponent({
 
       const forwardedProps: Record<string, any> = { ...attrs }
       delete forwardedProps.ref
+      delete forwardedProps.class
+      delete forwardedProps.className
 
       const accessibleProps = ctx?.withRoles
         ? {
@@ -97,7 +99,10 @@ export default defineComponent({
         ...forwardedProps,
         ...accessibleProps,
         ...targetProps,
-        class: mergedClassName,
+      }
+
+      if (mergedClassName) {
+        mergedProps.class = mergedClassName
       }
 
       if (props.value.refProp === 'ref') {
