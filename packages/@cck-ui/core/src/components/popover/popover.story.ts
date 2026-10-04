@@ -3,6 +3,7 @@ import CPopover, { CPopoverDropdown, CPopoverTarget } from '.'
 import { CckConfigProvider, createTheme } from '../../core'
 import { ref } from 'vue'
 import CGroup from '../group'
+import CButton from '../button'
 
 const meta = {
   title: 'Popover',
@@ -12,6 +13,41 @@ const meta = {
 export default meta
 
 type Story = StoryObj<typeof meta>
+
+export const Usage: Story = {
+  render: () => ({
+    components: { CButton, CPopover, CPopoverDropdown, CPopoverTarget },
+    setup() {
+      const head = document.head
+      const viteStyles = Array.from(head.querySelectorAll('style')).filter(
+        (style) => style.dataset.viteDevId
+      )
+      let buttonStyle: HTMLStyleElement | null = null
+      let unstyledButtonStyle: HTMLStyleElement | null = null
+      viteStyles.forEach((style) => {
+        if (style.dataset.viteDevId?.endsWith('/button.module.css')) {
+          buttonStyle = style
+        } else if (style.dataset.viteDevId?.endsWith('/unstyled-button.module.css')) {
+          unstyledButtonStyle = style
+        }
+      })
+
+      if (buttonStyle && unstyledButtonStyle) {
+        head.insertBefore(unstyledButtonStyle, buttonStyle)
+      }
+    },
+    template: `
+      <div style="padding:40px;">
+        <c-popover position="bottom" shadow="md" width="200" with-arrow>
+          <c-popover-target>
+            <c-button variant="filled">Toggle popover</c-button>
+          </c-popover-target>
+          <c-popover-dropdown>Dropdown</c-popover-dropdown>
+        </c-popover>
+      </div>
+    `,
+  }),
+}
 
 export const Uncontrolled: Story = {
   render: () => ({
