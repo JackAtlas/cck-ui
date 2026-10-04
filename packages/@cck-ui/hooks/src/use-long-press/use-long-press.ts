@@ -165,9 +165,9 @@ function getEventPosition(event: MouseEvent | TouchEvent): { x: number; y: numbe
 }
 
 function isTouchEvent(event: MouseEvent | TouchEvent): event is TouchEvent {
-  return typeof TouchEvent !== 'undefined' && event instanceof TouchEvent
+  return event.type.startsWith('touch')
 }
 
 function isMouseEvent(event: MouseEvent | TouchEvent): event is MouseEvent {
-  return typeof MouseEvent !== 'undefined' && event instanceof MouseEvent
+  return event.type.startsWith('mouse')
 }
