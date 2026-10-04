@@ -18,7 +18,7 @@ describe('@cck-ui/core/get-arrow-position-styles', () => {
       arrowPosition: 'merge',
     })
 
-    expect(styles.width).toBe(7)
+    expect(styles.width).toBe('7px')
     expect(styles.clipPath).toBeDefined()
   })
 
@@ -29,8 +29,8 @@ describe('@cck-ui/core/get-arrow-position-styles', () => {
       arrowPosition: 'merge',
     })
 
-    expect(styles.width).toBe(7)
-    expect(styles.height).toBe(7)
+    expect(styles.width).toBe('7px')
+    expect(styles.height).toBe('7px')
     expect(styles.transform).toBe('rotate(45deg)')
     expect(styles.clipPath).toBeDefined()
   })

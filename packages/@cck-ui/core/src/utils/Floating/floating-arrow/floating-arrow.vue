@@ -1,9 +1,9 @@
 <template>
-  <div role="presentation" v-bind="mergedAttrs" v-if="visible"></div>
+  <div ref="_root" role="presentation" v-bind="mergedAttrs" v-if="visible"></div>
 </template>
 
 <script setup lang="ts">
-import { computed, useAttrs } from 'vue'
+import { computed, ref, useAttrs } from 'vue'
 import { useDirectionContext } from '../../../core'
 import { getArrowPositionStyles } from './get-arrow-position-styles'
 import { FloatingArrowProps } from './floating-arrow.types'
@@ -11,6 +11,8 @@ import { FloatingArrowProps } from './floating-arrow.types'
 defineOptions({
   name: 'FloatingArrow',
 })
+
+const _root = ref<HTMLDivElement | null>(null)
 
 const attrs = useAttrs()
 
@@ -37,5 +39,9 @@ const mergedAttrs = computed(() => {
       ...computedStyle,
     },
   }
+})
+
+defineExpose({
+  root: _root,
 })
 </script>

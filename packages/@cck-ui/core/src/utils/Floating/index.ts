@@ -3,6 +3,7 @@ import FloatingArrow from './floating-arrow/floating-arrow.vue'
 export { FloatingArrow }
 export { getArrowMergeDropdownStyles } from './floating-arrow/get-arrow-position-styles'
 export { getFloatingPosition } from './get-floating-position/get-floating-position'
+export { useContextMenuHandlers } from './use-context-menu-handlers'
 export { useDelayedHover } from './use-delayed-hover'
 
 export type {

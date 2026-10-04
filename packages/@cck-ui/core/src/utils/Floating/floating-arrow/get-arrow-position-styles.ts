@@ -8,15 +8,15 @@ function horizontalSide(
   arrowPosition: ArrowPosition
 ) {
   if (placement === 'center' || arrowPosition === 'center') {
-    return { top: arrowY }
+    return { top: `${arrowY}px` }
   }
 
   if (placement === 'end') {
-    return { bottom: arrowOffset }
+    return { bottom: `${arrowOffset}px` }
   }
 
   if (placement === 'start') {
-    return { top: arrowOffset }
+    return { top: `${arrowOffset}px` }
   }
 
   return {}
@@ -30,15 +30,15 @@ function verticalSide(
   dir: 'rtl' | 'ltr'
 ) {
   if (placement === 'center' || arrowPosition === 'center') {
-    return { left: arrowX }
+    return { left: `${arrowX}px` }
   }
 
   if (placement === 'end') {
-    return { [dir === 'ltr' ? 'right' : 'left']: arrowOffset }
+    return { [dir === 'ltr' ? 'right' : 'left']: `${arrowOffset}px` }
   }
 
   if (placement === 'start') {
-    return { [dir === 'ltr' ? 'left' : 'right']: arrowOffset }
+    return { [dir === 'ltr' ? 'left' : 'right']: `${arrowOffset}px` }
   }
 
   return {}
@@ -76,8 +76,8 @@ function getMergeArrowStyles({
   }
 
   const baseStyles = {
-    width: arrowSize,
-    height: arrowSize,
+    width: `${arrowSize}px`,
+    height: `${arrowSize}px`,
     position: 'absolute' as const,
   }
 
@@ -93,7 +93,7 @@ function getMergeArrowStyles({
 
     return {
       ...baseStyles,
-      top: -arrowSize,
+      top: `-${arrowSize}px`,
       [physicalSide]: 0,
       clipPath:
         isStart !== (dir === 'rtl')
@@ -114,7 +114,7 @@ function getMergeArrowStyles({
 
     return {
       ...baseStyles,
-      bottom: -arrowSize,
+      bottom: `-${arrowSize}px`,
       [physicalSide]: 0,
       clipPath:
         isStart !== (dir === 'rtl')
@@ -126,7 +126,7 @@ function getMergeArrowStyles({
   if (side === 'left') {
     return {
       ...baseStyles,
-      right: -arrowSize,
+      right: `-${arrowSize}px`,
       [placement === 'start' ? 'top' : 'bottom']: 0,
       clipPath:
         placement === 'start'
@@ -138,7 +138,7 @@ function getMergeArrowStyles({
   if (side === 'right') {
     return {
       ...baseStyles,
-      left: -arrowSize,
+      left: `-${arrowSize}px`,
       [placement === 'start' ? 'top' : 'bottom']: 0,
       clipPath:
         placement === 'start'
@@ -178,11 +178,11 @@ export function getArrowPositionStyles({
 
   const [side, placement = 'center'] = position.split('-') as [FloatingSide, FloatingPlacement]
   const baseStyles = {
-    width: arrowSize,
-    height: arrowSize,
+    width: `${arrowSize}px`,
+    height: `${arrowSize}px`,
     transform: 'rotate(45deg)',
     position: 'absolute',
-    [radiusByFloatingSide[side]]: arrowRadius,
+    [radiusByFloatingSide[side]]: `${arrowRadius}px`,
   }
 
   const arrowPlacement = -arrowSize / 2
@@ -191,7 +191,7 @@ export function getArrowPositionStyles({
     return {
       ...baseStyles,
       ...horizontalSide(placement, arrowY, arrowOffset, arrowPosition),
-      right: arrowPlacement,
+      right: `${arrowPlacement}px`,
       borderLeftColor: 'transparent',
       borderBottomColor: 'transparent',
       clipPath: 'polygon(100% 0, 0 0, 100% 100%)',
@@ -202,7 +202,7 @@ export function getArrowPositionStyles({
     return {
       ...baseStyles,
       ...horizontalSide(placement, arrowY, arrowOffset, arrowPosition),
-      left: arrowPlacement,
+      left: `${arrowPlacement}px`,
       borderRightColor: 'transparent',
       borderTopColor: 'transparent',
       clipPath: 'polygon(0 100%, 0 0, 100% 100%)',
@@ -213,7 +213,7 @@ export function getArrowPositionStyles({
     return {
       ...baseStyles,
       ...verticalSide(placement, arrowX, arrowOffset, arrowPosition, dir),
-      bottom: arrowPlacement,
+      bottom: `${arrowPlacement}px`,
       borderTopColor: 'transparent',
       borderLeftColor: 'transparent',
       clipPath: 'polygon(0 100%, 100% 100%, 100% 0)',
@@ -224,7 +224,7 @@ export function getArrowPositionStyles({
     return {
       ...baseStyles,
       ...verticalSide(placement, arrowX, arrowOffset, arrowPosition, dir),
-      top: arrowPlacement,
+      top: `${arrowPlacement}px`,
       borderBottomColor: 'transparent',
       borderRightColor: 'transparent',
       clipPath: 'polygon(0 100%, 0 0, 100% 0)',
