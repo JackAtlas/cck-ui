@@ -40,6 +40,10 @@ const { transitionDuration, transitionStatus, transitionTimingFunction } = useTr
 })
 
 const shouldRenderSlot = computed(() => {
+  if (env === 'test') {
+    return props.mounted ? true : !!props.keepMounted
+  }
+
   if (props.keepMounted) {
     return true
   }
