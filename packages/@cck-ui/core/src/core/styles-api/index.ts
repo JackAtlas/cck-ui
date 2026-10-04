@@ -3,6 +3,7 @@ export { resolveClassNames } from './use-styles/get-class-name/resolve-class-nam
 export { resolveStyles } from './use-styles/get-style/resolve-styles/resolve-styles'
 export { FOCUS_CLASS_NAMES } from './use-styles/get-class-name/get-global-class-names/get-global-class-names'
 export * from './styles-api.types'
+export * from './use-resolved-styles-api/use-resolved-styles-api'
 export * from './use-styles/use-styles'
 export type {
   VarsResolver,
