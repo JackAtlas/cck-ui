@@ -46,7 +46,7 @@
 <script setup lang="ts">
 import { computed, ref, watchEffect } from 'vue'
 import { useFocusReturn } from '@cck-ui/hooks'
-import { CBox, useComponentProps, useDirectionContext } from '../../../core'
+import { CBox, rem, useComponentProps, useDirectionContext } from '../../../core'
 import { FloatingArrow, getArrowMergeDropdownStyles } from '../../../utils/Floating'
 import { usePopoverContext } from '../popover.context'
 import { PopoverDropdownProps } from './popover-dropdown.types'
@@ -160,6 +160,15 @@ watchEffect(() => {
   el.style.setProperty('--popover-top', `${ctx.y.value ?? 0}px`)
   el.style.setProperty('--popover-left', `${ctx.x.value ?? 0}px`)
   el.style.setProperty('--popover-z-index', String(ctx.zIndex.value ?? 300))
+
+  const w = ctx.width?.value
+  if (w === 'target') {
+    el.style.width = ''
+  } else if (w == null) {
+    el.style.width = ''
+  } else {
+    el.style.width = rem(w as any)
+  }
 
   const next = mergeStyles.value ?? {}
   const nextKeys = new Set(Object.keys(next))
