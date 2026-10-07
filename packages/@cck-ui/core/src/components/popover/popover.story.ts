@@ -4,6 +4,8 @@ import { CckConfigProvider, createTheme } from '../../core'
 import { ref } from 'vue'
 import CGroup from '../group'
 import CButton from '../button'
+import CStack from '../stack'
+import CText from '../text'
 
 const meta = {
   title: 'Popover',
@@ -16,7 +18,7 @@ type Story = StoryObj<typeof meta>
 
 export const Usage: Story = {
   render: () => ({
-    components: { CButton, CPopover, CPopoverDropdown, CPopoverTarget },
+    components: { CButton, CPopover, CPopoverDropdown, CPopoverTarget, CText },
     setup() {
       const head = document.head
       const viteStyles = Array.from(head.querySelectorAll('style')).filter(
@@ -42,7 +44,9 @@ export const Usage: Story = {
           <c-popover-target>
             <c-button variant="filled">Toggle popover</c-button>
           </c-popover-target>
-          <c-popover-dropdown>Dropdown</c-popover-dropdown>
+          <c-popover-dropdown>
+            <c-text size="xs">This is uncontrolled popover, it is opened when button is clicked</c-text>
+          </c-popover-dropdown>
         </c-popover>
       </div>
     `,
@@ -342,6 +346,28 @@ export const ReferenceHidden: Story = {
             <c-popover-dropdown>Dropdown</c-popover-dropdown>
           </c-popover>
         </div>
+      </div>
+    `,
+  }),
+}
+
+export const InitialFocus: Story = {
+  render: () => ({
+    components: { CPopover, CPopoverDropdown, CPopoverTarget, CStack },
+    template: `
+      <div style="padding: 40px;">
+        <c-popover trap-focus>
+          <c-popover-target>
+            <button type="button">Toggle popover</button>
+          </c-popover-target>
+          <c-popover-dropdown>
+            <c-stack>
+              <input />
+              <input data-autofocus />
+              <input />
+            </c-stack>
+          </c-popover-dropdown>
+        </c-popover>
       </div>
     `,
   }),
