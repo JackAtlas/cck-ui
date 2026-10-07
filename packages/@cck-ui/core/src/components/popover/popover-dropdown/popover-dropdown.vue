@@ -161,6 +161,12 @@ watchEffect(() => {
   el.style.setProperty('--popover-left', `${ctx.x.value ?? 0}px`)
   el.style.setProperty('--popover-z-index', String(ctx.zIndex.value ?? 300))
 
+  if (ctx.referenceHidden?.value) {
+    el.style.display = 'none'
+  } else {
+    el.style.display = ''
+  }
+
   const w = ctx.width?.value
   if (w === 'target') {
     el.style.width = ''
