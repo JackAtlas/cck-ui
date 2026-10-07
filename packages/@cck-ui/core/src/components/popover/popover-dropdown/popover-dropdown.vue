@@ -44,8 +44,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch, watchEffect } from 'vue'
-import { useFocusReturn, useMergedRef } from '@cck-ui/hooks'
+import { computed, ref, watchEffect } from 'vue'
+import { useFocusReturn } from '@cck-ui/hooks'
 import { CBox, useComponentProps, useDirectionContext } from '../../../core'
 import { FloatingArrow, getArrowMergeDropdownStyles } from '../../../utils/Floating'
 import { usePopoverContext } from '../popover.context'
