@@ -41,6 +41,7 @@ const props = useComponentProps({
   component: 'CAffix',
   defaultProps,
   props: rawProps,
+  booleanProps: ['withinPortal'],
 })
 
 const affixSpecificProps = [
