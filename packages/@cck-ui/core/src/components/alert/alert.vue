@@ -77,6 +77,7 @@ const props = useComponentProps({
   component: 'CAlert',
   defaultProps: {},
   props: rawProps,
+  booleanProps: ['withCloseButton', 'autoContrast'],
 })
 
 const knownProps = [
