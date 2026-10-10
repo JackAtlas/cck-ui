@@ -46,6 +46,7 @@ const props = useComponentProps({
   component: 'CAvatar',
   defaultProps: {},
   props: rawProps,
+  booleanProps: ['autoContrast'],
 })
 
 watch(
