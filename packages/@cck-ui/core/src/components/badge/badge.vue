@@ -46,6 +46,7 @@ const props = useComponentProps({
   component: 'CBadge',
   defaultProps: {},
   props: rawProps,
+  booleanProps: ['circle', 'fullWidth', 'autoContrast'],
 })
 
 const knownProps = [
