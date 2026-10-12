@@ -28,6 +28,7 @@ const props = useComponentProps({
   component: 'CBurger',
   defaultProps: {},
   props: rawProps,
+  booleanProps: ['opened'],
 })
 
 const knownProps = [
