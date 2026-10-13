@@ -39,6 +39,7 @@ const props = useComponentProps({
   component: 'CCard',
   defaultProps,
   props: rawProps,
+  booleanProps: ['withBorder'],
 })
 
 const knownProps = [
