@@ -22,6 +22,7 @@ const props = useComponentProps({
   component: 'CCardSection',
   defaultProps: {},
   props: rawProps,
+  booleanProps: ['withBorder', 'inheritPadding'],
 })
 
 const knownProps = [
