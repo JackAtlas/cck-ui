@@ -24,6 +24,7 @@ const props = useComponentProps({
   component: 'CCenter',
   defaultProps: {},
   props: rawProps,
+  booleanProps: ['inline'],
 })
 
 const knownProps = [
