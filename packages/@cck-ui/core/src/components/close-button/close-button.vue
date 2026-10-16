@@ -45,6 +45,7 @@ const props = useComponentProps({
   component: 'CCloseButton',
   defaultProps,
   props: rawProps,
+  booleanProps: ['dataDisabled', 'disabled'],
 })
 
 const knownProps = [
