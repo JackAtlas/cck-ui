@@ -25,6 +25,7 @@ const props = useComponentProps({
   component: 'CCode',
   defaultProps: {},
   props: rawProps,
+  booleanProps: ['block'],
 })
 
 const knownProps = [
