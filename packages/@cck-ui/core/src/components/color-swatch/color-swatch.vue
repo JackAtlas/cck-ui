@@ -38,6 +38,7 @@ const props = useComponentProps({
   component: 'CColorSwatch',
   defaultProps,
   props: rawProps,
+  booleanProps: ['withShadow'],
 })
 
 const knownProps = [
