@@ -29,6 +29,7 @@ const props = useComponentProps({
   component: 'CContainer',
   defaultProps,
   props: rawProps,
+  booleanProps: ['fluid'],
 })
 
 const knownProps = [
