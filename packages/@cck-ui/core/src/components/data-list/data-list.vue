@@ -24,12 +24,14 @@ const rawProps = defineProps<DataListProps>()
 
 const defaultProps = {
   orientation: 'horizontal',
+  withDivider: false,
 } satisfies Partial<DataListProps>
 
 const props = useComponentProps({
   component: 'CDataList',
   defaultProps,
   props: rawProps,
+  booleanProps: ['withDivider'],
 })
 
 const knownProps = [
