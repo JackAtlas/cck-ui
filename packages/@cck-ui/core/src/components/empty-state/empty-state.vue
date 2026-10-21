@@ -52,12 +52,14 @@ const rawProps = defineProps<EmptyStateProps>()
 const defaultProps = {
   size: 'md',
   align: 'center',
+  withIndicatorBackground: false,
 } satisfies Partial<EmptyStateProps>
 
 const props = useComponentProps({
   component: 'CEmptyState',
   defaultProps,
   props: rawProps,
+  booleanProps: ['withIndicatorBackground'],
 })
 
 const knownProps = [
