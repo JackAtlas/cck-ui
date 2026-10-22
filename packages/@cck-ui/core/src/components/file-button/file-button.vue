@@ -41,6 +41,7 @@ const props = useComponentProps({
   component: 'CFileButton',
   defaultProps,
   props: rawProps,
+  booleanProps: ['multiple', 'disabled', 'capture'],
 })
 
 const handleClick = () => {
