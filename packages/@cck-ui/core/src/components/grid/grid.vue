@@ -50,8 +50,10 @@ const props = useComponentProps({
   defaultProps: {
     columns: DEFAULT_COLUMNS,
     gap: 'md',
+    grow: false,
   },
   props: rawProps,
+  booleanProps: ['grow'],
 })
 
 const knownProps = [
