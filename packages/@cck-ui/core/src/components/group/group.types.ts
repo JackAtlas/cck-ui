@@ -40,7 +40,7 @@ export interface GroupProps
 
   /**
    * @description Determines whether each child element should have `flex-grow: 1` style
-   * @default 'md'
+   * @default false
    */
   grow?: boolean
 

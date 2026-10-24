@@ -31,8 +31,10 @@ const props = useComponentProps({
     align: 'center',
     justify: 'flex-start',
     wrap: 'wrap',
+    grow: false,
   },
   props: rawProps,
+  booleanProps: ['grow', 'preventGrowOverflow'],
 })
 
 const knownProps = [
