@@ -52,6 +52,7 @@ const props = useComponentProps({
   component: 'CHighlight',
   defaultProps,
   props: rawProps,
+  booleanProps: ['wholeWord', 'caseInsensitive', 'accentInsensitive'],
 })
 
 const knownProps = [
