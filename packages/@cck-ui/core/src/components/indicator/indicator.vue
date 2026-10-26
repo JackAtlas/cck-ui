@@ -32,12 +32,14 @@ const defaultProps = {
   position: 'top-end',
   offset: 0,
   showZero: true,
+  inline: false,
 } satisfies Partial<IndicatorProps>
 
 const props = useComponentProps({
   component: 'CIndicator',
   defaultProps,
   props: rawProps,
+  booleanProps: ['inline', 'withBorder', 'disabled'],
 })
 
 const styleProps = computed(() => ({
