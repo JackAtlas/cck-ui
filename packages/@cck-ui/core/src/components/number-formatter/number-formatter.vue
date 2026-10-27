@@ -28,6 +28,7 @@ const props = useComponentProps({
   component: 'CNumberFormatter',
   defaultProps,
   props: rawProps,
+  booleanProps: ['allowNegative', 'fixedDecimalScale', 'thousandSeparator'],
 })
 
 const formatted = computed(() => {
