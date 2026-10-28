@@ -23,6 +23,8 @@ const rawProps = defineProps<OverlayProps>()
 
 const defaultProps = {
   zIndex: getDefaultZIndex('modal'),
+  center: false,
+  fixed: false,
 } satisfies Partial<OverlayProps>
 
 const props = useComponentProps<OverlayProps>({
