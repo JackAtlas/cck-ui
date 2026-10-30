@@ -25,6 +25,7 @@ const props = useComponentProps({
   component: 'CPaper',
   defaultProps: {},
   props: rawProps,
+  booleanProps: ['withBorder'],
 })
 
 const knownProps = [
