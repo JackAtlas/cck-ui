@@ -29,6 +29,7 @@ const props = useComponentProps({
   component: 'CPortal',
   defaultProps,
   props: rawProps,
+  booleanProps: ['disabled'],
 })
 
 const container = ref<HTMLElement | null>(null)
