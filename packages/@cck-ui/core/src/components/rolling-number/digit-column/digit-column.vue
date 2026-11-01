@@ -34,6 +34,7 @@ const props = useComponentProps({
   component: 'CDigitColumn',
   defaultProps: {},
   props: rawProps,
+  booleanProps: ['empty'],
 })
 
 const digitIndex = computed(() => parseInt(props.value.digit, 10))

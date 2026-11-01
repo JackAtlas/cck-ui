@@ -54,12 +54,16 @@ const defaultProps = {
   timingFunction: 'ease',
   decimalSeparator: '.',
   tabularNumbers: true,
+  thousandSeparator: false,
+  fixedDecimalScale: false,
+  withLiveRegion: false,
 } satisfies Partial<RollingNumberProps>
 
 const props = useComponentProps({
   component: 'CRollingNumber',
   defaultProps,
   props: rawProps,
+  booleanProps: ['thousandSeparator', 'fixedDecimalScale', 'tabularNumbers', 'withLiveRegion'],
 })
 
 const previousValue = ref(props.value.value)
