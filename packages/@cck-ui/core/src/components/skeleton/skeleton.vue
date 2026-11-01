@@ -21,6 +21,7 @@ const attrs = useAttrs()
 
 const rawProps = withDefaults(defineProps<SkeletonProps>(), {
   animate: true,
+  circle: false,
   visible: true,
 })
 
@@ -28,6 +29,7 @@ const props = useComponentProps({
   component: 'CSkeleton',
   defaultProps: {},
   props: rawProps,
+  booleanProps: ['visible', 'circle', 'animate'],
 })
 
 const knownProps = [
