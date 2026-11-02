@@ -58,6 +58,7 @@ const props = useComponentProps({
   component: 'CSplitter',
   defaultProps,
   props: rawProps,
+  booleanProps: ['withHandle', 'resetOnDoubleClick'],
 })
 
 const knownProps = [

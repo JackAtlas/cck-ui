@@ -21,8 +21,11 @@ const rawProps = defineProps<SplitterPaneProps>()
 
 const props = useComponentProps({
   component: 'CSplitterPane',
-  defaultProps: {},
+  defaultProps: {
+    collapsible: false,
+  },
   props: rawProps,
+  booleanProps: ['collapsible'],
 })
 
 const knownProps = [
