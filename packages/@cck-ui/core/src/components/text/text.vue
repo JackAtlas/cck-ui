@@ -29,8 +29,12 @@ const rawProps = defineProps<TextProps>()
 
 const props = useComponentProps({
   component: 'CText',
-  defaultProps: {},
+  defaultProps: {
+    inline: false,
+    inherit: false,
+  },
   props: rawProps,
+  booleanProps: ['inline', 'inherit', 'span'],
 })
 
 function getTextTruncate(truncate: TextTruncate | undefined) {
