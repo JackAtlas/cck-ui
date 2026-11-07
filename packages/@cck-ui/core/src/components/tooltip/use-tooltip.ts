@@ -95,7 +95,7 @@ export function useTooltip(options: UseTooltipOptions) {
     }
 
     if (arrowEl) {
-      result.map(arrow({ element: arrowEl, padding: toValue(options.arrowOffset) }))
+      result.push(arrow({ element: arrowEl, padding: toValue(options.arrowOffset) }))
     }
 
     if (middlewaresOptions.inline) {
