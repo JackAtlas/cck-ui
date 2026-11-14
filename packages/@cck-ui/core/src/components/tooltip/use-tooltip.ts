@@ -1,4 +1,4 @@
-import { computed, MaybeRefOrGetter, onScopeDispose, ref, Ref, toValue, watch } from 'vue'
+import { computed, inject, MaybeRefOrGetter, onScopeDispose, ref, Ref, toValue, watch } from 'vue'
 import { FloatingAxisOffsets, FloatingPosition, FloatingStrategy } from '../../utils/Floating'
 import type { TooltipMiddlewares } from './tooltip.types'
 import { useId, useUncontrolled } from '@cck-ui/hooks'
@@ -13,6 +13,7 @@ import {
   type Middleware,
   type Placement,
 } from '@floating-ui/vue'
+import { TOOLTIP_GROUP_KEY } from './tooltip-group/tooltip-group.context'
 
 export interface UseTooltipOptions {
   position: MaybeRefOrGetter<FloatingPosition>
@@ -48,12 +49,22 @@ function getDefaultMiddlewares(middlewares: TooltipMiddlewares | undefined): Too
 }
 
 export function useTooltip(options: UseTooltipOptions) {
-  const uid = useId()
+  const uid = toValue(useId())
+  const group = inject(TOOLTIP_GROUP_KEY, null)
 
   const [opened, setOpened] = useUncontrolled<boolean>({
     value: () => toValue(options.opened),
     defaultValue: options.defaultOpened ?? false,
     finalValue: false,
+    onChange: (val) => {
+      if (group) {
+        if (val) {
+          group.registerActive(uid)
+        } else {
+          group.unregisterActive(uid)
+        }
+      }
+    },
   })
 
   const referenceEl = ref<HTMLElement | null>(null)
@@ -144,7 +155,8 @@ export function useTooltip(options: UseTooltipOptions) {
 
   const open = () => {
     clearCloseTimer()
-    const delay = toValue(options.openDelay) ?? 0
+    const useGroupInstant = !!group && group.activeId.value !== null && group.activeId.value !== uid
+    const delay = useGroupInstant ? 0 : (toValue(options.openDelay) ?? 0)
     if (delay > 0) {
       clearOpenTimer()
       openTimer = window.setTimeout(() => {
