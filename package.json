@@ -65,7 +65,7 @@
     "open": "^11.0.0",
     "oxfmt": "^0.59.0",
     "oxlint": "^1.74.0",
-    "postcss": "^8.5.19",
+    "postcss": "^8.5.33",
     "postcss-modules": "^9.0.1",
     "postcss-preset-cck": "^1.0.2",
     "postcss-simple-vars": "^7.0.1",
