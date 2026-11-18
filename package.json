@@ -37,20 +37,20 @@
   },
   "dependencies": {
     "type-fest": "^5.8.0",
-    "vue": "^3.5.39"
+    "vue": "catalog:"
   },
   "devDependencies": {
     "@commitlint/cli": "^21.2.4",
     "@commitlint/config-conventional": "^21.2.4",
-    "@storybook/vue3-vite": "^10.5.0",
+    "@storybook/vue3-vite": "^10.6.7",
     "@types/fs-extra": "^11.0.4",
     "@types/jsdom": "^28.0.3",
     "@types/node": "^26.1.1",
     "@types/yargs": "^17.0.35",
-    "@vitejs/plugin-vue": "^6.0.8",
+    "@vitejs/plugin-vue": "^6.0.11",
     "@vitejs/plugin-vue-jsx": "^5.1.6",
-    "@vue/shared": "^3.5.39",
-    "@vue/test-utils": "^2.4.11",
+    "@vue/shared": "catalog:",
+    "@vue/test-utils": "^2.6.0",
     "axe-core": "catalog:",
     "chalk": "^5.6.2",
     "commitizen": "^4.3.2",
@@ -80,7 +80,7 @@
     "typescript": "^6.0.3",
     "unplugin-vue": "^7.2.0",
     "version-next": "^1.0.2",
-    "vite": "^8.1.4",
+    "vite": "^8.3.8",
     "vitest": "^4.1.10",
     "yargs": "^18.0.0",
     "zx": "^8.8.5"
