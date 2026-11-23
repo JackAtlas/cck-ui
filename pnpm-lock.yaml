@@ -7,8 +7,8 @@ settings:
 catalogs:
   default:
     '@vue/shared':
-      specifier: ^3.5.45
-      version: 3.5.45
+      specifier: ^3.5.46
+      version: 3.5.46
     axe-core:
       specifier: ^4.14.1
       version: 4.12.1
@@ -56,7 +56,7 @@ importers:
         version: 5.1.6(vite@8.3.8(@types/node@26.1.1)(esbuild@0.28.1)(jiti@2.7.0)(sugarss@5.0.1(postcss@8.5.33))(tsx@4.23.1)(yaml@2.9.0))(vue@3.5.46(typescript@6.0.3))
       '@vue/shared':
         specifier: 'catalog:'
-        version: 3.5.45
+        version: 3.5.46
       '@vue/test-utils':
         specifier: ^2.6.0
         version: 2.6.0(@vue/compiler-dom@3.5.46)(@vue/server-renderer@3.5.46)(vue@3.5.46(typescript@6.0.3))
@@ -5596,7 +5596,7 @@ snapshots:
       '@babel/types': 7.29.7
       '@vue/babel-helper-vue-transform-on': 2.0.1
       '@vue/babel-plugin-resolve-type': 2.0.1(@babel/core@7.29.7)
-      '@vue/shared': 3.5.45
+      '@vue/shared': 3.5.46
     optionalDependencies:
       '@babel/core': 7.29.7
     transitivePeerDependencies:
@@ -5720,7 +5720,7 @@ snapshots:
     dependencies:
       '@volar/language-core': 2.4.30
       '@vue/compiler-dom': 3.5.45
-      '@vue/shared': 3.5.45
+      '@vue/shared': 3.5.46
       alien-signals: 3.2.1
       muggle-string: 0.4.1
       path-browserify: 1.0.1
@@ -5730,7 +5730,7 @@ snapshots:
     dependencies:
       '@volar/language-core': 2.4.28
       '@vue/compiler-dom': 3.5.39
-      '@vue/shared': 3.5.45
+      '@vue/shared': 3.5.46
       alien-signals: 3.2.1
       muggle-string: 0.4.1
       path-browserify: 1.0.1
