@@ -42,7 +42,7 @@
   "devDependencies": {
     "@commitlint/cli": "^21.2.4",
     "@commitlint/config-conventional": "^21.2.4",
-    "@storybook/vue3-vite": "^10.6.7",
+    "@storybook/vue3-vite": "^10.6.8",
     "@types/fs-extra": "^11.0.4",
     "@types/jsdom": "^28.0.3",
     "@types/node": "^26.1.1",
