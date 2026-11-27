@@ -66,7 +66,7 @@
     "oxfmt": "^0.59.0",
     "oxlint": "^1.74.0",
     "postcss": "^8.5.33",
-    "postcss-modules": "^9.1.2",
+    "postcss-modules": "^9.1.4",
     "postcss-preset-cck": "^1.0.2",
     "postcss-simple-vars": "^7.0.1",
     "resize-observer-polyfill": "^1.5.1",

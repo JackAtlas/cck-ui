@@ -106,8 +106,8 @@ importers:
         specifier: ^8.5.33
         version: 8.5.33
       postcss-modules:
-        specifier: ^9.1.2
-        version: 9.1.2(postcss@8.5.33)
+        specifier: ^9.1.4
+        version: 9.1.4(postcss@8.5.33)
       postcss-preset-cck:
         specifier: ^1.0.2
         version: 1.0.2(postcss@8.5.33)
@@ -3376,8 +3376,8 @@ packages:
     peerDependencies:
       postcss: ^8.1.0
 
-  postcss-modules@9.1.2:
-    resolution: {integrity: sha512-02zKjzl+mbVffGYyMy5hkkytlEiKvMfLrmCN6mT3ahVB9GMJdOV0SMH5g277Ar9huG/EUykuUcyMzFDhNc8NNg==}
+  postcss-modules@9.1.4:
+    resolution: {integrity: sha512-4zGagIiZalRxlwObUbUIaOH/8Uwx9/q59BPonpI1of0vyBGXS70ODpg6xuoG+rB+AoLZPWE8EE5zuBnFu0KgYw==}
     engines: {node: '>=20.6'}
     peerDependencies:
       postcss: ^8.0.0
@@ -7072,7 +7072,7 @@ snapshots:
       icss-utils: 5.1.0(postcss@8.5.33)
       postcss: 8.5.33
 
-  postcss-modules@9.1.2(postcss@8.5.33):
+  postcss-modules@9.1.4(postcss@8.5.33):
     dependencies:
       generic-names: 4.0.0
       icss-utils: 5.1.0(postcss@8.5.33)
